@@ -400,3 +400,39 @@ class SocialLink(models.Model):
         verbose_name_plural = "Social links"
 
 
+class LanguageSection(models.Model):
+    """LanguageSection model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cv
+
+    class Meta:
+        verbose_name_plural = "Language sections"
+
+class Language(models.Model):
+    """Language model"""
+    language_section = models.ForeignKey(
+        LanguageSection,
+        on_delete=models.CASCADE,
+        related_name="languages"
+    )
+    language = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    level = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.language
+
+    class Meta:
+        verbose_name_plural = "Languages"
+
