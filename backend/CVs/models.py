@@ -331,3 +331,35 @@ class SoftSkill(models.Model):
         verbose_name_plural = "Soft skills"
 
 
+class ProfessionalSkillSection(models.Model):
+    """HardSkillSection model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cv
+
+    class Meta:
+        verbose_name_plural = "Professional Skill sections"
+
+
+class ProfessionalSkill(models.Model):
+    """Professional skill model"""
+    professional_skill_section = models.ForeignKey(
+        ProfessionalSkillSection,
+        on_delete=models.CASCADE,
+        related_name="professional_skills"
+    )
+    skills = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.skills
+
+    class Meta:
+        verbose_name_plural = "Professional skills"
+
+
