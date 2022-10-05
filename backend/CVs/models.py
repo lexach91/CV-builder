@@ -1,6 +1,15 @@
 from django.db import models
 from authorization.models import User
 
+
+class Theme(models.Model):
+    """docstring for Theme"""
+    name = models.CharField(max_length=50)
+    path = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
 class CV(models.Model):
     """CV model"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -8,6 +17,12 @@ class CV(models.Model):
     description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    cv_themes = models.ForeignKey(
+        Theme,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.title
