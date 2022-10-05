@@ -436,3 +436,78 @@ class Language(models.Model):
     class Meta:
         verbose_name_plural = "Languages"
 
+
+class VolunteerSection(models.Model):
+    """VolunteerSection model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cv
+
+    class Meta:
+        verbose_name_plural = "Volunteer sections"
+
+
+class Volunteer(models.Model):
+    """Volunteer model"""
+    volunteer_section = models.ForeignKey(
+        VolunteerSection,
+        on_delete=models.CASCADE,
+        related_name="volunteers"
+    )
+    organization = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    position = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    start_date = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    end_date = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.organization
+
+    class Meta:
+        verbose_name_plural = "Volunteers"
+
+
+class VolunteerBullet(models.Model):
+    """Volunteer bullet model"""
+    volunteer = models.ForeignKey(
+        Volunteer,
+        on_delete=models.CASCADE,
+        related_name="volunteer_bullets"
+    )
+    bullet = models.TextField(
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.bullet
+
+    class Meta:
+        verbose_name_plural = "Volunteer bullets"
+
