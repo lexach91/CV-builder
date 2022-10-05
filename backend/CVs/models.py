@@ -363,3 +363,40 @@ class ProfessionalSkill(models.Model):
         verbose_name_plural = "Professional skills"
 
 
+class SocialLinkSection(models.Model):
+    """SocialLinkSection model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cv
+
+    class Meta:
+        verbose_name_plural = "Social link sections"
+
+class SocialLink(models.Model):
+    """Social link model"""
+    social_link_section = models.ForeignKey(
+        SocialLinkSection,
+        on_delete=models.CASCADE,
+        related_name="social_links"
+    )
+    name = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    url = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Social links"
+
+
