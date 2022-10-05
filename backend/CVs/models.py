@@ -298,3 +298,36 @@ class ShowcaseBullet(models.Model):
     class Meta:
         verbose_name_plural = "Project bullets"
 
+
+class SoftSkillSection(models.Model):
+    """SoftSkillSection model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cv
+
+    class Meta:
+        verbose_name_plural = "Soft skill sections"
+
+
+class SoftSkill(models.Model):
+    """SoftSkill model"""
+    soft_skill_section = models.ForeignKey(
+        SoftSkillSection,
+        on_delete=models.CASCADE,
+        related_name="soft_skills"
+    )
+    soft_skill = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.soft_skill
+
+    class Meta:
+        verbose_name_plural = "Soft skills"
+
+
