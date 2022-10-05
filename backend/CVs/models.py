@@ -147,3 +147,79 @@ class ExperienceBullet(models.Model):
         verbose_name_plural = "Job bullets"
 
 
+class EducationSection(models.Model):
+    """EducationSection model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cv
+
+    class Meta:
+        verbose_name_plural = "EducationSections"
+
+
+class Education(models.Model):
+    """Education model"""
+    education_section = models.ForeignKey(
+        EducationSection,
+        on_delete=models.CASCADE,
+        related_name="educations"
+    )
+    school = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    specialization = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    scores = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    start_date = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    end_date = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.school
+
+    class Meta:
+        verbose_name_plural = "Education"
+
+
+class EducationBullet(models.Model):
+    """Education bullet model"""
+    education = models.ForeignKey(
+        Education,
+        on_delete=models.CASCADE,
+        related_name="education_bullets"
+    )
+    bullet = models.TextField(
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.bullet
+
+    class Meta:
+        verbose_name_plural = "Education bullets"
+
+
