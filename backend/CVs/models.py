@@ -511,3 +511,34 @@ class VolunteerBullet(models.Model):
     class Meta:
         verbose_name_plural = "Volunteer bullets"
 
+
+class InterestSection(models.Model):
+    """InterestSection model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cv
+
+    class Meta:
+        verbose_name_plural = "Interest sections"
+
+
+class Interest(models.Model):
+    """Interest model"""
+    interest_section = models.ForeignKey(
+        InterestSection,
+        on_delete=models.CASCADE,
+        related_name="interests"
+    )
+    interest = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.interest
+
+    class Meta:
+        verbose_name_plural = "Interests"
