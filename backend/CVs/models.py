@@ -13,4 +13,42 @@ class CV(models.Model):
         return self.title
 
 
+class Header(models.Model):
+    """Header model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+    job_title = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )  
+    email = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    phone = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    address = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    url_link = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name_plural = "Headers"
 
