@@ -223,3 +223,78 @@ class EducationBullet(models.Model):
         verbose_name_plural = "Education bullets"
 
 
+class ShowcaseSection(models.Model):
+    """ShowcaseSection model"""
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cv
+
+    class Meta:
+        verbose_name_plural = "ShowcaseSections"
+
+
+class Showcase(models.Model):
+    """Project model"""
+    showcase_section = models.ForeignKey(
+        ShowcaseSection,
+        on_delete=models.CASCADE,
+        related_name="showcases"
+    )
+    name = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+        unique=False
+    )
+    url = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    start_date = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    end_date = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        unique=False
+    )
+    
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Projects"
+
+
+class ShowcaseBullet(models.Model):
+    """Project bullet model"""
+    showcase = models.ForeignKey(
+        Showcase,
+        on_delete=models.CASCADE,
+        related_name="showcase_bullets"
+    )
+    bullet = models.TextField(
+        blank=True,
+        null=True,
+        unique=False
+    )
+
+    def __str__(self):
+        return self.bullet
+
+    class Meta:
+        verbose_name_plural = "Project bullets"
+
