@@ -173,3 +173,24 @@ class RefreshTokenAPIView(APIView):
         response.status_code = status.HTTP_200_OK
         
         return response
+    
+    
+class LogoutAPIView(APIView):
+    """API endpoint for logging out a user"""
+    def post(self, request):
+        access_token = request.COOKIES.get("access_token")
+        refresh_token = request.COOKIES.get("refresh_token")
+        
+        response = Response()
+        
+        if access_token:
+            response.delete_cookie("access_token")
+            
+        if refresh_token:
+            BlacklistedToken.objects.create(token=refresh_token)
+            response.delete_cookie("refresh_token")
+            
+        response.status_code = status.HTTP_200_OK
+        
+        return response
+
