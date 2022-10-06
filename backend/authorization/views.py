@@ -24,6 +24,30 @@ class RegisterAPIView(APIView):
     def post(self, request):
         data = request.data
         
+        if not data:
+            return Response(
+                {"error": "No data provided"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+            
+        if not data.get("email"):
+            return Response(
+                {"error": "Email is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+        if not data.get("password"):
+            return Response(
+                {"error": "Password is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+            
+        if not data.get("password_confirm"):
+            return Response(
+                {"error": "Password confirmation is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )        
+        
         if data["password"] != data["password_confirm"]:
             return Response(
                 {"error": "Passwords do not match"},
@@ -42,6 +66,7 @@ class LoginAPIView(APIView):
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
+        print(email, password)
         
         if not email or not password:
             return Response(
@@ -50,14 +75,17 @@ class LoginAPIView(APIView):
             )
         
         user = User.objects.filter(email=email).first()
-        
+        print(user)
+        print(user._password)
         if not user:
+            print("User not found")
             return Response(
                 {"error": "Invalid credentials"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-            
+        print(user.check_password(password))
         if not user.check_password(password):
+            print("Password is incorrect")
             return Response(
                 {"error": "Invalid credentials"},
                 status=status.HTTP_400_BAD_REQUEST,
