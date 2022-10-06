@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
@@ -58,3 +59,29 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class BlacklistedToken(models.Model):
+    token = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.token
+    
+
+class PasswordResetToken(models.Model):
+    token = models.CharField(max_length=500)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    
+    def __str__(self):
+        return self.token
+    
+    def save(self, *args, **kwargs):
+        self.expires_at = self.created_at + datetime.timedelta(days=1)
+        super(PasswordResetToken, self).save(*args, **kwargs)
+        
+    def is_expired(self):
+        return self.expires_at < datetime.datetime.now()
+    
