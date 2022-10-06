@@ -13,12 +13,22 @@ class JWTAuthentication(BaseAuthentication):
     def authenticate(self, request):
         """Authenticate the user"""
         
-        access_token = get_authorization_header(request).split()
+        access_token = get_authorization_header(request).split()[1]
         
         if access_token is None:
             raise exceptions.AuthenticationFailed('No token provided')
         
-        pass
+        id = decode_access_token(access_token)
+        
+        if id is None:
+            raise exceptions.AuthenticationFailed('Invalid token')
+        
+        user = User.objects.get(id=id)
+        
+        if user is None:
+            raise exceptions.AuthenticationFailed('User not found')
+        
+        return (user, None)
     
     
 def create_access_token(user_id):
