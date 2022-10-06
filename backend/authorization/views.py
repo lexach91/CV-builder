@@ -116,4 +116,60 @@ class GetUserAPIView(APIView):
         
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
+
+class RefreshTokenAPIView(APIView):
+    """API endpoint for refreshing a token"""
+    def post(self, request):
+        refresh_token = request.COOKIES.get("refresh_token")
+        
+        if not refresh_token:
+            return Response(
+                {"error": "You are not logged in"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+        if BlacklistedToken.objects.filter(token=refresh_token).exists():
+            return Response(
+                {"error": "You are not logged in or your session has expired"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+            
+        id = decode_refresh_token(refresh_token)
+        
+        if id is None:
+            return Response(
+                {"error": "Invalid token"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+        user = User.objects.filter(id=id).first()
+        
+        if user is None:
+            return Response(
+                {"error": "User not found"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+            
+        access_token = create_access_token(user.id)
+        refresh_token = create_refresh_token(user.id)
+        
+        response = Response()
+        
+        response.set_cookie(
+            key="access_token",
+            value=access_token,
+            httponly=True,
+            expires=datetime.datetime.utcnow() + datetime.timedelta(seconds=600),
+        )
+        
+        response.set_cookie(
+            key="refresh_token",
+            value=refresh_token,
+            httponly=True,
+            expires=datetime.datetime.utcnow() + datetime.timedelta(days=3),
+        )
+        
+        response.status_code = status.HTTP_200_OK
+        
+        return response
