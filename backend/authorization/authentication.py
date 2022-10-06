@@ -23,7 +23,7 @@ class JWTAuthentication(BaseAuthentication):
         if id is None:
             raise exceptions.AuthenticationFailed('Invalid token')
         
-        user = User.objects.get(id=id)
+        user = User.objects.filter(id=id).first()
         
         if user is None:
             raise exceptions.AuthenticationFailed('User not found')
