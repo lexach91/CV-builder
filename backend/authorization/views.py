@@ -4,7 +4,7 @@ import string
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import CreateUserSerializer
+from .serializers import CreateUserSerializer, UserSerializer
 from .models import User, BlacklistedToken, PasswordResetToken
 from .authentication import (
     JWTAuthentication,
@@ -91,4 +91,29 @@ class LoginAPIView(APIView):
         response.status_code = status.HTTP_200_OK
         
         return response
+    
+
+class VerifyTokenAPIView(APIView):
+    """API endpoint for verifying a token"""
+    authentication_classes = (JWTAuthentication,)
+    
+    def get(self, request):
+        return Response(status=status.HTTP_200_OK)
+    
+
+class GetUserAPIView(APIView):
+    """API endpoint for getting a user"""
+    authentication_classes = (JWTAuthentication,)
+    
+    def get(self, request):
+        user = request.user
         
+        if user is None:
+            return Response(
+                {"error": "You are not logged in"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
