@@ -24,3 +24,17 @@ class CreateUserSerializer(ModelSerializer):
         def create(self, validated_data):
             user = User.objects.create_user(**validated_data)
             return user
+
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "birthday",
+            "country",
+        )
+        read_only_fields = ("id", "email")
