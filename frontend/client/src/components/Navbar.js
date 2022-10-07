@@ -41,7 +41,7 @@ const Navbar = () => {
   const authorizedTrue = (
     <>
       {AuthorizedNavbarLinks.map((link) => (
-        <li className="nav-item">
+        <li className="nav-item" key={link.name}>
           <NavLink
             key={link.name}
             to={link.path}
@@ -56,8 +56,9 @@ const Navbar = () => {
 
   const authorizedFalse = (
     <>
-      <li className="nav-item">
+      <li className="nav-item" key="login">
         <NavLink
+          key="login"
           to="/login"
           className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
         >
@@ -65,8 +66,9 @@ const Navbar = () => {
         </NavLink>
       </li>
 
-      <li className="nav-item">
+      <li className="nav-item" key="register">
         <NavLink
+          key="register"
           to="/register"
           className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
         >
@@ -92,9 +94,9 @@ const Navbar = () => {
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <span class="block relative w-6 h-px rounded-sm bg-white"></span>
-              <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
-              <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
+              <span className="block relative w-6 h-px rounded-sm bg-white"></span>
+              <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
+              <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
             </button>
           </div>
           <div
@@ -106,7 +108,7 @@ const Navbar = () => {
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               {navbarLinks.map((link) => (
-                <li className="nav-item">
+                <li className="nav-item" key={link.name}>
                   <NavLink
                     key={link.name}
                     to={link.path}
