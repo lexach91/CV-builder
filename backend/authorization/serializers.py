@@ -21,13 +21,15 @@ class CreateUserSerializer(ModelSerializer):
            "country": {"required": False},
         }
         
-        def create(self, validated_data):
-            password = validated_data.pop("password", None)
-            instance = self.Meta.model(**validated_data)
-            if password is not None:
-                instance.set_password(password)
-            instance.save()
-            return instance
+    def create(self, validated_data):
+        password = validated_data.pop("password", None)
+        print(password, "password from serializer")
+        instance = self.Meta.model(**validated_data)
+        instance.set_password(password)
+        instance.save()
+        print(instance, "instance from serializer")
+        print(instance.check_password(password), "password check from serializer")
+        return instance
 
 
 class UserSerializer(ModelSerializer):
