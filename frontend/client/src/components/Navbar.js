@@ -41,7 +41,7 @@ const Navbar = () => {
   const authorizedTrue = (
     <>
       {AuthorizedNavbarLinks.map((link) => (
-        <li>
+        <li className="nav-item">
           <NavLink
             key={link.name}
             to={link.path}
@@ -53,6 +53,29 @@ const Navbar = () => {
       ))}
     </>
   )
+
+  const authorizedFalse = (
+    <>
+      <li className="nav-item">
+        <NavLink
+          to="/login"
+          className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
+        >
+          Login
+        </NavLink>
+      </li>
+
+      <li className="nav-item">
+        <NavLink
+          to="/register"
+          className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
+        >
+          Register
+        </NavLink>
+      </li>
+    </>
+  )
+
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-green-800">
