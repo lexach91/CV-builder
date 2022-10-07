@@ -45,7 +45,7 @@ const Navbar = () => {
           <NavLink
             key={link.name}
             to={link.path}
-            className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
+            className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
           >
             {link.name}
           </NavLink>
@@ -59,7 +59,7 @@ const Navbar = () => {
       <li className="nav-item">
         <NavLink
           to="/login"
-          className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
+          className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
         >
           Login
         </NavLink>
@@ -68,7 +68,7 @@ const Navbar = () => {
       <li className="nav-item">
         <NavLink
           to="/register"
-          className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
+          className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
         >
           Register
         </NavLink>
@@ -78,11 +78,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-green-800">
+      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-slate-900">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <a
-              className="text-3xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
+              className="text-3xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-emerald-400 hover:text-emerald-300"
               href="#"
             >
               CV-builder
@@ -110,7 +110,7 @@ const Navbar = () => {
                   <NavLink
                     key={link.name}
                     to={link.path}
-                    className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
+                    className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
                   >
                     {link.name}
                   </NavLink>
@@ -121,9 +121,7 @@ const Navbar = () => {
         </div>
       </nav>
     </>
-
-  )
-
+  );
 }
 
 export default Navbar
