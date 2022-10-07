@@ -16,8 +16,43 @@ const navbarLinks = [
   },
 ];
 
+const AuthorizedNavbarLinks = [
+  {
+    name: "Create CV",
+    path: "/create-cv",
+  },
+  {
+    name: "My CVs",
+    path: "/my-cvs",
+  },
+  {
+    name: "profile",
+    path: "/profile",
+  },
+  {
+    name: "logout",
+    path: "/logout",
+  },
+];
+
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
+
+  const authorizedTrue = (
+    <>
+      {AuthorizedNavbarLinks.map((link) => (
+        <li>
+          <NavLink
+            key={link.name}
+            to={link.path}
+            className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
+          >
+            {link.name}
+          </NavLink>
+        </li>
+      ))}
+    </>
+  )
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-green-800">
@@ -34,9 +69,9 @@ const Navbar = () => {
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-        <span class="block relative w-6 h-px rounded-sm bg-white"></span>
-        <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
-        <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
+              <span class="block relative w-6 h-px rounded-sm bg-white"></span>
+              <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
+              <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
             </button>
           </div>
           <div
@@ -49,13 +84,14 @@ const Navbar = () => {
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               {navbarLinks.map((link) => (
                 <li className="nav-item">
-                <NavLink
-                  key={link.name}
-                  to={link.path}
-                  className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
-                >{link.name}
-                </NavLink>
-              </li>
+                  <NavLink
+                    key={link.name}
+                    to={link.path}
+                    className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-white hover:opacity-75'
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
               ))}
             </ul>
           </div>
