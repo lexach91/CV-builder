@@ -66,7 +66,7 @@ def decode_access_token(access_token):
     Decodes an access token.
     """
     try:
-        return jwt.decode(access_token, "access_secret", algorithms=["HS256"])
+        return jwt.decode(access_token, "access_secret", algorithms=["HS256"])["user_id"]
     except jwt.ExpiredSignatureError:
         raise exceptions.AuthenticationFailed("Access token expired")
     except jwt.InvalidTokenError:
@@ -77,7 +77,7 @@ def decode_refresh_token(refresh_token):
     Decodes a refresh token.
     """
     try:
-        return jwt.decode(refresh_token, "refresh_secret", algorithms=["HS256"])
+        return jwt.decode(refresh_token, "refresh_secret", algorithms=["HS256"])["user_id"]
     except jwt.ExpiredSignatureError:
         raise exceptions.AuthenticationFailed("Refresh token expired")
     except jwt.InvalidTokenError:
