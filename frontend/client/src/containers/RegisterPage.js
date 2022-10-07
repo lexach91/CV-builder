@@ -1,6 +1,6 @@
 import Layout from "../components/Layout";
 import React, { useState } from "react";
-
+import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -33,7 +33,7 @@ const RegisterPage = () => {
             <div className="w-full md:w-1/2 px-3">
               <label
                 className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2"
-               htmlFor="grid-last-name">
+                htmlFor="grid-last-name">
                   Last Name
               </label>
               <input
@@ -43,8 +43,10 @@ const RegisterPage = () => {
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"htmlFor="grid-city">
-                Country
+              <label
+                className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2"
+                htmlFor="grid-city">
+                  Country
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -54,16 +56,18 @@ const RegisterPage = () => {
               />
             </div>
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"htmlFor="grid-state">
-                birthday
+              <label
+                className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2"
+                htmlFor="grid-state">
+                  birthday
               </label>
-
               <div className="flex items-center justify-center">
-
-
-
+                <DatePicker
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
               </div>
-
             </div>
           </div>
           <div className='flex flex-wrap -mx-3 mb-6'>
@@ -84,7 +88,7 @@ const RegisterPage = () => {
             <div className="w-full px-3">
               <label
                 className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2"
-               htmlFor="grid-password">
+                htmlFor="grid-password">
                   Password
               </label>
               <input
@@ -93,8 +97,6 @@ const RegisterPage = () => {
               <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
             </div>
           </div>
-
-            
         </form>
       </div>
     </Layout>
