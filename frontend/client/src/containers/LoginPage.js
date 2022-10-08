@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 const LoginPage = () => {
   return (
     <Layout title='Register' content='Register to the app'>
-      <div className='container min-h-full max-w-120rem flex flex-wrap justify-center flex-col content-center'>
+      <div className='container flex flex-wrap justify-center flex-col content-center h-[90%] my-20 bg-slate-800 mx-auto max-w-120rem'>
 
 
-        <form className="w-full max-w-lg bg-slate-900 py-9 px-6 rounded-xl">
+        <form className="w-full max-w-lg bg-slate-900 py-9 px-10 rounded-xl">
           <h1 className='text-5xl text-center mb-6 text-emerald-400'>Login</h1>
           <p className='text-xl text-center'>
             Don't have an account? <Link className="ml-2 underline text-emerald-400 hover:text-emerald-600" to="/register">Register</Link>
