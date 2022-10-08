@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { Link } from "react-router-dom"; 
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -12,13 +13,13 @@ const RegisterPage = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
     <Layout title='Register' content='Register to the app'>
-      <div className='container mx-auto flex flex-col justify-center items-center container w-full min-h-full'>
+      <div className='container flex flex-wrap justify-center flex-col content-center h-[90%] my-20 bg-slate-800 mx-auto max-w-120rem '>
 
 
         <form className="w-full max-w-lg bg-slate-900 py-9 px-6 rounded-xl">
           <h1 className='text-5xl text-center mb-6 text-emerald-400'>Register</h1>
           <p className='text-xl text-center'>
-            Already have an account? <a className="ml-2 underline text-emerald-400 hover:text-emerald-600" href="/login">Login</a>
+            Already have an account? <Link className="ml-2 underline text-emerald-400 hover:text-emerald-600" to="/login">Login</Link>
           </p>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -114,6 +115,14 @@ const RegisterPage = () => {
                 type="password"
                 placeholder="******************"/>
             </div>
+          </div>
+          <div className="flex w-full justify-center">
+            <button
+              className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+                  >
+              Register
+            </button>
           </div>
         </form>
       </div>
