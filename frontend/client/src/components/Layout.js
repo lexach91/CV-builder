@@ -10,7 +10,7 @@ const Layout = ({ title, content, children }) => {
 			<meta name='description' content={content} />
 		</Helmet>
 		<Navbar />
-		<div className='flex flex-col justify-start content-start text-slate-100 flex-1 s'>
+		<div className='flex flex-col justify-start content-start text-slate-100 flex-1'>
       {children}
     </div>
     <Footer />
