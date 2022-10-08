@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { Link } from "react-router-dom"; 
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -18,7 +19,7 @@ const RegisterPage = () => {
         <form className="w-full max-w-lg bg-slate-900 py-9 px-6 rounded-xl">
           <h1 className='text-5xl text-center mb-6 text-emerald-400'>Register</h1>
           <p className='text-xl text-center'>
-            Already have an account? <a className="ml-2 underline text-emerald-400 hover:text-emerald-600" href="/login">Login</a>
+            Already have an account? <Link className="ml-2 underline text-emerald-400 hover:text-emerald-600" to="/login">Login</Link>
           </p>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
