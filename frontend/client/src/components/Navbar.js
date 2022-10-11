@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const navbarLinks = [
   {
@@ -36,7 +37,11 @@ const AuthorizedNavbarLinks = [
 ];
 
 const Navbar = () => {
+
+  const { isAuthenticated } = useSelector((state) => state.user);
   const [navbarOpen, setNavbarOpen] = useState(false);
+
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const authorizedTrue = (
     <>
@@ -118,6 +123,7 @@ const Navbar = () => {
                   </NavLink>
                 </li>
               ))}
+              { isAuthenticated ? authorizedTrue : authorizedFalse }
             </ul>
           </div>
         </div>
