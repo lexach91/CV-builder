@@ -29,7 +29,14 @@ const RegisterPage = () => {
   const { first_name, last_name, birthday, country, email, password } = formData;
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const onSubmit = e => {
+		e.preventDefault();
+    // set birthday to startDate
+    formData.birthday = startDate;
 
+		dispatch(register({ first_name, last_name, birthday, country, email, password }));
+    console.log(formData);
+	};
 
   if (registered) {
     return <Navigate to='/login' />;
