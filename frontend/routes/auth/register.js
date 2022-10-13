@@ -10,6 +10,7 @@ router.post('/api/auth/register', async(req, res) => {
     birthday,
     country,
     password,
+    password_confirm,
   } = req.body;
   
   const body = JSON.stringify({
@@ -19,9 +20,12 @@ router.post('/api/auth/register', async(req, res) => {
     birthday,
     country,
     password,
+    password_confirm,
   })
-  try {
 
+  try {
+    // fetch request towards Django API
+    console.log('before fetch')
     const registerResponse = await fetch(`${process.env.API_URL}/api/auth/register`, {
 			method: 'POST',
 			headers: {
@@ -30,7 +34,7 @@ router.post('/api/auth/register', async(req, res) => {
 			},
 			body,
 		});
-
+    console.log(registerResponse);
     const data = await registerResponse.json();
 
     return res.status(registerResponse.status).json(data);
