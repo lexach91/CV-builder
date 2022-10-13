@@ -53,7 +53,7 @@ class RegisterAPIView(APIView):
                 {"error": "Passwords do not match"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        print('we are done with backend')
+
         serializer = CreateUserSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -75,17 +75,12 @@ class LoginAPIView(APIView):
             )
         
         user = User.objects.filter(email=email).first()
-        print(user)
-        print(user._password)
         if not user:
-            print("User not found")
             return Response(
                 {"error": "Invalid credentials"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        print(user.check_password(password))
         if not user.check_password(password):
-            print("Password is incorrect")
             return Response(
                 {"error": "Invalid credentials"},
                 status=status.HTTP_400_BAD_REQUEST,
