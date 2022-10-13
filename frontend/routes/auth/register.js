@@ -34,10 +34,8 @@ router.post('/api/auth/register', async(req, res) => {
 			},
 			body,
 		});
-    console.log(registerResponse);
-    const data = await registerResponse.json();
-
-    return res.status(registerResponse.status).json(data);
+    // return an empty response with status 201
+    return res.status(201).json({});
 
   } catch(error) {
     console.log(error.message);
