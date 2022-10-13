@@ -14,21 +14,21 @@ class CreateUserSerializer(ModelSerializer):
             "country",  # optional
         )
         extra_kwargs = {
-           "password": {"write_only": True},
-           "first_name": {"required": False},
-           "last_name": {"required": False},
-           "birthday": {"required": False},
-           "country": {"required": False},
+            "password": {"write_only": True},
+            "first_name": {"required": False},
+            "last_name": {"required": False},
+            "birthday": {"required": False},
+            "country": {"required": False},
         }
         
     def create(self, validated_data):
         password = validated_data.pop("password", None)
-        print(password, "password from serializer")
+        birthday = validated_data["birthday"]
+        print(birthday)
         instance = self.Meta.model(**validated_data)
-        instance.set_password(password)
+        if password is not None:
+            instance.set_password(password)
         instance.save()
-        print(instance, "instance from serializer")
-        print(instance.check_password(password), "password check from serializer")
         return instance
 
 
