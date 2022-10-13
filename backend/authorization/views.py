@@ -23,7 +23,7 @@ class RegisterAPIView(APIView):
     """API endpoint for registering a new user"""
     def post(self, request):
         data = request.data
-        
+        print(data)
         if not data:
             return Response(
                 {"error": "No data provided"},
@@ -53,7 +53,7 @@ class RegisterAPIView(APIView):
                 {"error": "Passwords do not match"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        
+        print('we are done with backend')
         serializer = CreateUserSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
