@@ -24,17 +24,20 @@ const RegisterPage = () => {
     country: "",
     email: "",
     password: "",
+    password_confirm: "",
   });
 
-  const { first_name, last_name, birthday, country, email, password } = formData;
+  const { first_name, last_name, birthday, country, email, password, password_confirm } = formData;
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
 		e.preventDefault();
-    // set birthday to startDate
-    formData.birthday = startDate;
+    // set birthday
+    const birthDateFormatted2 = startDate.toISOString().slice(0, 10);
+    console.log(birthDateFormatted2);
+    formData.birthday = birthDateFormatted2;
 
-		dispatch(register({ first_name, last_name, birthday, country, email, password }));
+		dispatch(register({ first_name, last_name, birthday, country, email, password, password_confirm }));
     console.log(formData);
 	};
 
@@ -154,6 +157,24 @@ const RegisterPage = () => {
                 name="password"
                 onChange={onChange}
                 value={password}
+                type="password"
+                placeholder="******************"/>
+              <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full px-3">
+              <label
+                className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2"
+                htmlFor="password_confirm">
+                  Confirm Password
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="password_confirm"
+                name="password_confirm"
+                onChange={onChange}
+                value={password_confirm}
                 type="password"
                 placeholder="******************"/>
               <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
