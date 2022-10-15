@@ -1,14 +1,50 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { API_URL } from '../config'
 
 
 
+
+
+// login action creator
+export const login = createAsyncThunk(
+	'users/login',
+	async ({ email, password }, thunkAPI) => {
+		const body = JSON.stringify({
+			email,
+			password,
+		});
+
+		try {
+			const res = await fetch('/api/users/login', {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body,
+			});
+
+			const data = await res.json();
+
+			if (res.status === 200) {
+				const { dispatch } = thunkAPI;
+
+				dispatch(getUser());
+
+				return data;
+			} else {
+				return thunkAPI.rejectWithValue(data);
+			}
+		} catch (err) {
+			return thunkAPI.rejectWithValue(err.response.data);
+		}
+	}
+);
 
 
 // register action creator
 export const register = createAsyncThunk(
 	'auth/register',
-	async ({ first_name, last_name, birthday, country, email, password }, thunkAPI) => {
+	async ({ first_name, last_name, birthday, country, email, password, password_confirm }, thunkAPI) => {
 		const body = JSON.stringify({
 			first_name,
 			last_name,
@@ -16,11 +52,12 @@ export const register = createAsyncThunk(
       country,
 			email,
 			password,
+      password_confirm,
 		});
 
 		try {
       // call to 5000 -  hit express route
-			const response = await fetch(`${API_URL}/api/auth/register`, {
+			const response = await fetch(`/api/auth/register`, {
 				method: 'POST',
 				headers: {
 					Accept: 'application/json',
@@ -30,8 +67,10 @@ export const register = createAsyncThunk(
 			});
 
 			const data = await response.json();
-
+      console.log('after fetching data');
+      console.log(data);
 			if (response.status === 201) {
+        console.log("we are in the 201")
 				return data;
 			} else {
 				return thunkAPI.rejectWithValue(data);
