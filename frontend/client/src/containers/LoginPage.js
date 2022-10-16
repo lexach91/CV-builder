@@ -1,6 +1,8 @@
+import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from "../components/Layout";
-import { Link } from "react-router-dom"; 
+import { Link, Navigate } from "react-router-dom";
+import { login } from '../features/user'
 
 // Set up error messages
 
@@ -20,7 +22,7 @@ const LoginPage = () => {
   const onSubmit = e => {
 		e.preventDefault();
 
-		dispatch(register({ email, password }));
+		dispatch(login({ email, password }));
     console.log(formData);
 	};
 
