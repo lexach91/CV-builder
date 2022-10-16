@@ -1,6 +1,8 @@
+import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from "../components/Layout";
-import { Link } from "react-router-dom"; 
+import { Link, Navigate } from "react-router-dom";
+import { login } from '../features/user'
 
 // Set up error messages
 
@@ -20,7 +22,7 @@ const LoginPage = () => {
   const onSubmit = e => {
 		e.preventDefault();
 
-		dispatch(register({ email, password }));
+		dispatch(login({ email, password }));
     console.log(formData);
 	};
 
@@ -77,9 +79,8 @@ const LoginPage = () => {
           <div className="flex w-full justify-center">
             <button
               className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
-              type="button"
                   >
-              Register
+              Login
             </button>
           </div>
         </form>
