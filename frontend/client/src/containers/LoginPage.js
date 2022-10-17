@@ -26,9 +26,7 @@ const LoginPage = () => {
     console.log(formData);
 	};
 
-  if (registered) {
-    return <Navigate to='/' />;
-  }
+
 
   return (
     <Layout title='CV-builder | Register' content='Register to the app'>
