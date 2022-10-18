@@ -26,7 +26,7 @@ const LoginPage = () => {
     console.log(formData);
 	};
 
-  if (registered) {
+  if (isAuthenticated) {
     return <Navigate to='/' />;
   }
 
