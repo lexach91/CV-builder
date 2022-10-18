@@ -1,7 +1,27 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 
+// get user action creator
+const getUser = createAsyncThunk('users/me', async (_, thunkAPI) => {
+	try {
+		const response = await fetch('/api/users/me', {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+			},
+		});
 
+		const data = await response.json();
+
+		if (response.status === 200) {
+			return data;
+		} else {
+			return thunkAPI.rejectWithValue(data);
+		}
+	} catch (err) {
+		return thunkAPI.rejectWithValue(err.response.data);
+	}
+});
 
 
 // login action creator
@@ -14,7 +34,7 @@ export const login = createAsyncThunk(
 		});
 
 		try {
-			const res = await fetch('/api/users/login', {
+			const response = await fetch('/api/users/login', {
 				method: 'POST',
 				headers: {
 					Accept: 'application/json',
@@ -23,9 +43,9 @@ export const login = createAsyncThunk(
 				body,
 			});
 
-			const data = await res.json();
+			const data = await response.json();
 
-			if (res.status === 200) {
+			if (response.status === 200) {
 				const { dispatch } = thunkAPI;
 
 				dispatch(getUser());
