@@ -4,11 +4,11 @@ const fetch = (...args) =>
 
 const router = express.Router();
 
-router.get('/api/auth/current', async (req, res) => {
+router.get('/api/auth/user', async (req, res) => {
 	const { access } = req.cookies;
 
 	try {
-		const apiRes = await fetch(`${process.env.API_URL}/api/auth/current`, {
+		const apiRes = await fetch(`${process.env.API_URL}/api/auth/user`, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
