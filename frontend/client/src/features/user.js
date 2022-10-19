@@ -1,20 +1,40 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 
+// get user action creator
+const getUser = createAsyncThunk('auth/user', async (_, thunkAPI) => {
+	try {
+		const response = await fetch('/api/auth/user', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+			},
+		});
 
+		const data = await response.json();
+
+		if (response.status === 200) {
+			return data;
+		} else {
+			return thunkAPI.rejectWithValue(data);
+		}
+	} catch (err) {
+		return thunkAPI.rejectWithValue(err.response.data);
+	}
+});
 
 
 // login action creator
 export const login = createAsyncThunk(
-	'users/login',
+	'auth/login',
 	async ({ email, password }, thunkAPI) => {
 		const body = JSON.stringify({
 			email,
 			password,
 		});
-
+      console.log('before fetch')
 		try {
-			const res = await fetch('/api/users/login', {
+			const response = await fetch('/api/auth/login', {
 				method: 'POST',
 				headers: {
 					Accept: 'application/json',
@@ -22,10 +42,12 @@ export const login = createAsyncThunk(
 				},
 				body,
 			});
+      console.log('after fetch')
 
-			const data = await res.json();
+			const data = await response.json();
+      console.log(data)
 
-			if (res.status === 200) {
+			if (response.status === 200) {
 				const { dispatch } = thunkAPI;
 
 				dispatch(getUser());
@@ -117,6 +139,16 @@ const userSlice = createSlice({
       state.isAuthenticated = true;
     })
     .addCase(login.rejected, state => {
+      state.loading = false;
+    })
+    .addCase(getUser.pending, state => {
+      state.loading = true;
+    })
+    .addCase(getUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    })
+    .addCase(getUser.rejected, state => {
       state.loading = false;
     })
   }

@@ -7,11 +7,12 @@ const router = express.Router();
 
 router.post('api/auth/login'), async(req,res) => {
   const {email, password} = req.body;
+  console.log('before fetch in login route')
 
   const body = JSON.stringify({email, password});
 
   try {
-    const loginResponse = await fetch(`${process.env.API_URL}/auth/`, {
+    const loginResponse = await fetch(`${process.env.API_URL}/api/auth/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -20,6 +21,7 @@ router.post('api/auth/login'), async(req,res) => {
       body,
     });
     const data = await loginResponse.json();
+    console.log(data);
 
     if (loginResponse.status === 200) {
       res.setHeader(

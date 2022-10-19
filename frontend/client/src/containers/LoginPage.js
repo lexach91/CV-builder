@@ -9,7 +9,9 @@ import { login } from '../features/user'
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { registered, loading } = useSelector((state) => state.user);
+  const { loading, isAuthenticated, registered } = useSelector(
+		state => state.user
+	);
 
   const [formData, setFormData] = useState({
     email: "",
