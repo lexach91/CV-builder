@@ -95,25 +95,11 @@ class LoginAPIView(APIView):
         access_token = create_access_token(user.id)
         refresh_token = create_refresh_token(user.id)
         
-        response = Response()
-        
-        response.set_cookie(
-            key="access_token",
-            value=access_token,
-            httponly=True,
-            expires=datetime.datetime.utcnow() + datetime.timedelta(seconds=600),
-        )
-        
-        response.set_cookie(
-            key="refresh_token",
-            value=refresh_token,
-            httponly=True,
-            expires=datetime.datetime.utcnow() + datetime.timedelta(days=3),
-        )
-        
-        response.status_code = status.HTTP_200_OK
-        
-        return response
+        return Response(data={
+            "access": access_token,
+            "refresh": refresh_token,
+        },
+        status=status.HTTP_200_OK,)
     
 
 class VerifyTokenAPIView(APIView):
