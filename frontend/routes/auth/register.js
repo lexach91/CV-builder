@@ -2,6 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
+const fetch = (...args) =>
+	import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
+
 router.post('/api/auth/register', async(req, res) => {
   const { 
     first_name,
