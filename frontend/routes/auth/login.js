@@ -4,12 +4,16 @@ const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const router = express.Router();
-
-router.post('api/auth/login'), async(req,res) => {
+console.log('in login route');
+router.post('/api/auth/login', async(req,res) => {
   const {email, password} = req.body;
-  console.log('before fetch in login route')
+  console.log('before fetch in login route');
+  console.log(email);
+  console.log(password);
 
   const body = JSON.stringify({email, password});
+  const url = `${process.env.API_URL}/api/auth/login`;
+  console.log(url);
 
   try {
     const loginResponse = await fetch(`${process.env.API_URL}/api/auth/login`, {
@@ -20,6 +24,7 @@ router.post('api/auth/login'), async(req,res) => {
       },
       body,
     });
+    console.log(loginResponse);
     const data = await loginResponse.json();
     console.log(data);
 
@@ -53,6 +58,6 @@ router.post('api/auth/login'), async(req,res) => {
   }
 
 
-}
+});
 
 module.exports = router;
