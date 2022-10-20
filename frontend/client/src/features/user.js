@@ -24,43 +24,7 @@ const getUser = createAsyncThunk('auth/user', async (_, thunkAPI) => {
 });
 
 
-// login action creator
-export const login = createAsyncThunk(
-	'auth/login',
-	async ({ email, password }, thunkAPI) => {
-		const body = JSON.stringify({
-			email,
-			password,
-		});
-      console.log('before fetch')
-		try {
-			const response = await fetch('/api/auth/login', {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body,
-			});
-      console.log('after fetch')
 
-			const data = await response.json();
-      console.log(data)
-
-			if (response.status === 200) {
-				const { dispatch } = thunkAPI;
-
-				dispatch(getUser());
-
-				return data;
-			} else {
-				return thunkAPI.rejectWithValue(data);
-			}
-		} catch (err) {
-			return thunkAPI.rejectWithValue(err.response.data);
-		}
-	}
-);
 
 
 // register action creator
@@ -102,6 +66,35 @@ export const register = createAsyncThunk(
 		}
 	}
 );
+
+// login action creator
+export const login = createAsyncThunk('auth/login', async ( {email, password}, thunkAPI) => {
+	const body = JSON.stringify({
+		email,
+		password,
+	});
+	try {
+		const response = await fetch(`/api/auth/login`, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body
+		});
+
+		const data = await response.json();
+
+		if (response.status === 200) {
+			return data;
+		} else {
+			return thunkAPI.rejectWithValue(data);
+		}
+	} catch (err) {
+		return thunkAPI.rejectWithValue(err.response.data);
+	}
+});
+
 
 const initialState = {
   isAuthenticated: false,
