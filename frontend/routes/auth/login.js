@@ -24,9 +24,7 @@ router.post('/api/auth/login', async(req,res) => {
       },
       body,
     });
-    console.log(loginResponse);
     const data = await loginResponse.json();
-    console.log(data);
 
     if (loginResponse.status === 200) {
       res.setHeader(
