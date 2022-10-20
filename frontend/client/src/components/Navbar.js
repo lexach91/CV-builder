@@ -24,7 +24,7 @@ const AuthorizedNavbarLinks = [
   },
   {
     name: "My CVs",
-    path: "/my-cvs",
+    path: "/cvs",
   },
   {
     name: "profile",
