@@ -16,6 +16,7 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(new Date());
   const { registered, loading } = useSelector((state) => state.user);
+  const [inputErrors, setInputErrors] = useState(false);
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -32,6 +33,24 @@ const RegisterPage = () => {
 
   const onSubmit = e => {
 		e.preventDefault();
+    if (password.length < 6) {
+      console.log("Password must be at least 6 characters");
+      const passwordInput = document.getElementById("password");
+      setInputErrors(true);
+      passwordInput.setCustomValidity("Password must be at least 6 characters");
+      // change border for the input
+      
+    
+    } else if (password !== password_confirm) {
+      console.log("Passwords do not match");
+      const passwordConfirmInput = document.getElementById("password_confirm");
+      passwordConfirmInput.setCustomValidity("Passwords do not match");
+    } else if ( email === "") {
+      console.log("Email is required");
+      const emailInput = document.getElementById("email");
+      emailInput.setCustomValidity("Email is required");
+    } else {
+
     // set birthday
     const birthDateFormatted2 = startDate.toISOString().slice(0, 10);
     console.log(birthDateFormatted2);
@@ -39,6 +58,7 @@ const RegisterPage = () => {
 
 		dispatch(register({ first_name, last_name, birthday, country, email, password, password_confirm }));
     console.log(formData);
+    }
 	};
 
   if (registered) {
@@ -66,7 +86,10 @@ const RegisterPage = () => {
                 First Name
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                className={
+                  inputErrors ? 'appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' 
+                  : 'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                }
                 id="first_name"
                 name="first_name"
                 type="text"
@@ -82,7 +105,10 @@ const RegisterPage = () => {
                   Last Name
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className={
+                  inputErrors ? 'appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' 
+                  : 'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                }
                 id="last_name"
                 name="last_name"
                 type="text"
@@ -99,7 +125,10 @@ const RegisterPage = () => {
                   Country
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className={
+                  inputErrors ? 'appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' 
+                  : 'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                }
                 id="country"
                 name="country"
                 type="text"
@@ -152,7 +181,10 @@ const RegisterPage = () => {
                   Password
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className={
+                  inputErrors ? 'appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' 
+                  : 'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                }
                 id="password"
                 name="password"
                 onChange={onChange}
@@ -170,7 +202,10 @@ const RegisterPage = () => {
                   Confirm Password
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className={
+                  inputErrors ? 'appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' 
+                  : 'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                }
                 id="password_confirm"
                 name="password_confirm"
                 onChange={onChange}
