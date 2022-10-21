@@ -32,6 +32,13 @@ const RegisterPage = () => {
 
   const onSubmit = e => {
 		e.preventDefault();
+
+    if (password !== password_confirm) {
+      console.log("Passwords do not match");
+      const passwordConfirmInput = document.getElementById("password_confirm");
+      passwordConfirmInput.setCustomValidity("Passwords do not match");
+    } else {
+
     // set birthday
     const birthDateFormatted2 = startDate.toISOString().slice(0, 10);
     console.log(birthDateFormatted2);
@@ -39,6 +46,7 @@ const RegisterPage = () => {
 
 		dispatch(register({ first_name, last_name, birthday, country, email, password, password_confirm }));
     console.log(formData);
+    }
 	};
 
   if (registered) {
@@ -66,7 +74,7 @@ const RegisterPage = () => {
                 First Name
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="first_name"
                 name="first_name"
                 type="text"
