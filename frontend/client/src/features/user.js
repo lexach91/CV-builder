@@ -5,7 +5,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 const getUser = createAsyncThunk('auth/user', async (_, thunkAPI) => {
 	try {
 		const response = await fetch('/api/auth/user', {
-			method: 'POST',
+			method: 'GET',
 			headers: {
 				Accept: 'application/json',
 			},
@@ -86,6 +86,8 @@ export const login = createAsyncThunk('auth/login', async ( {email, password}, t
 		const data = await response.json();
 
 		if (response.status === 200) {
+			const { dispatch } = thunkAPI;
+			dispatch(getUser());
 			return data;
 		} else {
 			return thunkAPI.rejectWithValue(data);
