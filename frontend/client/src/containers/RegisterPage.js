@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { Form, Field } from 'react-final-form';
 import { Link, Navigate } from "react-router-dom"; 
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../features/user';
@@ -28,28 +29,46 @@ const RegisterPage = () => {
     password_confirm: "",
   });
 
+  const validate = (data) => {
+    let errors = {};
+
+    if (!data.first_name) {
+        errors.first_name = 'First Name is required.';
+    }
+
+    if (!data.last_name) {
+
+        errors.last_name = 'Last Name is required.';
+    }
+
+    if (!data.email) {
+        errors.email = 'Email is required.';
+    }
+    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)) {
+        errors.email = 'Invalid email address. E.g. example@email.com';
+    }
+
+    if (!data.password) {
+        errors.password = 'Password is required.';
+    }
+
+    if (!data.password_confirm) {
+        errors.password_confirm = 'Password confirmation is required.';
+    }
+
+    if (data.password !== data.password_confirm) {
+        errors.password_confirm = 'Passwords do not match.';
+    }
+
+    return errors;
+};
+
   const { first_name, last_name, birthday, country, email, password, password_confirm } = formData;
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
 		e.preventDefault();
-    if (password.length < 6) {
-      console.log("Password must be at least 6 characters");
-      const passwordInput = document.getElementById("password");
-      setInputErrors(true);
-      passwordInput.setCustomValidity("Password must be at least 6 characters");
-      // change border for the input
-      
-    
-    } else if (password !== password_confirm) {
-      console.log("Passwords do not match");
-      const passwordConfirmInput = document.getElementById("password_confirm");
-      passwordConfirmInput.setCustomValidity("Passwords do not match");
-    } else if ( email === "") {
-      console.log("Email is required");
-      const emailInput = document.getElementById("email");
-      emailInput.setCustomValidity("Email is required");
-    } else {
+
 
     // set birthday
     const birthDateFormatted2 = startDate.toISOString().slice(0, 10);
@@ -58,7 +77,7 @@ const RegisterPage = () => {
 
 		dispatch(register({ first_name, last_name, birthday, country, email, password, password_confirm }));
     console.log(formData);
-    }
+
 	};
 
   if (registered) {
@@ -70,7 +89,7 @@ const RegisterPage = () => {
       <div className='container flex flex-wrap justify-center flex-col content-center h-[90%] my-20 bg-slate-800 mx-auto max-w-120rem '>
 
 
-        <form
+        <Form
           className="w-full max-w-lg bg-slate-900 py-9 px-6 rounded-xl"
           onSubmit={onSubmit}
         >
@@ -255,7 +274,7 @@ const RegisterPage = () => {
             </button>
           )}
           </div>
-        </form>
+        </Form>
       </div>
     </Layout>
   );
