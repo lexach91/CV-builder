@@ -1,4 +1,8 @@
-import './App.css';
+import "./App.css";
+import "primereact/resources/themes/mdc-dark-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+import "primeflex/primeflex.css";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import HomePage from "./containers/HomePage";
