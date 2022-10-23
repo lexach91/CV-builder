@@ -1,39 +1,46 @@
-.App {
-  text-align: center;
+.form-register .surface-card {
+  min-width: 450px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.form-register .surface-card form {
+  margin-top: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.form-register .surface-card .field {
+  margin-bottom: 1.5rem;
+}
+
+.video-element {
+  width: 100%;
+  aspect-ratio: 16/9;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* border: 1px solid #464680; */
+}
+
+.host-video-container {
+  border: 1px solid #626277;
+  position: relative;
+  overflow: hidden;
+}
+
+.guest-video-container {
+  border: 1px solid #2c8d39;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 960px) {
+  .form-register .surface-card {
+    width: 80%;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
+@media screen and (max-width: 640px) {
+  .form-register .surface-card {
+    width: 100%;
+    min-width: 0;
+    padding: 1rem;
   }
 }
