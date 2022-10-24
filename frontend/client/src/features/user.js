@@ -103,6 +103,8 @@ const initialState = {
   user: null,
   loading: false,
   registered: false,
+  errors: null,
+  messages: null,
 }
 
 const userSlice = createSlice({
@@ -133,8 +135,9 @@ const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = true;
     })
-    .addCase(login.rejected, state => {
+    .addCase(login.rejected, (state, action) => {
       state.loading = false;
+	  state.errors = action.payload;
     })
     .addCase(getUser.pending, state => {
       state.loading = true;

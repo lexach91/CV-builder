@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from "../components/Layout";
 import { Link, Navigate } from "react-router-dom";
@@ -16,11 +16,17 @@ import { login } from '../features/user'
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { loading, isAuthenticated, registered } = useSelector(
+  const { loading, isAuthenticated, registered, errors } = useSelector(
 		state => state.user
 	);
   const [showMessage, setShowMessage] = useState(false);
   const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (errors) {
+      console.log(errors);
+    }
+  }, [errors]);
 
 
   const validate = (data) => {
@@ -53,7 +59,16 @@ const LoginPage = () => {
 
   const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
   const getFormErrorMessage = (meta) => {
-      return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
+    let errorMessage = '';
+
+      // return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
+      if (isFormFieldValid(meta)) {
+        errorMessage = meta.error;
+      } else if (errors?.error) {
+        errorMessage = errors.error;
+      }
+      return errorMessage && <small className="p-error">{errorMessage}</small>;
+
   };
 
 
@@ -103,7 +118,7 @@ const LoginPage = () => {
                   <div className="field">
                     <span className="p-float-label p-input-icon-right">
                       <i className="pi pi-envelope" />
-                      <InputText id="email" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                      <InputText id="email" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} />
                       <label htmlFor="email" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Email*</label>
                     </span>
                     {getFormErrorMessage(meta)}
@@ -112,7 +127,7 @@ const LoginPage = () => {
                 <Field name="password" render={({ input, meta }) => (
                   <div className="field">
                     <span className="p-float-label">
-                      <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) })} header={passwordHeader} footer={passwordFooter} />
+                      <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} header={passwordHeader} footer={passwordFooter} />
                       <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Password*</label>
                     </span>
                     {getFormErrorMessage(meta)}
