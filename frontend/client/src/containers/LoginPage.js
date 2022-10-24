@@ -29,7 +29,7 @@ const LoginPage = () => {
 	};
 
   if (isAuthenticated) {
-    return <Navigate to='/' />;
+    return <Navigate to='/cvs' />;
   }
 
   return (
