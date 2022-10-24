@@ -35,6 +35,7 @@ router.post('/api/auth/login', async(req,res) => {
           path: '/api/',
           sameSite: 'strict',
           secure: process.env.NODE_ENV === 'production',
+          path: '/',
         }),
         cookie.serialize('refresh', data.refresh, {
           httpOnly: true,
@@ -42,6 +43,7 @@ router.post('/api/auth/login', async(req,res) => {
           path: '/api/',
           sameSite: 'strict',
           secure: process.env.NODE_ENV === 'production',
+          path: '/',
         }),
       ]);
       return res.status(loginResponse.status).json({ access: 'login successful' });
