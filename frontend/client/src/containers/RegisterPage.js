@@ -8,9 +8,9 @@ import { Divider } from 'primereact/divider';
 import { Dropdown } from 'primereact/dropdown';
 import { Password } from 'primereact/password';
 import { Calendar } from 'primereact/calendar';
+import { classNames } from 'primereact/utils';
 import { CountryService } from "../service/CountryService";
 import { Link, Navigate } from "react-router-dom";
-import { classNames } from 'primereact/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../features/user';
 // https://reactdatepicker.com/
@@ -33,6 +33,7 @@ const RegisterPage = () => {
   useEffect(() => {
       countryservice.getCountries().then(data => setCountries(data));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  
   const validate = (data) => {
     let errors = {};
 
@@ -43,6 +44,9 @@ const RegisterPage = () => {
     if (!data.last_name) {
 
         errors.last_name = 'Last Name is required.';
+    }
+    if (data.country === "empty") {
+        errors.country = 'Country is required.';
     }
 
     if (!data.email) {
@@ -121,7 +125,7 @@ const RegisterPage = () => {
         </Dialog>
         <div className="flex justify-content-center">
           <div className="card">
-            <Form onSubmit={onSubmit} initialValues={{ name: '', email: '', password: '', date: null, country: null, accept: false }} validate={validate} render={({ handleSubmit }) => (
+            <Form onSubmit={onSubmit} initialValues={{ first_name: '', last_name: '', email: '', password: '', birthday: null, country: null, password_confirm: '' }} validate={validate} render={({ handleSubmit }) => (
               <form
                 className="p-fluid bg-slate-900 p-6 rounded shadow-md"
                 onSubmit={handleSubmit}
