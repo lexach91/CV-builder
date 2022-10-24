@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "authorization",
     "CVs",
     "services",
+    "profiles",
 ]
 
 AUTH_USER_MODEL = "authorization.User"
