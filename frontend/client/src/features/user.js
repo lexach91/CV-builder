@@ -97,6 +97,61 @@ export const login = createAsyncThunk('auth/login', async ( {email, password}, t
 	}
 });
 
+// verification action creator
+export const checkAuth = createAsyncThunk('auth/verify', async (_, thunkAPI) => {
+  try {
+    const res = await fetch('/api/auth/verify', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+
+    const data = await res.json();
+
+    if (res.status === 200) {
+      const { dispatch } = thunkAPI;
+
+      dispatch(getUser());
+
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue(data);
+    }
+  } catch (err) {
+    return thunkAPI.rejectWithValue(err.response.data);
+  }
+})
+
+// Logout action creator
+export const logout = createAsyncThunk(
+	'auth/logout',
+  // no arguments in this case
+	async (_, thunkAPI) => {
+
+		try {
+			const res = await fetch('/api/auth/logout', {
+				method: 'GET',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+			});
+
+			const data = await res.json();
+
+			if (res.status === 200) {
+
+				return data;
+			} else {
+				return thunkAPI.rejectWithValue(data);
+			}
+		} catch (err) {
+			return thunkAPI.rejectWithValue(err.response.data);
+		}
+	}
+);
+
 
 const initialState = {
   isAuthenticated: false,
@@ -144,6 +199,27 @@ const userSlice = createSlice({
       state.user = action.payload;
     })
     .addCase(getUser.rejected, state => {
+      state.loading = false;
+    })
+    .addCase(checkAuth.pending, state => {
+      state.loading = true;
+    })
+    .addCase(checkAuth.fulfilled, state => {
+      state.loading = false;
+      state.isAuthenticated = true;
+    })
+    .addCase(checkAuth.rejected, state => {
+      state.loading = false;
+    })
+    .addCase(logout.pending, state => {
+      state.loading = true;
+    })
+    .addCase(logout.fulfilled, state => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+    })
+    .addCase(logout.rejected, state => {
       state.loading = false;
     })
   }
