@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from '../features/user';
 
 const navbarLinks = [
   {
@@ -30,13 +31,11 @@ const AuthorizedNavbarLinks = [
     name: "profile",
     path: "/profile",
   },
-  {
-    name: "logout",
-    path: "/logout",
-  },
 ];
 
 const Navbar = () => {
+
+  const dispatch = useDispatch();
 
   const { isAuthenticated } = useSelector((state) => state.user);
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -56,6 +55,11 @@ const Navbar = () => {
           </NavLink>
         </li>
       ))}
+      <li className="nav-item">
+        <a className='nav-link' href='#!' onClick={() => dispatch(logout())}>
+					Logout
+				</a>
+      </li>
     </>
   )
 
