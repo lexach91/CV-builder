@@ -364,7 +364,7 @@ class ProfessionalSkill(models.Model):
         on_delete=models.CASCADE,
         related_name="professional_skills"
     )
-    skills = models.CharField(
+    skill = models.CharField(
         max_length=500,
         blank=True,
         null=True,
