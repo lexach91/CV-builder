@@ -26,39 +26,30 @@ from .models import (
     VolunteerBullet,
     InterestSection,
     Interest,
-    )
+)
 
 
 class HeaderSerializer(ModelSerializer):
     class Meta:
         model = Header
-        fields = (
-            "job_title",
-            "email",
-            "phone",
-            "address",
-            "url_link"
-        )
+        fields = ("job_title", "email", "phone", "address", "url_link")
 
 
 class SummarySerializer(ModelSerializer):
     class Meta:
         model = Summary
-        fields = (
-            "summary",
-        )
-        
+        fields = ("summary",)
+
 
 class ExperienceBulletSerializer(ModelSerializer):
     class Meta:
         model = ExperienceBullet
-        fields = (
-            "bullet",
-        )
-        
+        fields = ("bullet",)
+
 
 class ExperienceSerializer(ModelSerializer):
     bullets = ExperienceBulletSerializer(many=True)
+
     class Meta:
         model = Experience
         fields = (
@@ -69,27 +60,25 @@ class ExperienceSerializer(ModelSerializer):
             "description",
             "bullets",
         )
-        
+
 
 class ExperienceSectionSerializer(ModelSerializer):
     experiences = ExperienceSerializer(many=True)
+
     class Meta:
         model = ExperienceSection
-        fields = (
-            "experiences",
-        )
-        
-        
+        fields = ("experiences",)
+
+
 class EducationBulletSerializer(ModelSerializer):
     class Meta:
         model = EducationBullet
-        fields = (
-            "bullet",
-        )
+        fields = ("bullet",)
 
 
 class EducationSerializer(ModelSerializer):
     bullets = EducationBulletSerializer(many=True)
+
     class Meta:
         model = Education
         fields = (
@@ -100,27 +89,25 @@ class EducationSerializer(ModelSerializer):
             "end_date",
             "bullets",
         )
-        
+
 
 class EducationSectionSerializer(ModelSerializer):
     educations = EducationSerializer(many=True)
+
     class Meta:
         model = EducationSection
-        fields = (
-            "educations",
-        )
+        fields = ("educations",)
 
 
 class ShowcaseBulletSerializer(ModelSerializer):
     class Meta:
         model = ShowcaseBullet
-        fields = (
-            "bullet",
-        )
-        
-        
+        fields = ("bullet",)
+
+
 class ShowcaseSerializer(ModelSerializer):
     bullets = ShowcaseBulletSerializer(many=True)
+
     class Meta:
         model = Showcase
         fields = (
@@ -135,45 +122,38 @@ class ShowcaseSerializer(ModelSerializer):
 
 class ShowcaseSectionSerializer(ModelSerializer):
     showcases = ShowcaseSerializer(many=True)
+
     class Meta:
         model = ShowcaseSection
-        fields = (
-            "showcases",
-        )
-        
+        fields = ("showcases",)
+
 
 class SoftSkillSerializer(ModelSerializer):
     class Meta:
         model = SoftSkill
-        fields = (
-            "soft_skill",
-        )
-        
-        
+        fields = ("soft_skill",)
+
+
 class SoftSkillSectionSerializer(ModelSerializer):
     skills = SoftSkillSerializer(many=True)
+
     class Meta:
         model = SoftSkillSection
-        fields = (
-            "skills",
-        )
-        
+        fields = ("skills",)
+
 
 class ProfessionalSkillSerializer(ModelSerializer):
     class Meta:
         model = ProfessionalSkill
-        fields = (
-            "skill",
-        )
-        
+        fields = ("skill",)
+
 
 class ProfessionalSkillSectionSerializer(ModelSerializer):
     skills = ProfessionalSkillSerializer(many=True)
+
     class Meta:
         model = ProfessionalSkillSection
-        fields = (
-            "skills",
-        )
+        fields = ("skills",)
 
 
 class SocialLinkSerializer(ModelSerializer):
@@ -183,15 +163,14 @@ class SocialLinkSerializer(ModelSerializer):
             "name",
             "url",
         )
-        
-        
+
+
 class SocialLinkSectionSerializer(ModelSerializer):
     links = SocialLinkSerializer(many=True)
+
     class Meta:
         model = SocialLinkSection
-        fields = (
-            "links",
-        )
+        fields = ("links",)
 
 
 class LanguageSerializer(ModelSerializer):
@@ -205,23 +184,21 @@ class LanguageSerializer(ModelSerializer):
 
 class LanguageSectionSerializer(ModelSerializer):
     languages = LanguageSerializer(many=True)
+
     class Meta:
         model = LanguageSection
-        fields = (
-            "languages",
-        )
+        fields = ("languages",)
 
 
 class VolunteerBulletSerializer(ModelSerializer):
     class Meta:
         model = VolunteerBullet
-        fields = (
-            "bullet",
-        )
+        fields = ("bullet",)
 
 
 class VolunteerSerializer(ModelSerializer):
     bullets = VolunteerBulletSerializer(many=True)
+
     class Meta:
         model = Volunteer
         fields = (
@@ -232,33 +209,29 @@ class VolunteerSerializer(ModelSerializer):
             "description",
             "bullets",
         )
-        
-        
+
+
 class VolunteerSectionSerializer(ModelSerializer):
     volunteers = VolunteerSerializer(many=True)
+
     class Meta:
         model = VolunteerSection
-        fields = (
-            "volunteers",
-        )
-        
-        
+        fields = ("volunteers",)
+
+
 class InterestSerializer(ModelSerializer):
     class Meta:
         model = Interest
-        fields = (
-            "interest",
-        )
+        fields = ("interest",)
 
 
 class InterestSectionSerializer(ModelSerializer):
     interests = InterestSerializer(many=True)
+
     class Meta:
         model = InterestSection
-        fields = (
-            "interests",
-        )
-        
+        fields = ("interests",)
+
 
 class CVSerializer(ModelSerializer):
     header = HeaderSerializer()
@@ -272,6 +245,7 @@ class CVSerializer(ModelSerializer):
     language_section = LanguageSectionSerializer()
     volunteer_section = VolunteerSectionSerializer()
     interest_section = InterestSectionSerializer()
+
     class Meta:
         model = CV
         fields = (
