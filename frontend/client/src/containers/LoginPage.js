@@ -9,7 +9,7 @@ import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider';
 import { Password } from 'primereact/password';
 import { classNames } from 'primereact/utils';
-import { login } from '../features/user'
+import { login } from '../features/user';
 
 // Set up error messages
 
@@ -97,7 +97,7 @@ const LoginPage = () => {
         <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
           <div className="flex align-items-center flex-column pt-6 px-3">
             <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
-            <h5>Registration Successful!</h5>
+            <h5>Login Successful!</h5>
             <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
               Your account is registered under name <b>{formData.name}</b> ; it'll be valid next 30 days without activation. Please check <b>{formData.email}</b> for activation instructions.
             </p>
@@ -110,9 +110,9 @@ const LoginPage = () => {
                 className="p-fluid bg-slate-900 p-6 rounded shadow-md"
                 onSubmit={handleSubmit}
               >
-                <h1 className='text-5xl text-center mb-6 text-emerald-400'>Register</h1>
+                <h1 className='text-5xl text-center mb-6 text-emerald-400'>Login</h1>
                 <p className='text-xl text-center'>
-                  Already have an account? <Link className="ml-2 underline text-emerald-400 hover:text-emerald-600" to="/login">Login</Link>
+                  Don't have an account? <Link className="ml-2 underline text-emerald-400 hover:text-emerald-600" to="/register">Register</Link>
                 </p>
                 <Field name="email" render={({ input, meta }) => (
                   <div className="field">

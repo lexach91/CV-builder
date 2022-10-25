@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from '../features/user';
+import { Button } from 'primereact/button';
 
 const navbarLinks = [
   {
@@ -10,10 +12,6 @@ const navbarLinks = [
   {
     name: "link1",
     path: "/link1",
-  },
-  {
-    name: "link2",
-    path: "/link2",
   },
 ];
 
@@ -30,13 +28,11 @@ const AuthorizedNavbarLinks = [
     name: "profile",
     path: "/profile",
   },
-  {
-    name: "logout",
-    path: "/logout",
-  },
 ];
 
 const Navbar = () => {
+
+  const dispatch = useDispatch();
 
   const { isAuthenticated } = useSelector((state) => state.user);
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -46,36 +42,43 @@ const Navbar = () => {
   const authorizedTrue = (
     <>
       {AuthorizedNavbarLinks.map((link) => (
-        <li className="nav-item" key={link.name}>
+        <li className="flex flex-row flex-wrap card-container" key={link.name}>
           <NavLink
             key={link.name}
             to={link.path}
-            className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
+            className="hover:text-blue-200 p-button-info mr-4 flex align-items-center justify-content-center font-bold text-white border-round capitalize"
           >
             {link.name}
           </NavLink>
         </li>
       ))}
+      <li className="p-menuitem">
+        <Button 
+          className="p-button-info mr-2 hover:bg-blue-400"
+          href='#!' onClick={() => dispatch(logout())}>
+					Logout
+				</Button>
+      </li>
     </>
   )
 
   const authorizedFalse = (
     <>
-      <li className="nav-item" key="login">
+      <li className="flex flex-row flex-wrap card-container" key="login">
         <NavLink
           key="login"
           to="/login"
-          className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
+          className='hover:text-blue-200 p-button-info flex align-items-center justify-content-center font-bold text-white border-round capitalize mr-4'
         >
           Login
         </NavLink>
       </li>
 
-      <li className="nav-item" key="register">
+      <li className="flex flex-row flex-wrap card-container" key="register">
         <NavLink
           key="register"
           to="/register"
-          className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
+          className="hover:text-blue-200 p-button-info flex align-items-center justify-content-center font-bold text-white border-round capitalize"
         >
           Register
         </NavLink>
@@ -113,11 +116,11 @@ const Navbar = () => {
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               {navbarLinks.map((link) => (
-                <li className="nav-item" key={link.name}>
+                <li className="flex flex-row flex-wrap card-container" key={link.name}>
                   <NavLink
                     key={link.name}
                     to={link.path}
-                    className='px-6 py-2 flex text-xl items-center uppercase font-bold leading-snug text-slate-200 hover:opacity-75 hover:text-slate-300'
+                    className="hover:text-blue-200 p-button-info mr-4 flex align-items-center justify-content-center font-bold text-white border-round capitalize"
                   >
                     {link.name}
                   </NavLink>
