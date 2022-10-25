@@ -1,3 +1,31 @@
-from django.shortcuts import render
-
-# Create your views here.
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import (
+    Theme,
+    CV,
+    Header,
+    Summary,
+    ExperienceSection,
+    Experience,
+    ExperienceBullet,
+    EducationSection,
+    Education,
+    EducationBullet,
+    ShowcaseSection,
+    Showcase,
+    ShowcaseBullet,
+    SoftSkillSection,
+    SoftSkill,
+    ProfessionalSkillSection,
+    ProfessionalSkill,
+    SocialLinkSection,
+    SocialLink,
+    LanguageSection,
+    Language,
+    VolunteerSection,
+    Volunteer,
+    VolunteerBullet,
+    InterestSection,
+    Interest,
+    )
