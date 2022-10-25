@@ -9,7 +9,7 @@ import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider';
 import { Password } from 'primereact/password';
 import { classNames } from 'primereact/utils';
-import { login } from '../features/user'
+import { login } from '../features/user';
 
 // Set up error messages
 
