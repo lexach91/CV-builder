@@ -9,7 +9,7 @@ import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider';
 import { Password } from 'primereact/password';
 import { classNames } from 'primereact/utils';
-import { login } from '../features/user';
+import { resetRegistered, login } from '../features/user';
 
 // Set up error messages
 
@@ -28,6 +28,11 @@ const LoginPage = () => {
     }
   }, [errors]);
 
+
+  useEffect(() => {
+    // check if user is registered and reset registered state
+		if (registered) dispatch(resetRegistered());
+	}, [registered]);
 
   const validate = (data) => {
     let errors = {};

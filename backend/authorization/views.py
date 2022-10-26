@@ -54,6 +54,13 @@ class RegisterAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        if data.get("email") is not None:
+            if User.objects.filter(email=data["email"]).exists():
+                return Response(
+                    {"error": "Email already exists"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
         serializer = CreateUserSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

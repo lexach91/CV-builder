@@ -24,11 +24,16 @@ const RegisterPage = () => {
 
   const dispatch = useDispatch();
   const [countries, setCountries] = useState([]);
-  const { registered, loading } = useSelector((state) => state.user);
+  const { registered, loading, errors } = useSelector((state) => state.user);
   const [showMessage, setShowMessage] = useState(false);
   const countryservice = new CountryService();
   const [formData, setFormData] = useState({});
 
+  useEffect(() => {
+    if (errors) {
+      console.log(errors);
+    }
+  }, [errors]);
 
   useEffect(() => {
       countryservice.getCountries().then(data => setCountries(data));
@@ -137,7 +142,7 @@ const RegisterPage = () => {
                 <Field name="first_name" render={({ input, meta }) => (
                   <div className="field">
                     <span className="p-float-label">
-                      <InputText id="first_name" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                      <InputText id="first_name" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} />
                       <label htmlFor="first_name" className={classNames({ 'p-error': isFormFieldValid(meta) })}>First name*</label>
                     </span>
                     {getFormErrorMessage(meta)}
@@ -146,7 +151,7 @@ const RegisterPage = () => {
                 <Field name="last_name" render={({ input, meta }) => (
                   <div className="field">
                     <span className="p-float-label">
-                      <InputText id="last_name" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                      <InputText id="last_name" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} />
                       <label htmlFor="last_name" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Last name*</label>
                     </span>
                     {getFormErrorMessage(meta)}
@@ -172,7 +177,7 @@ const RegisterPage = () => {
                   <div className="field">
                     <span className="p-float-label p-input-icon-right">
                       <i className="pi pi-envelope" />
-                      <InputText id="email" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                      <InputText id="email" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} />
                       <label htmlFor="email" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Email*</label>
                     </span>
                     {getFormErrorMessage(meta)}
