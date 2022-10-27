@@ -142,7 +142,7 @@ const RegisterPage = () => {
                 <Field name="first_name" render={({ input, meta }) => (
                   <div className="field">
                     <span className="p-float-label">
-                      <InputText id="first_name" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} />
+                      <InputText id="first_name" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta)})} />
                       <label htmlFor="first_name" className={classNames({ 'p-error': isFormFieldValid(meta) })}>First name*</label>
                     </span>
                     {getFormErrorMessage(meta)}
@@ -151,7 +151,7 @@ const RegisterPage = () => {
                 <Field name="last_name" render={({ input, meta }) => (
                   <div className="field">
                     <span className="p-float-label">
-                      <InputText id="last_name" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} />
+                      <InputText id="last_name" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta)})} />
                       <label htmlFor="last_name" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Last name*</label>
                     </span>
                     {getFormErrorMessage(meta)}
@@ -177,28 +177,28 @@ const RegisterPage = () => {
                   <div className="field">
                     <span className="p-float-label p-input-icon-right">
                       <i className="pi pi-envelope" />
-                      <InputText id="email" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} />
-                      <label htmlFor="email" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Email*</label>
+                      <InputText id="email" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.email })} />
+                      <label htmlFor="email" className={classNames({ 'p-error': isFormFieldValid(meta) || errors?.email })}>Email*</label>
                     </span>
-                    {getFormErrorMessage(meta)}
+                    {getFormErrorMessage(meta) || errors?.email && <small className="p-error">{errors.email}</small>}
                   </div>
                 )} />
                 <Field name="password" render={({ input, meta }) => (
                   <div className="field">
                     <span className="p-float-label">
-                      <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) })} header={passwordHeader} footer={passwordFooter} />
-                      <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Password*</label>
+                      <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.password })} header={passwordHeader} footer={passwordFooter} />
+                      <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) || errors?.password })}>Password*</label>
                     </span>
-                    {getFormErrorMessage(meta)}
+                    {getFormErrorMessage(meta) || errors?.password && <small className="p-error">{errors.password}</small>}
                   </div>
                 )} />
                 <Field name="password_confirm" render={({ input, meta }) => (
                   <div className="field">
                     <span className="p-float-label">
-                      <Password id="password_confirm" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                      <label htmlFor="password_confirm" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Confirm password*</label>
+                      <Password id="password_confirm" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.password_confirm })} />
+                      <label htmlFor="password_confirm" className={classNames({ 'p-error': isFormFieldValid(meta) || errors?.password_confirm })}>Confirm password*</label>
                     </span>
-                    {getFormErrorMessage(meta)}
+                    {getFormErrorMessage(meta) || errors?.password_confirm && <small className="p-error">{errors.password_confirm}</small>}
                   </div>
                 )} />
                 <Button type="submit" label="Submit" className="mt-2" />
