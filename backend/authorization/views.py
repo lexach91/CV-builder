@@ -32,32 +32,32 @@ class RegisterAPIView(APIView):
             
         if not data.get("email"):
             return Response(
-                {"error": "Email is required"},
+                {"email": "Email is required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         
         if not data.get("password"):
             return Response(
-                {"error": "Password is required"},
+                {"password": "Password is required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
             
         if not data.get("password_confirm"):
             return Response(
-                {"error": "Password confirmation is required"},
+                {"password_confirm": "Password confirmation is required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )        
         
         if data["password"] != data["password_confirm"]:
             return Response(
-                {"error": "Passwords do not match"},
+                {"password_confirm": "Passwords do not match"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if data.get("email") is not None:
             if User.objects.filter(email=data["email"]).exists():
                 return Response(
-                    {"error": "Email already exists"},
+                    {"email": "User with this email already exists"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
