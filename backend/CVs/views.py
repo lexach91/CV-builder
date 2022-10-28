@@ -56,9 +56,12 @@ from .serializers import (
     InterestSerializer,
     InterestSectionSerializer,
     )
+from authorization.authentication import JWTAuthentication
+
 
 
 class MyCVsAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
     def get(self, request):
         user = request.user
         cvs = CV.objects.filter(user=user)
@@ -81,6 +84,7 @@ class MyCVsAPIView(APIView):
     
 
 class CVDetailsAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
     def get(self, request, pk):
         user = request.user
         try:
