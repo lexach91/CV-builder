@@ -10,9 +10,10 @@ import { store } from './store';
 
 
 const HomePage = lazy(() => import("./containers/HomePage"));
-const MyCVsPage = lazy(() => import("./containers/MyCVsPage"));
 const RegisterPage = lazy(() => import("./containers/RegisterPage"));
 const LoginPage = lazy(() => import("./containers/LoginPage"));
+const MyCVsPage = lazy(() => import("./containers/MyCVsPage"));
+const CreateCVPage = lazy(() => import("./containers/CreateCVPage"));
 
 function App() {
   return (
@@ -21,9 +22,10 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/cvs' element={<MyCVsPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/login' element={<LoginPage />} />
+            <Route path='/cvs' element={<MyCVsPage />} />
+            <Route path='/create-cv' element={<CreateCVPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
