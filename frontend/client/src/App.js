@@ -14,6 +14,7 @@ const RegisterPage = lazy(() => import("./containers/RegisterPage"));
 const LoginPage = lazy(() => import("./containers/LoginPage"));
 const MyCVsPage = lazy(() => import("./containers/MyCVsPage"));
 const CreateCVPage = lazy(() => import("./containers/CreateCVPage"));
+const ProfilePage = lazy(() => import("./containers/ProfilePage"));
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/cvs' element={<MyCVsPage />} />
             <Route path='/create-cv' element={<CreateCVPage />} />
+            <Route path='/profile' element={<ProfilePage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
