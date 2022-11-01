@@ -72,6 +72,12 @@ const ProfilePage = () => {
     }
   }, [isAuthenticated, user]);
 
+
+
+  const onChangeFirstName = (e) => {
+    setFirstName(e.target.value);
+  };
+
   return (
     <Layout title='CV-builder | My CVs' content='Welcome to the Your Profile page'>
       <div className="pt-4 container mx-auto">
@@ -144,7 +150,7 @@ const ProfilePage = () => {
       </Dialog>
 
 
-      <div className="surface-0 p-4 w-full md:w-8 md:mx-auto">
+      <div className="bg-slate-900 p-4 w-full md:w-8 md:mx-auto">
         <div className="text-500 mb-3">
           Your profile information can be changed here.
         </div>
@@ -156,8 +162,8 @@ const ProfilePage = () => {
                 <InputText
                   name="first_name"
                   value={firstName}
-                  // onChange={}
-                  // onBlur={}
+                  onChange={onChangeFirstName}
+                  onBlur={() => setEditFirstName(!editFirstName)}
                 />
               ) : (
                 <div className="text-900">{firstName}</div>
@@ -167,8 +173,8 @@ const ProfilePage = () => {
               <Button
                 label="Edit"
                 icon="pi pi-pencil"
-                className="p-button-text"
-                // onClick={}
+                className="p-button-text bg-indigo-700 hover:bg-indigo-800 text-white"
+                onClick={() => setEditFirstName(!editFirstName)}
               />
             </div>
           </li>
@@ -190,7 +196,7 @@ const ProfilePage = () => {
               <Button
                 label="Edit"
                 icon="pi pi-pencil"
-                className="p-button-text"
+                className="p-button-text bg-indigo-700 hover:bg-indigo-800 text-white"
                 onClick={() => setEditLastName(!editLastName)}
               />
             </div>
@@ -229,7 +235,7 @@ const ProfilePage = () => {
               <Button
                 label="Edit"
                 icon="pi pi-pencil"
-                className="p-button-text"
+                className="p-button-text bg-indigo-700 hover:bg-indigo-800 text-white"
                 // onClick={}
               />
             </div>
@@ -252,7 +258,7 @@ const ProfilePage = () => {
               <Button
                 label="Edit"
                 icon="pi pi-pencil"
-                className="p-button-text"
+                className="p-button-text bg-indigo-700 hover:bg-indigo-800 text-white"
                 // onClick={}
               />
             </div>
@@ -267,7 +273,7 @@ const ProfilePage = () => {
               <Button
                 label="Edit"
                 icon="pi pi-pencil"
-                className="p-button-text"
+                className="p-button-text bg-indigo-700 hover:bg-indigo-800 text-white"
                 // onClick={}
               />
             </div>
