@@ -28,7 +28,7 @@ const ProfilePage = () => {
   const [email, setEmail] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [country, setCountry] = useState("");
-  const [countriesList, setCountriesList] = useState([]);
+  const [countries, setCountries] = useState([]);
   const countryservice = new CountryService();
   const [editMode, setEditMode] = useState(false);
   const [editFirstName, setEditFirstName] = useState(false);
@@ -51,9 +51,7 @@ const ProfilePage = () => {
 
 
   useEffect(() => {
-    countryservice.getCountries().then((data) => {
-      setCountriesList(data);
-    });
+    countryservice.getCountries().then(data => setCountries(data));
   }, []);
 
   useEffect(() => {
@@ -76,6 +74,19 @@ const ProfilePage = () => {
 
   const onChangeFirstName = (e) => {
     setFirstName(e.target.value);
+  };
+
+  const onChangeLastName = (e) => {
+    setLastName(e.target.value);
+  };
+
+  const onChangeBirthDate = (e) => {
+    setBirthDate(e.target.value);
+  };
+
+  const onChangeCountry = (e) => {
+    setCountry(e.target.value);
+    setEditCountry(false);
   };
 
   return (
@@ -185,8 +196,8 @@ const ProfilePage = () => {
                 <InputText
                   name="last_name"
                   value={lastName}
-                  // onChange={}
-                  // onBlur={}
+                  onChange={onChangeLastName}
+                  onBlur={() => setEditLastName(!editLastName)}
                 />
               ) : (
                 <div className="text-900">{lastName}</div>
@@ -206,7 +217,7 @@ const ProfilePage = () => {
             <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
               <div className="text-900">{email}</div>
             </div>
-            <div className="w-6 md:w-2 flex justify-content-end">
+            <div className="w-6 md:w-2 flex justify-content-end bg-indigo-900">
               <Button
                 label="Can't change"
                 icon="pi pi-times"
@@ -225,7 +236,7 @@ const ProfilePage = () => {
                   mask="9999-99-99"
                   showIcon
                   value={new Date(birthDate)}
-                  // onChange={}
+                  onChange={onChangeBirthDate}
                 />
               ) : (
                 <div className="text-900">{birthDate}</div>
@@ -236,7 +247,7 @@ const ProfilePage = () => {
                 label="Edit"
                 icon="pi pi-pencil"
                 className="p-button-text bg-indigo-700 hover:bg-indigo-800 text-white"
-                // onClick={}
+                onClick={() => setEditBirthDate(!editBirthDate)}
               />
             </div>
           </li>
@@ -247,8 +258,8 @@ const ProfilePage = () => {
                 <Dropdown
                   name="country"
                   value={country}
-                  options={countriesList}
-                  // onChange={}
+                  options={countries}
+                  onChange={onChangeCountry}
                 />
               ) : (
                 <div className="text-900">{country}</div>
@@ -259,7 +270,7 @@ const ProfilePage = () => {
                 label="Edit"
                 icon="pi pi-pencil"
                 className="p-button-text bg-indigo-700 hover:bg-indigo-800 text-white"
-                // onClick={}
+                onClick={() => setEditCountry(!editCountry)}
               />
             </div>
           </li>
