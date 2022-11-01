@@ -45,13 +45,10 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (isAuthenticated === false && loading === false) {
-
+      navigate("/login");
     }
   }, [isAuthenticated, loading]);
 
-  if (registered) {
-    navigate("/");
-  }
 
   useEffect(() => {
     countryservice.getCountries().then((data) => {
