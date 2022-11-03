@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 
 // get user action creator
-const getUser = createAsyncThunk('auth/user', async (_, thunkAPI) => {
+export const getUser = createAsyncThunk('auth/user', async (_, thunkAPI) => {
 	try {
 		const response = await fetch('/api/auth/user', {
 			method: 'GET',
