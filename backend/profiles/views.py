@@ -28,3 +28,43 @@ class ProfileAPIView(APIView):
         user = request.user
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ChangePasswordAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        user = request.user
+        if not user:
+            return Response(
+                {"error": "You are not logged in"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        data = request.data
+
+        if not user.check_password(data["old_password"]):
+            return Response(
+                {"error": "Old password is incorrect"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if data["new_password"] != data["confirm_password"]:
+            return Response(
+                {"error": "Passwords do not match"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if user.check_password(data["new_password"]):
+            return Response(
+                {"error": "New password cannot be the same as old password"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        user.set_password(data["new_password"])
+        user.save()
+
+        return Response(
+            {"success": True, "message": "Password changed successfully"},
+            status=status.HTTP_200_OK,
+        )
