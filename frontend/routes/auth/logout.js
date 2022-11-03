@@ -17,7 +17,7 @@ router.get('/api/auth/logout', (req, res) => {
       httpOnly: true,
       // Expire date in the past
       expires: new Date(0),
-      path: '/api/',
+      path: '/',
       sameSite: 'strict',
       secure: process.env.NODE_ENV === 'production',
     }),
@@ -26,7 +26,7 @@ router.get('/api/auth/logout', (req, res) => {
       httpOnly: true,
       // Expire date in the past
       expires: new Date(0),
-      path: '/api/',
+      path: '/',
       sameSite: 'strict',
       secure: process.env.NODE_ENV === 'production',
     }),
