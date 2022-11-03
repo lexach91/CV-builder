@@ -116,7 +116,8 @@ export const checkAuth = createAsyncThunk('auth/verify', async (_, thunkAPI) => 
 
       return data;
     } else {
-      return thunkAPI.rejectWithValue(data);
+      const { dispatch } = thunkAPI;
+      dispatch(refreshToken());
     }
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response.data);
@@ -153,6 +154,36 @@ export const logout = createAsyncThunk(
 );
 
 
+// refresh token action creator
+export const refreshToken = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    try {
+      const res = await fetch('/api/auth/refresh', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      const data = await res.json();
+
+      if (res.status === 200) {
+        const { dispatch } = thunkAPI;
+        dispatch(getUser());
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+)
+
+
+
 const initialState = {
   isAuthenticated: false,
   user: null,
@@ -175,56 +206,101 @@ const userSlice = createSlice({
     builder
     .addCase(register.pending, state => {
       state.loading = true;
+      state.errors = null;
+      state.messages = null;
     })
     .addCase(register.fulfilled, state => {
       state.loading = false;
       state.registered = true;
+      state.errors = null;
+      state.messages = "You have successfully registered. Please login to continue."
     })
     .addCase(register.rejected, (state, action) => {
       state.loading = false;
       state.errors = action.payload;
+      state.messages = null;
     })
     .addCase(login.pending, state => {
       state.loading = true;
+      state.errors = null;
+      state.messages = null;
     })
     .addCase(login.fulfilled, state => {
       state.loading = false;
       state.isAuthenticated = true;
+      state.errors = null;
+      state.messages = "You have successfully logged in."
     })
     .addCase(login.rejected, (state, action) => {
       state.loading = false;
       state.errors = action.payload;
+      state.messages = null;
+      state.isAuthenticated = false;
     })
     .addCase(getUser.pending, state => {
       state.loading = true;
+      state.errors = null;
+      state.messages = null;
     })
     .addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload;
+      state.isAuthenticated = true;
+      state.errors = null;
+      state.messages = null;
     })
     .addCase(getUser.rejected, state => {
       state.loading = false;
+      state.isAuthenticated = false;
+      state.errors = "Session expired. Please login to continue.";
+      state.messages = null;
     })
     .addCase(checkAuth.pending, state => {
       state.loading = true;
+      state.errors = null;
+      state.messages = null;
     })
     .addCase(checkAuth.fulfilled, state => {
       state.loading = false;
       state.isAuthenticated = true;
+      state.errors = null;
+      state.messages = null;
     })
     .addCase(checkAuth.rejected, state => {
       state.loading = false;
+      state.isAuthenticated = false;
+      state.errors = "Session expired. Please login to continue.";
     })
     .addCase(logout.pending, state => {
       state.loading = true;
+      state.errors = null;
+      state.messages = null;
     })
     .addCase(logout.fulfilled, state => {
       state.loading = false;
       state.isAuthenticated = false;
       state.user = null;
+      state.errors = null;
+      state.messages = "You have successfully logged out.";
     })
     .addCase(logout.rejected, state => {
       state.loading = false;
+    })
+    .addCase(refreshToken.pending, state => {
+      state.loading = true;
+      state.errors = null;
+      state.messages = null;
+    })
+    .addCase(refreshToken.fulfilled, state => {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.errors = null;
+      state.messages = null;
+    })
+    .addCase(refreshToken.rejected, state => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.errors = "Session expired. Please login to continue.";
     })
   }
 })

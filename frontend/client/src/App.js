@@ -7,7 +7,7 @@ import "primeflex/primeflex.css";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { getUser } from './features/user';
+import { checkAuth } from './features/user';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     try {
-      dispatch(getUser());
+      dispatch(checkAuth());
     }
     catch (error) {
       console.log(error);
