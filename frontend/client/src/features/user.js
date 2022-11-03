@@ -160,7 +160,7 @@ export const refreshToken = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await fetch('/api/auth/refresh', {
-        method: 'GET',
+        method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
