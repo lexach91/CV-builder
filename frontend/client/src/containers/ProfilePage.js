@@ -96,7 +96,7 @@ const ProfilePage = () => {
       new_password: newPassword,
       confirm_password: confirmPassword,
     };
-    const response = await fetch("/api/v1/users/", {
+    const response = await fetch("/api/profile/change-password/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

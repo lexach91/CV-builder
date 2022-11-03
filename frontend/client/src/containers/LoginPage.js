@@ -78,19 +78,7 @@ const LoginPage = () => {
 
 
   const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false) } /></div>;
-  const passwordHeader = <h6>Pick a password</h6>;
-  const passwordFooter = (
-      <React.Fragment>
-          <Divider />
-          <p className="mt-2">Suggestions</p>
-          <ul className="pl-2 ml-2 mt-0" style={{ lineHeight: '1.5' }}>
-              <li>At least one lowercase</li>
-              <li>At least one uppercase</li>
-              <li>At least one numeric</li>
-              <li>Minimum 8 characters</li>
-          </ul>
-      </React.Fragment>
-  );
+
 
   if (isAuthenticated) {
     return <Navigate to='/cvs' />;
@@ -132,7 +120,7 @@ const LoginPage = () => {
                 <Field name="password" render={({ input, meta }) => (
                   <div className="field">
                     <span className="p-float-label">
-                      <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} header={passwordHeader} footer={passwordFooter} />
+                      <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) || errors?.error })} feedback={false} />
                       <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Password*</label>
                     </span>
                     {getFormErrorMessage(meta)}
