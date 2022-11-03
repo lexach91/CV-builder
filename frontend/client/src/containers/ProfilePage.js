@@ -89,18 +89,48 @@ const ProfilePage = () => {
     setEditCountry(false);
   };
 
-  return (
-    <Layout title='CV-builder | My CVs' content='Welcome to the Your Profile page'>
-      <div className="pt-4 container mx-auto">
-        <h1 className="text-6xl text-center my-6 text-emerald-400 ">
-          Your Profile
-        </h1>
-        <p  className="text-xl text-center">
+  const changePassword = async () => {
+    setPasswordUpdating(true);
+    const payload = {
+      old_password: oldPassword,
+      new_password: newPassword,
+      confirm_password: confirmPassword,
+    };
+    const response = await fetch("/api/v1/users/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+    if (data.success) {
+      setDialogVisible(false);
+      setPasswordUpdating(false);
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    }
+  };
 
-        </p>
+  const onChangeOldPassword = (e) => {
+    setOldPassword(e.target.value);
+  };
 
-      <Dialog
+  const onChangeNewPassword = (e) => {
+    setNewPassword(e.target.value);
+  };
+
+  const onChangeConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const passwordDialog = () => {
+    return (
+      <Dialog 
         header="Change Password"
+        visible={dialogVisible}
         footer={
           <div>
             <Button
@@ -121,7 +151,7 @@ const ProfilePage = () => {
                 newPassword !== confirmPassword
               }
               onClick={() => {
-
+                changePassword();
               }}
             />
           </div>
@@ -131,7 +161,7 @@ const ProfilePage = () => {
           <Password
             id="oldPassword"
             value={oldPassword}
-            // onChange={}
+            onChange={onChangeOldPassword}
             placeholder="Old Password"
             feedback={false}
             toggleMask={true}
@@ -142,7 +172,7 @@ const ProfilePage = () => {
           <Password
             id="newPassword"
             value={newPassword}
-            // onChange={}
+            onChange={onChangeNewPassword}
             placeholder="New Password"
             toggleMask={true}
           />
@@ -152,14 +182,27 @@ const ProfilePage = () => {
           <Password
             id="confirmPassword"
             value={confirmPassword}
-            // onChange={}
+            onChange={onChangeConfirmPassword}
             placeholder="Confirm Password"
             feedback={false}
             toggleMask={true}
           />
         </div>
-      </Dialog>
 
+    </Dialog>
+      );
+    };
+
+  return (
+    <Layout title='CV-builder | My CVs' content='Welcome to the Your Profile page'>
+      <div className="pt-4 container mx-auto">
+        <h1 className="text-6xl text-center my-6 text-emerald-400 ">
+          Your Profile
+        </h1>
+        <p  className="text-xl text-center">
+
+        </p>
+    
 
       <div className="bg-slate-900 p-4 w-full md:w-8 md:mx-auto">
         <div className="text-500 mb-3">
@@ -278,14 +321,14 @@ const ProfilePage = () => {
             <div className="text-500 w-6 md:w-2 font-medium">Password</div>
             <div className="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
               <div className="text-900">*********</div>
-              {}
+              {passwordDialog()}
             </div>
             <div className="w-6 md:w-2 flex justify-content-end">
               <Button
                 label="Edit"
                 icon="pi pi-pencil"
                 className="p-button-text bg-indigo-700 hover:bg-indigo-800 text-white"
-                // onClick={}
+                onClick={() => setDialogVisible(true)}
               />
             </div>
           </li>
