@@ -7,6 +7,9 @@ import "primeflex/primeflex.css";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { getUser } from './features/user';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const HomePage = lazy(() => import("./containers/HomePage"));
@@ -17,8 +20,19 @@ const CreateCVPage = lazy(() => import("./containers/CreateCVPage"));
 const ProfilePage = lazy(() => import("./containers/ProfilePage"));
 
 function App() {
+  const dispatch = useDispatch();
+  const { loading, isAuthenticated, user } = useSelector(state => state.user);
+
+  useEffect(() => {
+    try {
+      dispatch(getUser());
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }, [dispatch]);
+
   return (
-    <Provider store={store}>
       <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
@@ -30,8 +44,7 @@ function App() {
             <Route path='/profile' element={<ProfilePage />} />
           </Routes>
         </Suspense>
-      </BrowserRouter>
-    </Provider>
+      </BrowserRouter>   
   );
 }
 
