@@ -10,6 +10,7 @@ const currentRoute = require('./routes/auth/current');
 const loginRoute = require('./routes/auth/login');
 const verifyRoute = require('./routes/auth/verify');
 const logoutRoute = require('./routes/auth/logout');
+const changePasswordRoute = require('./routes/profiles/changePassword');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(currentRoute);
 app.use(loginRoute);
 app.use(verifyRoute);
 app.use(logoutRoute);
+app.use(changePasswordRoute);
 
 app.use(express.static('client/build'));
 
