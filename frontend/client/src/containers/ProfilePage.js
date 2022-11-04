@@ -91,20 +91,22 @@ const ProfilePage = () => {
 
   const changePassword = async () => {
     setPasswordUpdating(true);
-    const payload = {
+    const body = {
       old_password: oldPassword,
       new_password: newPassword,
       confirm_password: confirmPassword,
     };
+    console.log(body);
     const response = await fetch("/api/profile/change-password/", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(body),
     });
     const data = await response.json();
+    console.log(data);
     if (data.success) {
       setDialogVisible(false);
       setPasswordUpdating(false);
@@ -128,9 +130,10 @@ const ProfilePage = () => {
 
   const passwordDialog = () => {
     return (
-      <Dialog 
+      <Dialog
         header="Change Password"
         visible={dialogVisible}
+        onHide={() => setDialogVisible(false)}
         footer={
           <div>
             <Button
@@ -156,7 +159,7 @@ const ProfilePage = () => {
             />
           </div>
         }>
-        <div className="form-group">
+        <div className="form-group flex justify-between align-items-center mt-2">
           <label htmlFor="oldPassword">Old Password</label>
           <Password
             id="oldPassword"
@@ -167,7 +170,7 @@ const ProfilePage = () => {
             toggleMask={true}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group flex justify-between align-items-center">
           <label htmlFor="newPassword">New Password</label>
           <Password
             id="newPassword"
@@ -177,8 +180,12 @@ const ProfilePage = () => {
             toggleMask={true}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password</label>
+        <div className="form-group flex justify-between align-items-center">
+          <label
+            htmlFor="confirmPassword"
+            className="mr-2"
+          >
+            Confirm Password</label>
           <Password
             id="confirmPassword"
             value={confirmPassword}
