@@ -12,7 +12,7 @@ import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider';
 import { Password } from 'primereact/password';
 import { classNames } from 'primereact/utils';
-import { resetRegistered } from '../features/user';
+import { resetRegistered, setErrors, setMessages, resetErrors, resetMessages } from '../features/user';
 
 
 const ProfilePage = () => {
@@ -97,22 +97,32 @@ const ProfilePage = () => {
       confirm_password: confirmPassword,
     };
     console.log(body);
-    const response = await fetch("/api/profile/change-password/", {
-      method: "POST",
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
-    const data = await response.json();
-    console.log(data);
-    if (data.success) {
-      setDialogVisible(false);
-      setPasswordUpdating(false);
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+    try {
+      const response = await fetch("/api/profile/change-password/", {
+        method: "POST",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      // const data = await response.json();
+      // console.log(data);
+      // if status is 200, then password was changed
+      if (response.status === 200) {
+        setDialogVisible(false);
+        setPasswordUpdating(false);
+        setOldPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+        // dispatch(setMessages("Password was changed successfully"));
+      } else {
+        setPasswordUpdating(false);
+        // dispatch(setErrors("Something went wrong when changing password"));
+      }
+    }
+    catch (err) {
+      // dispatch(setErrors("Something went wrong when changing password"));
     }
   };
 
