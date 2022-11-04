@@ -137,15 +137,21 @@ class GetUserAPIView(APIView):
 class RefreshTokenAPIView(APIView):
     """API endpoint for refreshing a token"""
     def post(self, request):
-        refresh_token = request.COOKIES.get("refresh_token")
+        refresh_token = request.COOKIES.get("refresh")
+        print(refresh_token)
+        print(request.COOKIES)
+        print(request.data)
+        print(request.headers)
         
         if not refresh_token:
+            print("no refresh token")
             return Response(
                 {"error": "You are not logged in"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         
         if BlacklistedToken.objects.filter(token=refresh_token).exists():
+            print("refresh token is blacklisted")
             return Response(
                 {"error": "You are not logged in or your session has expired"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -154,6 +160,7 @@ class RefreshTokenAPIView(APIView):
         id = decode_refresh_token(refresh_token)
         
         if id is None:
+            print("refresh token is invalid")
             return Response(
                 {"error": "Invalid token"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -162,6 +169,7 @@ class RefreshTokenAPIView(APIView):
         user = User.objects.filter(id=id).first()
         
         if user is None:
+            print("user does not exist")
             return Response(
                 {"error": "User not found"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -170,25 +178,11 @@ class RefreshTokenAPIView(APIView):
         access_token = create_access_token(user.id)
         refresh_token = create_refresh_token(user.id)
         
-        response = Response()
-        
-        response.set_cookie(
-            key="access_token",
-            value=access_token,
-            httponly=True,
-            expires=datetime.datetime.utcnow() + datetime.timedelta(seconds=600),
-        )
-        
-        response.set_cookie(
-            key="refresh_token",
-            value=refresh_token,
-            httponly=True,
-            expires=datetime.datetime.utcnow() + datetime.timedelta(days=3),
-        )
-        
-        response.status_code = status.HTTP_200_OK
-        
-        return response
+        return Response(data={
+            "access": access_token,
+            "refresh": refresh_token,
+        },
+        status=status.HTTP_200_OK,)
     
     
 class LogoutAPIView(APIView):
