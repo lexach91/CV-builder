@@ -7,9 +7,11 @@ import "primeflex/primeflex.css";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { checkAuth } from './features/user';
+import { checkAuth, resetErrors, resetMessages } from './features/user';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Toast } from 'primereact/toast';
+import { useRef } from "react";
 
 
 const HomePage = lazy(() => import("./containers/HomePage"));
@@ -21,7 +23,8 @@ const ProfilePage = lazy(() => import("./containers/ProfilePage"));
 
 function App() {
   const dispatch = useDispatch();
-  const { loading, isAuthenticated, user } = useSelector(state => state.user);
+  const { loading, isAuthenticated, user, errors, messages } = useSelector(state => state.user);
+  const toast = useRef(null);
 
   useEffect(() => {
     try {
@@ -32,7 +35,29 @@ function App() {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    if (errors) {
+      console.log(errors);
+      toast.current.show({ severity: 'error', summary: 'Error', detail: errors });
+      setTimeout(() => {
+        dispatch(resetErrors());
+      }, 5000);
+    }
+  }, [errors]);
+
+  useEffect(() => {
+    if (messages) {
+      console.log(messages);
+      toast.current.show({ severity: 'success', summary: 'Success', detail: messages });
+      setTimeout(() => {
+        dispatch(resetMessages());
+      }, 5000);
+    }
+  }, [messages]);
+
   return (
+    <>
+      <Toast ref={toast} />
       <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
@@ -44,7 +69,8 @@ function App() {
             <Route path='/profile' element={<ProfilePage />} />
           </Routes>
         </Suspense>
-      </BrowserRouter>   
+      </BrowserRouter>       
+    </>
   );
 }
 
