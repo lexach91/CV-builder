@@ -199,7 +199,19 @@ const userSlice = createSlice({
   reducers: {
     resetRegistered: (state) => {
       state.registered = false
-    }
+    },
+    resetMessages: (state) => {
+      state.messages = null
+    },
+    resetErrors: (state) => {
+      state.errors = null
+    },
+    setMessages: (state, message) => {
+      state.messages = message;
+    },
+    setErrors: (state, error) => {
+      state.errors = error;
+    },
   },
   // accept other types outside of the slice
   extraReducers: builder => {
@@ -217,7 +229,7 @@ const userSlice = createSlice({
     })
     .addCase(register.rejected, (state, action) => {
       state.loading = false;
-      state.errors = action.payload;
+      state.errors = action.payload.error;
       state.messages = null;
     })
     .addCase(login.pending, state => {
@@ -233,7 +245,7 @@ const userSlice = createSlice({
     })
     .addCase(login.rejected, (state, action) => {
       state.loading = false;
-      state.errors = action.payload;
+      state.errors = action.payload.error;
       state.messages = null;
       state.isAuthenticated = false;
     })
@@ -305,5 +317,5 @@ const userSlice = createSlice({
   }
 })
 
-export const { resetRegistered } = userSlice.actions
+export const { resetRegistered, resetErrors, resetMessages, setErrors, setMessages } = userSlice.actions
 export default userSlice.reducer

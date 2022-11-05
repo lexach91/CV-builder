@@ -36,6 +36,7 @@ class ChangePasswordAPIView(APIView):
     def post(self, request):
         user = request.user
         if not user:
+            print("User not found")
             return Response(
                 {"error": "You are not logged in"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -44,18 +45,21 @@ class ChangePasswordAPIView(APIView):
         data = request.data
 
         if not user.check_password(data["old_password"]):
+            print("Wrong password")
             return Response(
                 {"error": "Old password is incorrect"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if data["new_password"] != data["confirm_password"]:
+            print("Passwords don't match")
             return Response(
                 {"error": "Passwords do not match"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if user.check_password(data["new_password"]):
+            print("New password is the same as old password")
             return Response(
                 {"error": "New password cannot be the same as old password"},
                 status=status.HTTP_400_BAD_REQUEST,

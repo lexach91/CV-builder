@@ -16,6 +16,7 @@ router.post('/api/profile/change-password', async (req, res) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${access}`,
       },
       body: JSON.stringify(req.body),
     });
