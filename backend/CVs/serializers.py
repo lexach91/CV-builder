@@ -103,7 +103,8 @@ class ExperienceSectionSerializer(ModelSerializer):
 class EducationBulletSerializer(ModelSerializer):
     class Meta:
         model = EducationBullet
-        fields = '__all__'
+        fields = ('bullet',)
+    
 
 
 class EducationSerializer(ModelSerializer):
@@ -111,7 +112,23 @@ class EducationSerializer(ModelSerializer):
 
     class Meta:
         model = Education
-        fields = '__all__'
+        fields = (
+            'school',
+            'specialization',
+            'scores',
+            'start_date',
+            'end_date',
+            'bullets',
+        )
+    def to_representation(self, instance):
+        return {
+            'school': instance.school,
+            'specialization': instance.specialization,
+            'scores': instance.scores,
+            'start_date': instance.start_date,
+            'end_date': instance.end_date,
+            'bullets': [EducationBulletSerializer(bullet).data for bullet in instance.education_bullets.all()],
+        }
 
 
 class EducationSectionSerializer(ModelSerializer):
@@ -119,7 +136,9 @@ class EducationSectionSerializer(ModelSerializer):
 
     class Meta:
         model = EducationSection
-        fields = '__all__'
+        fields = ('educations',)
+    def to_representation(self, instance):
+        return [EducationSerializer(education).data for education in instance.get().educations.all()]
 
 
 class ShowcaseBulletSerializer(ModelSerializer):
@@ -240,7 +259,7 @@ class CVSerializer(ModelSerializer):
     header = HeaderSerializer(read_only=True)
     summary = SummarySerializer()
     experience_section = ExperienceSectionSerializer()
-    # education_section = EducationSectionSerializer()
+    education_section = EducationSectionSerializer()
     # showcase_section = ShowcaseSectionSerializer()
     # soft_skill_section = SoftSkillSectionSerializer()
     # professional_skill_section = ProfessionalSkillSectionSerializer()
