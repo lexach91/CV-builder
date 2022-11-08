@@ -199,7 +199,7 @@ const CreateCVPage = () => {
 
                 {experiences.map((experience, index) => (
 
-                <div className="card mt-4">
+                <div className="card mt-4 border-500 border-3 border-round p-4">
 
                   <div className="card">
                     <div class="formgrid grid">
@@ -310,6 +310,7 @@ const CreateCVPage = () => {
                       </div>
                     </div>
                   </div>
+                  <Button type="button" label="Save" icon="pi pi-check" onClick={() => this.addExperience()} />
                 
                 </div>
 
