@@ -13,6 +13,10 @@ const onSubmit = (values) => {
 
 
 const CreateCVPage = () => {
+  const [experiences, setExperiences] = useState([]);
+
+
+
   return (
     <Layout title='CV-builder | My CVs' content='Welcome to the Create CV page'>
       <div className="pt-4 container mx-auto">
@@ -192,6 +196,9 @@ const CreateCVPage = () => {
                   </div>
                 </div>
                   <h2 className="text-2xl text-center m-4 text-emerald-400">Experience</h2>
+
+                {experiences.map((experience, index) => (
+
                 <div className="card mt-4">
 
                   <div className="card">
@@ -201,12 +208,13 @@ const CreateCVPage = () => {
                           <div className="field">
                             <span className="p-float-label">
                               <InputText
-                                id="company" {...input}
+                                id={`company${index}`}
+                                {...input}
                                 autoFocus
                                 className=""
                               />
                               <label
-                                htmlFor="company"
+                                htmlFor={`company${index}`}
                                 className="">
                                   company
                               </label>
@@ -220,12 +228,13 @@ const CreateCVPage = () => {
                           <div className="field">
                             <span className="p-float-label">
                               <InputText
-                                id="position" {...input}
+                                id={`position${index}`}
+                                {...input}
                                 autoFocus
                                 className=""
                               />
                               <label
-                                htmlFor="position"
+                                htmlFor={`position${index}`}
                                 className="">
                                   position
                               </label>
@@ -243,12 +252,13 @@ const CreateCVPage = () => {
                           <div className="field">
                             <span className="p-float-label">
                               <InputText
-                                id="start_date" {...input}
+                                id={`start_date${index}`}
+                                {...input}
                                 autoFocus
                                 className=""
                               />
                               <label
-                                htmlFor="start_date"
+                                htmlFor={`start_date${index}`}
                                 className="">
                                   start_date
                               </label>
@@ -262,12 +272,13 @@ const CreateCVPage = () => {
                           <div className="field">
                             <span className="p-float-label">
                               <InputText
-                                id="end_date" {...input}
+                                id={`end_date${index}`}
+                                {...input}
                                 autoFocus
                                 className=""
                               />
                               <label
-                                htmlFor="end_date"
+                                htmlFor={`end_date${index}`}
                                 className="">
                                   end_date
                               </label>
@@ -283,12 +294,13 @@ const CreateCVPage = () => {
                             <div className="field col w-full">
                               <span className="p-float-label">
                                 <InputTextarea
-                                  id="description" {...input}
+                                  id={`description${index}`}
+                                  {...input}
                                   autoFocus
                                   className=""
                                 />
                                 <label
-                                  htmlFor="description"
+                                  htmlFor={`description${index}`}
                                   className="">
                                     description
                                 </label>
@@ -300,9 +312,21 @@ const CreateCVPage = () => {
                   </div>
                 
                 </div>
+
+                ))}
                 {/* add button which calls more work expreience
                  */}
-                <Button label="+ Add Experience" className="p-button-raised p-button-rounded p-button-secondary" />
+                <Button 
+                  label="+ Add Experience" 
+                  className="p-button-raised p-button-rounded p-button-secondary"
+                  id="add-experience"
+                  onClick={
+                    (e) => {
+                      e.preventDefault();
+                      setExperiences([...experiences, {id: experiences.length}]);
+                    }
+                  }
+                />
                 
                 
                 <Button type="submit" label="Submit" className="mt-2" />
