@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import React, { useEffect, useState } from "react";
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
+import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 
 
@@ -68,7 +69,7 @@ const CreateCVPage = () => {
                 </div>
                 <div className="card mb-4">
                   <div class="formgrid grid">
-                    <Field name="last_name" render={({ input, meta }) => (
+                    <Field name="job_title" render={({ input, meta }) => (
                         <div className="field col w-full">
                           <span className="p-float-label">
                             <InputText
@@ -108,7 +109,7 @@ const CreateCVPage = () => {
                       )} />
                     </div>
                     <div class="field col">
-                      <Field name="last_name" render={({ input, meta }) => (
+                      <Field name="phone" render={({ input, meta }) => (
                         <div className="field">
                           <span className="p-float-label">
                             <InputText
@@ -131,7 +132,7 @@ const CreateCVPage = () => {
 
                 <div className="card">
                   <div class="formgrid grid">
-                    <Field name="last_name" render={({ input, meta }) => (
+                    <Field name="address" render={({ input, meta }) => (
                         <div className="field col w-full">
                           <span className="p-float-label">
                             <InputText
@@ -152,7 +153,7 @@ const CreateCVPage = () => {
 
                 <div className="card">
                   <div class="formgrid grid">
-                    <Field name="last_name" render={({ input, meta }) => (
+                    <Field name="url_link" render={({ input, meta }) => (
                         <div className="field col w-full">
                           <span className="p-float-label">
                             <InputText
@@ -170,7 +171,141 @@ const CreateCVPage = () => {
                       )} />
                   </div>
                 </div>
-                                <Button type="submit" label="Submit" className="mt-2" />
+                <div className="card mt-4">
+                  <div class="formgrid grid">
+                    <Field name="summary" render={({ input, meta }) => (
+                        <div className="field col w-full">
+                          <span className="p-float-label">
+                            <InputTextarea
+                              id="summary" {...input}
+                              autoFocus
+                              className=""
+                            />
+                            <label
+                              htmlFor="summary"
+                              className="">
+                                summary
+                            </label>
+                          </span>
+                        </div>
+                      )} />
+                  </div>
+                </div>
+                  <h2 className="text-2xl text-center m-4 text-emerald-400">Experience</h2>
+                <div className="card mt-4">
+
+                  <div className="card">
+                    <div class="formgrid grid">
+                      <div class="field col">
+                        <Field name="company" render={({ input, meta }) => (
+                          <div className="field">
+                            <span className="p-float-label">
+                              <InputText
+                                id="company" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="company"
+                                className="">
+                                  company
+                              </label>
+                            </span>
+
+                          </div>
+                        )} />
+                      </div>
+                      <div class="field col">
+                        <Field name="position" render={({ input, meta }) => (
+                          <div className="field">
+                            <span className="p-float-label">
+                              <InputText
+                                id="position" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="position"
+                                className="">
+                                  position
+                              </label>
+                            </span>
+
+                          </div>
+                        )} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card">
+                    <div class="formgrid grid">
+                      <div class="field col">
+                        <Field name="start_date" render={({ input, meta }) => (
+                          <div className="field">
+                            <span className="p-float-label">
+                              <InputText
+                                id="start_date" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="start_date"
+                                className="">
+                                  start_date
+                              </label>
+                            </span>
+
+                          </div>
+                        )} />
+                      </div>
+                      <div class="field col">
+                        <Field name="end_date" render={({ input, meta }) => (
+                          <div className="field">
+                            <span className="p-float-label">
+                              <InputText
+                                id="end_date" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="end_date"
+                                className="">
+                                  end_date
+                              </label>
+                            </span>
+
+                          </div>
+                        )} />
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div class="formgrid grid">
+                        <Field name="description" render={({ input, meta }) => (
+                            <div className="field col w-full">
+                              <span className="p-float-label">
+                                <InputTextarea
+                                  id="description" {...input}
+                                  autoFocus
+                                  className=""
+                                />
+                                <label
+                                  htmlFor="description"
+                                  className="">
+                                    description
+                                </label>
+                              </span>
+                            </div>
+                          )} />
+                      </div>
+                    </div>
+                  </div>
+                
+                </div>
+                {/* add button which calls more work expreience
+                 */}
+                <Button label="+ Add Experience" className="p-button-raised p-button-rounded p-button-secondary" />
+                
+                
+                <Button type="submit" label="Submit" className="mt-2" />
               </form>
               )} />
           </div>
