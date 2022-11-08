@@ -97,7 +97,9 @@ class ExperienceSectionSerializer(ModelSerializer):
         model = ExperienceSection
         fields = ('experiences',)
     def to_representation(self, instance):
-        return [ExperienceSerializer(experience).data for experience in instance.get().experiences.all()]
+        if instance.exists():
+            return [ExperienceSerializer(experience).data for experience in instance.get().experiences.all()]
+        return None
 
 
 class EducationBulletSerializer(ModelSerializer):
@@ -138,13 +140,15 @@ class EducationSectionSerializer(ModelSerializer):
         model = EducationSection
         fields = ('educations',)
     def to_representation(self, instance):
-        return [EducationSerializer(education).data for education in instance.get().educations.all()]
+        if instance.exists():
+            return [EducationSerializer(education).data for education in instance.get().educations.all()]
+        return None
 
 
 class ShowcaseBulletSerializer(ModelSerializer):
     class Meta:
         model = ShowcaseBullet
-        fields = '__all__'
+        fields = ('bullet',)
 
 
 class ShowcaseSerializer(ModelSerializer):
@@ -152,7 +156,23 @@ class ShowcaseSerializer(ModelSerializer):
 
     class Meta:
         model = Showcase
-        fields = '__all__'
+        fields = (
+            'name',
+            'description',
+            'url',
+            'start_date',
+            'end_date',
+            'bullets',
+        )
+    def to_representation(self, instance):
+        return {
+            'name': instance.name,
+            'description': instance.description,
+            'url': instance.url,
+            'start_date': instance.start_date,
+            'end_date': instance.end_date,
+            'bullets': [ShowcaseBulletSerializer(bullet).data for bullet in instance.showcase_bullets.all()],
+        }
 
 
 class ShowcaseSectionSerializer(ModelSerializer):
@@ -160,13 +180,17 @@ class ShowcaseSectionSerializer(ModelSerializer):
 
     class Meta:
         model = ShowcaseSection
-        fields = '__all__'
+        fields = ('showcases',)
+    def to_representation(self, instance):
+        if instance.exists():
+            return [ShowcaseSerializer(showcase).data for showcase in instance.get().showcases.all()]
+        return None
 
 
 class SoftSkillSerializer(ModelSerializer):
     class Meta:
         model = SoftSkill
-        fields = '__all__'
+        fields = ('soft_skill',)
 
 
 class SoftSkillSectionSerializer(ModelSerializer):
@@ -174,13 +198,17 @@ class SoftSkillSectionSerializer(ModelSerializer):
 
     class Meta:
         model = SoftSkillSection
-        fields = '__all__'
+        fields = ('skills',)
+    def to_representation(self, instance):
+        if instance.exists():
+            return [SoftSkillSerializer(skill).data for skill in instance.get().skills.all()]
+        return None
 
 
 class ProfessionalSkillSerializer(ModelSerializer):
     class Meta:
         model = ProfessionalSkill
-        fields = '__all__'
+        fields = ('skill',)
 
 
 class ProfessionalSkillSectionSerializer(ModelSerializer):
@@ -188,13 +216,17 @@ class ProfessionalSkillSectionSerializer(ModelSerializer):
 
     class Meta:
         model = ProfessionalSkillSection
-        fields = '__all__'
+        fields = ('skills',)
+    def to_representation(self, instance):
+        if instance.exists():
+            return [ProfessionalSkillSerializer(skill).data for skill in instance.get().professional_skills.all()]
+        return None
 
 
 class SocialLinkSerializer(ModelSerializer):
     class Meta:
         model = SocialLink
-        fields = '__all__'
+        fields = ('name', 'url',)
 
 
 class SocialLinkSectionSerializer(ModelSerializer):
@@ -202,13 +234,17 @@ class SocialLinkSectionSerializer(ModelSerializer):
 
     class Meta:
         model = SocialLinkSection
-        fields = '__all__'
+        fields = ('links',)
+    def to_representation(self, instance):
+        if instance.exists():
+            return [SocialLinkSerializer(link).data for link in instance.get().links.all()]
+        return None
 
 
 class LanguageSerializer(ModelSerializer):
     class Meta:
         model = Language
-        fields = '__all__'
+        fields = ('language', 'level',)
 
 
 class LanguageSectionSerializer(ModelSerializer):
@@ -216,13 +252,17 @@ class LanguageSectionSerializer(ModelSerializer):
 
     class Meta:
         model = LanguageSection
-        fields = '__all__'
+        fields = ('languages',)
+    def to_representation(self, instance):
+        if instance.exists():
+            return [LanguageSerializer(language).data for language in instance.get().languages.all()]
+        return None
 
 
 class VolunteerBulletSerializer(ModelSerializer):
     class Meta:
         model = VolunteerBullet
-        fields = '__all__'
+        fields = ('bullet',)
 
 
 class VolunteerSerializer(ModelSerializer):
@@ -230,7 +270,23 @@ class VolunteerSerializer(ModelSerializer):
 
     class Meta:
         model = Volunteer
-        fields = '__all__'
+        fields = (
+            'organization',
+            'position',
+            'start_date',
+            'end_date',
+            'description',
+            'bullets',
+        )
+    def to_representation(self, instance):
+        return {
+            'organization': instance.organization,
+            'position': instance.position,
+            'start_date': instance.start_date,
+            'end_date': instance.end_date,
+            'description': instance.description,
+            'bullets': [VolunteerBulletSerializer(bullet).data for bullet in instance.volunteer_bullets.all()],
+        }
 
 
 class VolunteerSectionSerializer(ModelSerializer):
@@ -238,13 +294,17 @@ class VolunteerSectionSerializer(ModelSerializer):
 
     class Meta:
         model = VolunteerSection
-        fields = '__all__'
+        fields = ('volunteers',)
+    def to_representation(self, instance):
+        if instance.exists():
+            return [VolunteerSerializer(volunteer).data for volunteer in instance.get().volunteers.all()]
+        return None
 
 
 class InterestSerializer(ModelSerializer):
     class Meta:
         model = Interest
-        fields = '__all__'
+        fields = ('interest',)
 
 
 class InterestSectionSerializer(ModelSerializer):
@@ -252,7 +312,11 @@ class InterestSectionSerializer(ModelSerializer):
 
     class Meta:
         model = InterestSection
-        fields = '__all__'
+        fields = ('interests',)
+    def to_representation(self, instance):
+        if instance.exists():
+            return [InterestSerializer(interest).data for interest in instance.get().interests.all()]
+        return None
 
 
 class CVSerializer(ModelSerializer):
@@ -260,18 +324,30 @@ class CVSerializer(ModelSerializer):
     summary = SummarySerializer()
     experience_section = ExperienceSectionSerializer()
     education_section = EducationSectionSerializer()
-    # showcase_section = ShowcaseSectionSerializer()
-    # soft_skill_section = SoftSkillSectionSerializer()
-    # professional_skill_section = ProfessionalSkillSectionSerializer()
-    # social_link_section = SocialLinkSectionSerializer()
-    # language_section = LanguageSectionSerializer()
-    # volunteer_section = VolunteerSectionSerializer()
-    # interest_section = InterestSectionSerializer()
+    showcase_section = ShowcaseSectionSerializer()
+    soft_skill_section = SoftSkillSectionSerializer()
+    professional_skill_section = ProfessionalSkillSectionSerializer()
+    social_link_section = SocialLinkSectionSerializer()
+    language_section = LanguageSectionSerializer()
+    volunteer_section = VolunteerSectionSerializer()
+    interest_section = InterestSectionSerializer()
 
     # header = serializers.SerializerMethodField()
     class Meta:
         model = CV
-        fields = '__all__'
+        fields = (
+            'header',
+            'summary',
+            'experience_section',
+            'education_section',
+            'showcase_section',
+            'soft_skill_section',
+            'professional_skill_section',
+            'social_link_section',
+            'language_section',
+            'volunteer_section',
+            'interest_section',
+        )
         
     
 
