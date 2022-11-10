@@ -76,11 +76,9 @@ class MyCVsAPIView(APIView):
     
     def post(self, request):
         user = request.user
-        serializer = CVSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        cv = CV.objects.create(user=user)
+        serializer = CVSerializer(cv)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
 class CVDetailsAPIView(APIView):
