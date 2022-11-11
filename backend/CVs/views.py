@@ -28,7 +28,7 @@ from .models import (
     VolunteerBullet,
     InterestSection,
     Interest,
-    )
+)
 from .serializers import (
     CVSerializer,
     HeaderSerializer,
@@ -55,13 +55,13 @@ from .serializers import (
     VolunteerSectionSerializer,
     InterestSerializer,
     InterestSectionSerializer,
-    )
+)
 from authorization.authentication import JWTAuthentication
-
 
 
 class MyCVsAPIView(APIView):
     authentication_classes = [JWTAuthentication]
+
     def get(self, request):
         user = request.user
         cvs = CV.objects.filter(user=user)
@@ -72,17 +72,17 @@ class MyCVsAPIView(APIView):
             )
         serializer = CVSerializer(cvs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    
+
     def post(self, request):
         user = request.user
         cv = CV.objects.create(user=user)
         serializer = CVSerializer(cv)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
 
 class CVDetailsAPIView(APIView):
     authentication_classes = [JWTAuthentication]
+
     def get(self, request, pk):
         user = request.user
         try:
@@ -94,8 +94,7 @@ class CVDetailsAPIView(APIView):
             )
         serializer = CVSerializer(cv)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -107,11 +106,13 @@ class CVDetailsAPIView(APIView):
             )
         cv.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
-    
+
+
 class HeaderAPIView(APIView):
     """Create and edit header section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -126,7 +127,7 @@ class HeaderAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -148,7 +149,7 @@ class HeaderAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -167,11 +168,13 @@ class HeaderAPIView(APIView):
             )
         header.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class SummaryAPIView(APIView):
     """Create and edit summary section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -186,7 +189,7 @@ class SummaryAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -208,7 +211,7 @@ class SummaryAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -227,11 +230,13 @@ class SummaryAPIView(APIView):
             )
         summary.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class ExperienceSectionAPIView(APIView):
     """Create and edit experience section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -246,7 +251,7 @@ class ExperienceSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -263,12 +268,14 @@ class ExperienceSectionAPIView(APIView):
                 {"error": "Experience section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = ExperienceSectionSerializer(experience_section, data=request.data)
+        serializer = ExperienceSectionSerializer(
+            experience_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -287,11 +294,13 @@ class ExperienceSectionAPIView(APIView):
             )
         experience_section.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class EducationSectionAPIView(APIView):
     """Create and edit education section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -306,7 +315,7 @@ class EducationSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -323,12 +332,14 @@ class EducationSectionAPIView(APIView):
                 {"error": "Education section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = EducationSectionSerializer(education_section, data=request.data)
+        serializer = EducationSectionSerializer(
+            education_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -351,7 +362,9 @@ class EducationSectionAPIView(APIView):
 
 class ShowcaseSectionAPIView(APIView):
     """Create and edit showcase section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -366,7 +379,7 @@ class ShowcaseSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -383,12 +396,14 @@ class ShowcaseSectionAPIView(APIView):
                 {"error": "Showcase section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = ShowcaseSectionSerializer(showcase_section, data=request.data)
+        serializer = ShowcaseSectionSerializer(
+            showcase_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -407,11 +422,13 @@ class ShowcaseSectionAPIView(APIView):
             )
         showcase_section.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class SoftSkillSectionAPIView(APIView):
     """Create and edit soft skill section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -426,7 +443,7 @@ class SoftSkillSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -443,12 +460,14 @@ class SoftSkillSectionAPIView(APIView):
                 {"error": "Soft skill section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = SoftSkillSectionSerializer(soft_skill_section, data=request.data)
+        serializer = SoftSkillSectionSerializer(
+            soft_skill_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -467,11 +486,13 @@ class SoftSkillSectionAPIView(APIView):
             )
         soft_skill_section.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class ProfessionalSkillSectionAPIView(APIView):
     """Create and edit professional skill section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -486,7 +507,7 @@ class ProfessionalSkillSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -497,18 +518,22 @@ class ProfessionalSkillSectionAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
         try:
-            professional_skill_section = ProfessionalSkillSection.objects.get(cv=cv)
+            professional_skill_section = ProfessionalSkillSection.objects.get(
+                cv=cv
+            )
         except ProfessionalSkillSection.DoesNotExist:
             return Response(
                 {"error": "Professional skill section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = ProfessionalSkillSectionSerializer(professional_skill_section, data=request.data)
+        serializer = ProfessionalSkillSectionSerializer(
+            professional_skill_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -519,7 +544,9 @@ class ProfessionalSkillSectionAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
         try:
-            professional_skill_section = ProfessionalSkillSection.objects.get(cv=cv)
+            professional_skill_section = ProfessionalSkillSection.objects.get(
+                cv=cv
+            )
         except ProfessionalSkillSection.DoesNotExist:
             return Response(
                 {"error": "Professional skill section not found"},
@@ -531,7 +558,9 @@ class ProfessionalSkillSectionAPIView(APIView):
 
 class SocialLinkSectionAPIView(APIView):
     """Create and edit social link section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -546,7 +575,7 @@ class SocialLinkSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -563,12 +592,14 @@ class SocialLinkSectionAPIView(APIView):
                 {"error": "Social link section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = SocialLinkSectionSerializer(social_link_section, data=request.data)
+        serializer = SocialLinkSectionSerializer(
+            social_link_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -591,7 +622,9 @@ class SocialLinkSectionAPIView(APIView):
 
 class LanguageSectionAPIView(APIView):
     """Create and edit language section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -606,7 +639,7 @@ class LanguageSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -623,12 +656,14 @@ class LanguageSectionAPIView(APIView):
                 {"error": "Language section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = LanguageSectionSerializer(language_section, data=request.data)
+        serializer = LanguageSectionSerializer(
+            language_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -649,10 +684,11 @@ class LanguageSectionAPIView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 class VolunteerSectionAPIView(APIView):
     """Create and edit volunteer section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -667,7 +703,7 @@ class VolunteerSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -684,12 +720,14 @@ class VolunteerSectionAPIView(APIView):
                 {"error": "Volunteer section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = VolunteerSectionSerializer(volunteer_section, data=request.data)
+        serializer = VolunteerSectionSerializer(
+            volunteer_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
@@ -712,7 +750,9 @@ class VolunteerSectionAPIView(APIView):
 
 class InterestSectionAPIView(APIView):
     """Create and edit interest section of CV"""
+
     authentication_classes = [JWTAuthentication]
+
     def post(self, request, pk):
         user = request.user
         try:
@@ -727,7 +767,7 @@ class InterestSectionAPIView(APIView):
             serializer.save(cv=cv)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, pk):
         user = request.user
         try:
@@ -744,12 +784,14 @@ class InterestSectionAPIView(APIView):
                 {"error": "Interest section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = InterestSectionSerializer(interest_section, data=request.data)
+        serializer = InterestSectionSerializer(
+            interest_section, data=request.data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, pk):
         user = request.user
         try:
