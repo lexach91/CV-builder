@@ -14,15 +14,7 @@ const onSubmit = (values) => {
 
 
 const CreateCVPage = () => {
-  const [header, setHeader] = useState({
-    first_name: '',
-    last_name: '',
-    job_title: '',
-    email: '',
-    phone: '',
-    address: '',
-    url_link: '',
-  });
+
   const [showHeaderForm, setShowHeaderForm] = useState(false);
   const [summary, setSummary] = useState("");
   const [experiences, setExperiences] = useState([]);
@@ -39,7 +31,7 @@ const CreateCVPage = () => {
             className="p-fluid bg-slate-900 p-6 rounded shadow-md min-full-400px"
           >
                             <div className="card mt-4">
-                  <div class="formgrid grid">
+                  <div className="formgrid grid">
                     <Field name="summary" render={({ input, meta }) => (
                         <div className="field col w-full">
                           <span className="p-float-label">
@@ -67,14 +59,15 @@ const CreateCVPage = () => {
     <Layout title='CV-builder | My CVs' content='Welcome to the Create CV page'>
       <div className="pt-4 container mx-auto">
         <div className="flex justify-content-center">
-          <div className="card">
+          <div className="card min-w-screen bg-red-400 flex justify-content-center flex-column  align-content-center">
             <h1 className="text-center">Create CV</h1>
 
 
-                <div className="card mt-4 border-500 border-3 border-round p-4 min-w-full w-screen md:min-w-0">
+                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
                   <h2 className="text-2xl text-center mb-4 text-emerald-400">Header</h2>
                   {/* add section header on button click */}
                   {!showHeaderForm && (
+                    <div className="flex justify-content-center m-4">
                     <Button 
                       label='Add header'
                       className="p-button-rounded p-button-success"
@@ -83,8 +76,9 @@ const CreateCVPage = () => {
                         setShowHeaderForm(true);                        
                       }}
                     />
+                    </div>
                   )}
-                  {showHeaderForm && HeaderBlock}
+                  {showHeaderForm && <HeaderBlock />}
                 </div>
 
 
@@ -102,8 +96,8 @@ const CreateCVPage = () => {
                 <div className="card mt-4 border-500 border-3 border-round p-4">
 
                   <div className="card">
-                    <div class="formgrid grid">
-                      <div class="field col">
+                    <div className="formgrid grid">
+                      <div className="field col">
                         <Field name="company" render={({ input, meta }) => (
                           <div className="field">
                             <span className="p-float-label">
@@ -123,7 +117,7 @@ const CreateCVPage = () => {
                           </div>
                         )} />
                       </div>
-                      <div class="field col">
+                      <div className="field col">
                         <Field name="position" render={({ input, meta }) => (
                           <div className="field">
                             <span className="p-float-label">
@@ -146,8 +140,8 @@ const CreateCVPage = () => {
                     </div>
                   </div>
                   <div className="card">
-                    <div class="formgrid grid">
-                      <div class="field col">
+                    <div className="formgrid grid">
+                      <div className="field col">
                         <Field name="start_date" render={({ input, meta }) => (
                           <div className="field">
                             <span className="p-float-label">
@@ -167,7 +161,7 @@ const CreateCVPage = () => {
                           </div>
                         )} />
                       </div>
-                      <div class="field col">
+                      <div className="field col">
                         <Field name="end_date" render={({ input, meta }) => (
                           <div className="field">
                             <span className="p-float-label">
@@ -189,7 +183,7 @@ const CreateCVPage = () => {
                       </div>
                     </div>
                     <div className="card">
-                      <div class="formgrid grid">
+                      <div className="formgrid grid">
                         <Field name="description" render={({ input, meta }) => (
                             <div className="field col w-full">
                               <span className="p-float-label">
