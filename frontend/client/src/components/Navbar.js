@@ -17,10 +17,6 @@ const navbarLinks = [
 
 const AuthorizedNavbarLinks = [
   {
-    name: "Create CV",
-    path: "/create-cv",
-  },
-  {
     name: "My CVs",
     path: "/cvs",
   },
