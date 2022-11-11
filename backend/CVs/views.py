@@ -168,3 +168,63 @@ class HeaderAPIView(APIView):
         header.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+
+class SummaryAPIView(APIView):
+    """Create and edit summary section of CV"""
+    authentication_classes = [JWTAuthentication]
+    def post(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = SummarySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(cv=cv)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            summary = Summary.objects.get(cv=cv)
+        except Summary.DoesNotExist:
+            return Response(
+                {"error": "Summary not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = SummarySerializer(summary, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            summary = Summary.objects.get(cv=cv)
+        except Summary.DoesNotExist:
+            return Response(
+                {"error": "Summary not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        summary.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
