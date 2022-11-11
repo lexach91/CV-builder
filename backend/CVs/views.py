@@ -409,3 +409,61 @@ class ShowcaseSectionAPIView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
+class SoftSkillSectionAPIView(APIView):
+    """Create and edit soft skill section of CV"""
+    authentication_classes = [JWTAuthentication]
+    def post(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = SoftSkillSectionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(cv=cv)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            soft_skill_section = SoftSkillSection.objects.get(cv=cv)
+        except SoftSkillSection.DoesNotExist:
+            return Response(
+                {"error": "Soft skill section not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = SoftSkillSectionSerializer(soft_skill_section, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            soft_skill_section = SoftSkillSection.objects.get(cv=cv)
+        except SoftSkillSection.DoesNotExist:
+            return Response(
+                {"error": "Soft skill section not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        soft_skill_section.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
