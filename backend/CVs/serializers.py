@@ -336,6 +336,7 @@ class CVSerializer(ModelSerializer):
     class Meta:
         model = CV
         fields = (
+            'id',
             'header',
             'summary',
             'experience_section',
