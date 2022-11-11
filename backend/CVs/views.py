@@ -467,3 +467,65 @@ class SoftSkillSectionAPIView(APIView):
             )
         soft_skill_section.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class ProfessionalSkillSectionAPIView(APIView):
+    """Create and edit professional skill section of CV"""
+    authentication_classes = [JWTAuthentication]
+    def post(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = ProfessionalSkillSectionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(cv=cv)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            professional_skill_section = ProfessionalSkillSection.objects.get(cv=cv)
+        except ProfessionalSkillSection.DoesNotExist:
+            return Response(
+                {"error": "Professional skill section not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = ProfessionalSkillSectionSerializer(professional_skill_section, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        user = request.user
+        try:
+            cv = CV.objects.get(pk=pk, user=user)
+        except CV.DoesNotExist:
+            return Response(
+                {"error": "CV not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            professional_skill_section = ProfessionalSkillSection.objects.get(cv=cv)
+        except ProfessionalSkillSection.DoesNotExist:
+            return Response(
+                {"error": "Professional skill section not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        professional_skill_section.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
