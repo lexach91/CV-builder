@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import HeaderBlock from "../components/HeaderBlock";
+import { useSelector, useDispatch } from "react-redux";
 
 
 
@@ -18,10 +19,16 @@ const CreateCVPage = () => {
   const [showHeaderForm, setShowHeaderForm] = useState(false);
   const [summary, setSummary] = useState("");
   const [experiences, setExperiences] = useState([]);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
-
+  useEffect(() => {
+    if (!isAuthenticated) {
+      window.location.href = "/login";
+    }
+  }, [isAuthenticated]);
 
   const SummaryBlock = (
+    
     <>
       <Form onSubmit={onSubmit}
         initialValues={{ summary: '' }}
@@ -30,7 +37,7 @@ const CreateCVPage = () => {
           <form
             className="p-fluid bg-slate-900 p-6 rounded shadow-md min-full-400px"
           >
-                            <div className="card mt-4">
+            <div className="card mt-4">
                   <div className="formgrid grid">
                     <Field name="summary" render={({ input, meta }) => (
                         <div className="field col w-full">
@@ -59,7 +66,7 @@ const CreateCVPage = () => {
     <Layout title='CV-builder | My CVs' content='Welcome to the Create CV page'>
       <div className="pt-4 container mx-auto">
         <div className="flex justify-content-center">
-          <div className="card min-w-screen bg-red-400 flex justify-content-center flex-column  align-content-center">
+          <div className="card min-w-screen flex justify-content-center flex-column align-content-center">
             <h1 className="text-center">Create CV</h1>
 
 
