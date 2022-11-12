@@ -65,7 +65,7 @@ function App() {
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/cvs' element={<MyCVsPage />} />
-            <Route path='/create-cv' element={<CreateCVPage />} />
+            <Route path='/cvs/:id' element={<CreateCVPage />} />
             <Route path='/profile' element={<ProfilePage />} />
           </Routes>
         </Suspense>
