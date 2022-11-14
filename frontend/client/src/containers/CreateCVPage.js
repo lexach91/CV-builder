@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import HeaderBlock from "../components/HeaderBlock";
+import SummaryBlock from "../components/SummaryBlock";
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -17,7 +18,7 @@ const onSubmit = (values) => {
 const CreateCVPage = () => {
 
   const [showHeaderForm, setShowHeaderForm] = useState(false);
-  const [summary, setSummary] = useState("");
+  const [showSummaryForm, setShowSummaryForm] = useState(false);
   const [experiences, setExperiences] = useState([]);
   const { isAuthenticated } = useSelector((state) => state.user);
 
@@ -27,40 +28,6 @@ const CreateCVPage = () => {
     }
   }, [isAuthenticated]);
 
-  const SummaryBlock = (
-    
-    <>
-      <Form onSubmit={onSubmit}
-        initialValues={{ summary: '' }}
-        // validate={validate}
-        render={({ handleSubmit }) => (
-          <form
-            className="p-fluid bg-slate-900 p-6 rounded shadow-md min-full-400px"
-          >
-            <div className="card mt-4">
-                  <div className="formgrid grid">
-                    <Field name="summary" render={({ input, meta }) => (
-                        <div className="field col w-full">
-                          <span className="p-float-label">
-                            <InputTextarea
-                              id="summary" {...input}
-                              autoFocus
-                              className=""
-                            />
-                            <label
-                              htmlFor="summary"
-                              className="">
-                                summary
-                            </label>
-                          </span>
-                        </div>
-                      )} />
-                  </div>
-                </div>
-          </form>
-        )} />
-    </>
-  );
 
   return (
     <Layout title='CV-builder | My CVs' content='Welcome to the Create CV page'>
@@ -87,7 +54,22 @@ const CreateCVPage = () => {
                   )}
                   {showHeaderForm && <HeaderBlock />}
                 </div>
-
+                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
+                  <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
+                  {!showSummaryForm && (
+                    <div className="flex justify-content-center m-4">
+                      <Button
+                        label='Add summary'
+                        className="p-button-rounded p-button-success"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setShowSummaryForm(true);                        
+                        }}
+                      />
+                    </div>
+                  )}
+                  {showSummaryForm && <SummaryBlock />}
+                </div>
 
 
                   <h2 className="text-2xl text-center m-4 text-emerald-400">Experience</h2>
