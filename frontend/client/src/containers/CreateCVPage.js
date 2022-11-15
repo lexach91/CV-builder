@@ -7,6 +7,7 @@ import { Button } from 'primereact/button'
 import HeaderBlock from "../components/HeaderBlock";
 import SummaryBlock from "../components/SummaryBlock";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 
 
@@ -21,6 +22,9 @@ const CreateCVPage = () => {
   const [showSummaryForm, setShowSummaryForm] = useState(false);
   const [experiences, setExperiences] = useState([]);
   const { isAuthenticated } = useSelector((state) => state.user);
+  
+  const cvId = useParams().id;
+  console.log(cvId);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -52,7 +56,7 @@ const CreateCVPage = () => {
                     />
                     </div>
                   )}
-                  {showHeaderForm && <HeaderBlock />}
+                  {showHeaderForm && <HeaderBlock id={cvId} />}
                 </div>
                 <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
                   <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
