@@ -51,7 +51,17 @@ const HeaderBlock = () => {
           >
             <div className="card">
               <div className="formgrid grid">
-                <div className="field col">
+                <div className="field col relative">
+                  <div 
+                    className="flex w-full align-items-start justify-content-end">
+                    <Button
+                        className="p-button-rounded p-button-text p-button-plain"
+                        icon="pi pi-question-circle"
+                        tooltip="Go to profile to change your First Name"
+                        disabled
+                        tooltipOptions={{ showOnDisabled: true }}
+                      />
+                  </div>
                   <Field name="first_name" render={({ input, meta }) => (
                     <div className="field">
                       <span className="p-float-label">
@@ -59,7 +69,7 @@ const HeaderBlock = () => {
                           id="first_name" {...input}
                           value={firstName}
                           autoFocus
-                          className=""
+                          className="font-bold"
                           disabled
                           title="Go to profile to change your first name"
                         />
@@ -71,17 +81,20 @@ const HeaderBlock = () => {
                       </span>
                     </div>
                   )} />
-                  <Button
-                    className="p-button-rounded p-button-secondary p-button-outlined"
-                    icon="pi pi-question-circle"
-                    tooltip="Go to profile to change your First Name"
-                    disabled
-                    tooltipOptions={{ showOnDisabled: true }}
-                  />
+
                 </div>
 
-                <div className="field col bg-red-400 flexflex-wrap">
-                  {/* <div className="field"> */}
+                <div className="field col">
+                  <div 
+                    className="flex w-full align-items-start justify-content-end">
+                    <Button
+                        className="p-button-rounded p-button-text p-button-plain"
+                        icon="pi pi-question-circle"
+                        tooltip="Go to profile to change your Last Name"
+                        disabled
+                        tooltipOptions={{ showOnDisabled: true }}
+                      />
+                  </div>
                   <Field name="last_name" title="GOVNO" render={({ input, meta }) => (
                     <div className="field">
                       <span className="p-float-label">
@@ -89,7 +102,7 @@ const HeaderBlock = () => {
                           id="last_name" {...input}
                           value={lastName}
                           autoFocus
-                          className=""
+                          className="font-bold"
                           disabled
                         />
                         <label
@@ -101,13 +114,6 @@ const HeaderBlock = () => {
                       </span>
                     </div>
                   )} />
-                  <Button
-                    className="p-button-rounded p-button-secondary p-button-outlined"
-                    icon="pi pi-question-circle"
-                    tooltip="Go to profile to change your Last Name"
-                    disabled
-                    tooltipOptions={{ showOnDisabled: true }}
-                  />
                 </div>
               </div>
             </div>
