@@ -22,13 +22,28 @@ const CreateCVPage = () => {
   const [showSummaryForm, setShowSummaryForm] = useState(false);
   const [experiences, setExperiences] = useState([]);
   const { isAuthenticated } = useSelector((state) => state.user);
-  
+  const [ headerExists, setHeaderExists ] = useState(false);
+
   const cvId = useParams().id;
   console.log(cvId);
+
+  const getCVDetails = async () => {
+    console.log(window.location.origin);
+    const res = await fetch(`${window.location.origin}/api/cvs/?id=${cvId}`);
+
+    const data = await res.json();
+    console.log(data);
+    if (data.header) {
+      setHeaderExists(true);
+      console.log("header exists");
+    }
+  };
 
   useEffect(() => {
     if (!isAuthenticated) {
       window.location.href = "/login";
+    } else {
+      getCVDetails();
     }
   }, [isAuthenticated]);
 
@@ -60,6 +75,7 @@ const CreateCVPage = () => {
                 </div>
                 <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
                   <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
+                  
                   {!showSummaryForm && (
                     <div className="flex justify-content-center m-4">
                       <Button
