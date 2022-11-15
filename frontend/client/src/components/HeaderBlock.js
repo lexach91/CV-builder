@@ -3,19 +3,35 @@ import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
-
+import { useSelector, useDispatch } from "react-redux";
 
 
 const HeaderBlock = () => {
+  const { isAuthenticated, user, registered, loading } = useSelector(
+    (state) => state.user
+  );
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const [header, setHeader] = useState({
-    first_name: '',
-    last_name: '',
     job_title: '',
     email: '',
     phone: '',
     address: '',
     url_link: '',
   });
+
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setFirstName(user.first_name);
+      setLastName(user.last_name);
+    } else {
+      setFirstName("");
+      setLastName("");
+    }
+  }, [isAuthenticated, user]);
 
   const onSubmit = (values) => {
     console.log(values);
@@ -41,8 +57,11 @@ const HeaderBlock = () => {
                       <span className="p-float-label">
                         <InputText
                           id="first_name" {...input}
+                          value={firstName}
                           autoFocus
                           className=""
+                          disabled
+                          title="Go to profile to change your first name"
                         />
                         <label
                           htmlFor="first_name"
@@ -52,23 +71,32 @@ const HeaderBlock = () => {
                       </span>
                     </div>
                   )} />
+
                 </div>
 
                 <div className="field col">
-                  <Field name="last_name" render={({ input, meta }) => (
+                  <Field name="last_name" title="GOVNO" render={({ input, meta }) => (
                     <div className="field">
                       <span className="p-float-label">
                         <InputText
                           id="last_name" {...input}
+                          value={lastName}
                           autoFocus
                           className=""
+                          disabled
                         />
                         <label
                           htmlFor="last_name"
+                            
                           className="">
-                            Last name
+                            Last name <i
+                              className="pi pi-question-circle"
+                              title="Go to profile to change your first name"
+                              ></i>
                         </label>
                       </span>
+                      {/* Add question icon */}
+                      
                     </div>
                   )} />
                 </div>
