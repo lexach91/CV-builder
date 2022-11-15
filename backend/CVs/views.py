@@ -122,6 +122,12 @@ class HeaderAPIView(APIView):
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        if Header.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Header already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
         serializer = HeaderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(cv=cv)
@@ -184,6 +190,11 @@ class SummaryAPIView(APIView):
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        if Summary.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Summary already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         serializer = SummarySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(cv=cv)
@@ -245,6 +256,11 @@ class ExperienceSectionAPIView(APIView):
             return Response(
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+        if ExperienceSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Experience section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         serializer = ExperienceSectionSerializer(data=request.data)
         if serializer.is_valid():
@@ -310,6 +326,11 @@ class EducationSectionAPIView(APIView):
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        if EducationSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Education section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         serializer = EducationSectionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(cv=cv)
@@ -373,6 +394,11 @@ class ShowcaseSectionAPIView(APIView):
             return Response(
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+        if ShowcaseSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Showcase section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         serializer = ShowcaseSectionSerializer(data=request.data)
         if serializer.is_valid():
@@ -438,6 +464,11 @@ class SoftSkillSectionAPIView(APIView):
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        if SoftSkillSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Soft skill section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         serializer = SoftSkillSectionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(cv=cv)
@@ -501,6 +532,11 @@ class ProfessionalSkillSectionAPIView(APIView):
             return Response(
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+        if ProfessionalSkillSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Professional skill section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         serializer = ProfessionalSkillSectionSerializer(data=request.data)
         if serializer.is_valid():
@@ -570,6 +606,11 @@ class SocialLinkSectionAPIView(APIView):
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        if SocialLinkSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Social link section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         serializer = SocialLinkSectionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(cv=cv)
@@ -633,6 +674,11 @@ class LanguageSectionAPIView(APIView):
             return Response(
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+        if LanguageSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Language section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         serializer = LanguageSectionSerializer(data=request.data)
         if serializer.is_valid():
@@ -698,6 +744,11 @@ class VolunteerSectionAPIView(APIView):
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        if VolunteerSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Volunteer section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         serializer = VolunteerSectionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(cv=cv)
@@ -761,6 +812,11 @@ class InterestSectionAPIView(APIView):
             return Response(
                 {"error": "CV not found"},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+        if InterestSection.objects.filter(cv=cv).exists():
+            return Response(
+                {"error": "Interest section already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         serializer = InterestSectionSerializer(data=request.data)
         if serializer.is_valid():
