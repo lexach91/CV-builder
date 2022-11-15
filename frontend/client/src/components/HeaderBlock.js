@@ -71,10 +71,17 @@ const HeaderBlock = () => {
                       </span>
                     </div>
                   )} />
-
+                  <Button
+                    className="p-button-rounded p-button-secondary p-button-outlined"
+                    icon="pi pi-question-circle"
+                    tooltip="Go to profile to change your First Name"
+                    disabled
+                    tooltipOptions={{ showOnDisabled: true }}
+                  />
                 </div>
 
-                <div className="field col">
+                <div className="field col bg-red-400 flexflex-wrap">
+                  {/* <div className="field"> */}
                   <Field name="last_name" title="GOVNO" render={({ input, meta }) => (
                     <div className="field">
                       <span className="p-float-label">
@@ -89,16 +96,18 @@ const HeaderBlock = () => {
                           htmlFor="last_name"
                             
                           className="">
-                            Last name <i
-                              className="pi pi-question-circle"
-                              title="Go to profile to change your first name"
-                              ></i>
+                            Last name
                         </label>
                       </span>
-                      {/* Add question icon */}
-                      
                     </div>
                   )} />
+                  <Button
+                    className="p-button-rounded p-button-secondary p-button-outlined"
+                    icon="pi pi-question-circle"
+                    tooltip="Go to profile to change your Last Name"
+                    disabled
+                    tooltipOptions={{ showOnDisabled: true }}
+                  />
                 </div>
               </div>
             </div>
