@@ -6,7 +6,7 @@ import { Button } from 'primereact/button'
 import { useSelector, useDispatch } from "react-redux";
 
 
-const HeaderBlock = () => {
+const HeaderBlock = (props) => {
   const { isAuthenticated, user, registered, loading } = useSelector(
     (state) => state.user
   );
@@ -14,13 +14,17 @@ const HeaderBlock = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const [header, setHeader] = useState({
-    job_title: '',
-    email: '',
-    phone: '',
-    address: '',
-    url_link: '',
-  });
+  const [headerFormData, setHeaderFormData] = useState({});
+
+  // const [header, setHeader] = useState({
+  //   job_title: '',
+  //   email: '',
+  //   phone: '',
+  //   address: '',
+  //   url_link: '',
+  // });
+
+  const id = props.id;
 
 
   useEffect(() => {
@@ -33,9 +37,21 @@ const HeaderBlock = () => {
     }
   }, [isAuthenticated, user]);
 
-  const onSubmit = (values) => {
-    console.log(values);
-    // setHeaderFormData(values);
+  const onSubmit = async (data, form) => {
+    console.log(data);
+    setHeaderFormData(data);
+    const payloadHeader = {
+      id: id,
+      job_title: data.job_title,
+      email: data.email,
+      phone: data.phone,
+      address: data.address,
+      url_link: data.url_link,
+    };
+    console.log(payloadHeader);
+    // dispatch(updateHeader(payloadHeader));
+
+  
   };
   
 
@@ -43,11 +59,12 @@ const HeaderBlock = () => {
     <>
       <Form
         onSubmit={onSubmit}
-        initialValues={{ first_name: '', last_name: '', job_title: '', email: '', phone: '', address: '', url_link: '' }}
+        initialValues={{ job_title: '', email: '', phone: '', address: '', url_link: '' }}
         // validate={validate}
         render={({ handleSubmit }) => (
           <form
             className="p-fluid bg-slate-900 p-6 rounded shadow-md"
+            // onSubmit={handleSubmit}
           >
             <div className="card">
               <div className="formgrid grid">
