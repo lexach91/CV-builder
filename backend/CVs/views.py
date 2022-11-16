@@ -262,6 +262,7 @@ class ExperienceSectionAPIView(APIView):
                 {"error": "Experience section already exists"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        print(request.data)
         serializer = ExperienceSectionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(cv=cv)
@@ -284,13 +285,18 @@ class ExperienceSectionAPIView(APIView):
                 {"error": "Experience section not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = ExperienceSectionSerializer(
-            experience_section, data=request.data
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        experiences = request.data.pop("experiences")
+        errors = []
+        for experience in experiences:
+            serializer = ExperienceSerializer(data=experience, partial=True)
+            if serializer.is_valid():
+                serializer.save(experience_section=experience_section)
+            else:
+                errors.append(serializer.errors)
+        
+        serializer = ExperienceSectionSerializer(experience_section)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
         user = request.user
