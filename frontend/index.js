@@ -13,6 +13,7 @@ const logoutRoute = require('./routes/auth/logout');
 const changePasswordRoute = require('./routes/profiles/changePassword');
 const refreshRoute = require('./routes/auth/refresh');
 
+const getCVDetailsRoute = require('./routes/cvs/getCVDetails');
 const createNewCVRoute = require('./routes/cvs/createNewCV');
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(logoutRoute);
 app.use(changePasswordRoute);
 app.use(refreshRoute);
 
+app.use(getCVDetailsRoute);
 app.use(createNewCVRoute);
 
 app.use(express.static('client/build'));
