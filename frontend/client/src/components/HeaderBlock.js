@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import { useSelector, useDispatch } from "react-redux";
 
@@ -15,14 +14,6 @@ const HeaderBlock = (props) => {
   const [lastName, setLastName] = useState("");
 
   const [headerFormData, setHeaderFormData] = useState({});
-
-  // const [header, setHeader] = useState({
-  //   job_title: '',
-  //   email: '',
-  //   phone: '',
-  //   address: '',
-  //   url_link: '',
-  // });
 
   const id = props.id;
 
@@ -112,7 +103,7 @@ const HeaderBlock = (props) => {
                         tooltipOptions={{ showOnDisabled: true }}
                       />
                   </div>
-                  <Field name="last_name" title="GOVNO" render={({ input, meta }) => (
+                  <Field name="last_name" render={({ input, meta }) => (
                     <div className="field">
                       <span className="p-float-label">
                         <InputText
