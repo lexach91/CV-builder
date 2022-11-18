@@ -8,5 +8,15 @@ This is application for creating CVs. The main goal is to create a CV in a few m
 
 Include different templates for CVs that allow the user to choose the one that suits him the best.
 
+## Technologies used
 
+ - Languages:
+    
+    - Python 3.10.4: the primary language used to develop the server-side of the website.
+
+    - JS: the primary language used to develop interactive components of the website.
+
+    - HTML: the markup language used to create the website.
+
+    - CSS: the styling language used to style the website.​
 
