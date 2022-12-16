@@ -32,3 +32,7 @@ Include different templates for CVs that allow the user to choose the one that s
 
     - Primeflex: css framework used to style the front-end of the website.
 
+  - Databases:
+
+    - SQLite: was used as a development database.
+    - PostgreSQL: the database used to store all the data.​
