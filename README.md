@@ -20,3 +20,15 @@ Include different templates for CVs that allow the user to choose the one that s
 
     - CSS: the styling language used to style the website.​
 
+  - Frameworks and libraries:
+
+    - Django: python framework used to create all the logic.
+
+    - Django-rest-framework: python framework used to create the API.
+
+    - React: javascript framework used to create the front-end of the website.
+
+    - PrimeReact: a set of components used to create the front-end of the website.
+
+    - Primeflex: css framework used to style the front-end of the website.
+
