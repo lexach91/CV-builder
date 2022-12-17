@@ -28,7 +28,7 @@ const HeaderBlock = (props) => {
     }
   }, [isAuthenticated, user]);
 
-  const onSubmit = async (data, form) => {
+  const responseHeader = async (data, form) => {
     console.log(data);
     setHeaderFormData(data);
     const payloadHeader = {
@@ -49,7 +49,7 @@ const HeaderBlock = (props) => {
   return (
     <>
       <Form
-        onSubmit={onSubmit}
+        onSubmit={responseHeader}
         initialValues={{ job_title: '', email: '', phone: '', address: '', url_link: '' }}
         // validate={validate}
         render={({ handleSubmit }) => (
@@ -231,7 +231,11 @@ const HeaderBlock = (props) => {
               </div>
             </div>
 
-            <Button type="submit" label="Save" className="mt-2" />
+            <Button
+              label="Save Header"
+              className="mt-2"
+              type="submit"
+              />
           </form>
         )} />
     </>
