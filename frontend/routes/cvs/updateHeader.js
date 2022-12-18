@@ -6,14 +6,16 @@ const router = express.Router();
 
 
 // for the endpoint on express
-router.post('/api/cvs', async (req, res) => {
+router.post(`/api/cvs`, async (req, res) => {
   // parse access token from cookie
   const { access } = req.cookies;
-
+  
   const { id } = req.query;
 
+  console.log('CV id for creating a header', id);
+
   try {
-    const apiRes = await fetch(`${process.env.API_URL}/api/cvs//${id}/header`, {
+    const apiRes = await fetch(`${process.env.API_URL}/api/cvs/${id}/header`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
