@@ -16,7 +16,7 @@ const refreshRoute = require('./routes/auth/refresh');
 const getCVDetailsRoute = require('./routes/cvs/getCVDetails');
 const createNewCVRoute = require('./routes/cvs/createNewCV');
 
-const setNewHeaderRoute = require('./routes/cvs/createCVHeader');
+const updateHeaderRoute = require('./routes/cvs/updateHeader');
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.use(refreshRoute);
 app.use(getCVDetailsRoute);
 app.use(createNewCVRoute);
 
-app.use(setNewHeaderRoute);
+app.use(updateHeaderRoute);
 
 app.use(express.static('client/build'));
 
