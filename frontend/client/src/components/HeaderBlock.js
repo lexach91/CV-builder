@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
 import { useSelector, useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 
 
 const HeaderBlock = (props) => {
@@ -18,6 +18,12 @@ const HeaderBlock = (props) => {
 
   const id = props.id;
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
