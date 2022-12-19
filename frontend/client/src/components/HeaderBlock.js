@@ -3,6 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const HeaderBlock = (props) => {
@@ -17,6 +18,12 @@ const HeaderBlock = (props) => {
 
   const id = props.id;
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -40,11 +47,24 @@ const HeaderBlock = (props) => {
       url_link: data.url_link,
     };
     console.log(payloadHeader);
-    // dispatch(updateHeader(payloadHeader));
-
-  
+    try {
+      const response = await fetch("api/cvs/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          },
+        body: JSON.stringify(payloadHeader),
+      });
+      const data = await response.json();
+      console.log(data);
+      navigate(`/cvs/${data.id}`);
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
-  
+
 
   return (
     <>
