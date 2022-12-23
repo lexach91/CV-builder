@@ -122,7 +122,6 @@ const CreateCVPage = () => {
                                   company
                               </label>
                             </span>
-
                           </div>
                         )} />
                       </div>
@@ -142,7 +141,6 @@ const CreateCVPage = () => {
                                   position
                               </label>
                             </span>
-
                           </div>
                         )} />
                       </div>
@@ -166,7 +164,6 @@ const CreateCVPage = () => {
                                   start_date
                               </label>
                             </span>
-
                           </div>
                         )} />
                       </div>
