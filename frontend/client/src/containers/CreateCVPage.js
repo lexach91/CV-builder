@@ -94,6 +94,14 @@ const CreateCVPage = () => {
                             {headerData.address}
                             {headerData.url_link}
                           </div>
+                          <Button
+                            label='Edit header'
+                            className="p-button-rounded p-button-success"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setShowHeaderForm(true);                        
+                            }}
+                          />
                         </div>
                       )}
                     <Button 
