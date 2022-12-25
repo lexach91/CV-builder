@@ -10,7 +10,7 @@ router.get('/api/cvs/', async (req, res) => {
   const { access } = req.cookies;
 
   const { id } = req.query;
-  console.log(id);
+  // console.log(id);
 
   
   try {
@@ -27,7 +27,7 @@ router.get('/api/cvs/', async (req, res) => {
     });
     // in return we get only a response code
     const data = await apiRes.json();
-    console.log(data);
+    // console.log(data);
     return res.status(apiRes.status).json(data);
 
     // const data = await apiRes.json();
