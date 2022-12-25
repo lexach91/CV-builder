@@ -1,13 +1,14 @@
 import Layout from "../components/Layout";
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import HeaderBlock from "../components/HeaderBlock";
 import SummaryBlock from "../components/SummaryBlock";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import ExperienceFormBlock from "../components/ExperienceFormBlock";
 
 
 
@@ -21,6 +22,7 @@ const CreateCVPage = () => {
   const [showHeaderForm, setShowHeaderForm] = useState(false);
   const [showSummaryForm, setShowSummaryForm] = useState(false);
   const [experiences, setExperiences] = useState([]);
+  const [experienceForm, setExperienceForm] = useState(false);
   const { isAuthenticated } = useSelector((state) => state.user);
   const [ headerExists, setHeaderExists ] = useState(false);
 
@@ -54,11 +56,9 @@ const CreateCVPage = () => {
         <div className="flex justify-content-center">
           <div className="card min-w-screen flex justify-content-center flex-column align-content-center">
             <h1 className="text-center">Create CV</h1>
-
-
                 <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
                   <h2 className="text-2xl text-center mb-4 text-emerald-400">Header</h2>
-                  {/* add section header on button click */}
+                  {/* Header block */}
                   {!showHeaderForm && (
                     <div className="flex justify-content-center m-4">
                     <Button 
@@ -73,9 +73,9 @@ const CreateCVPage = () => {
                   )}
                   {showHeaderForm && <HeaderBlock id={cvId} />}
                 </div>
+                {/* Summary block */}
                 <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
                   <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
-                  
                   {!showSummaryForm && (
                     <div className="flex justify-content-center m-4">
                       <Button
@@ -90,9 +90,24 @@ const CreateCVPage = () => {
                   )}
                   {showSummaryForm && <SummaryBlock />}
                 </div>
+                {/* Experience block */}
+                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
+                  <h2 className="text-2xl text-center mb-4 text-emerald-400">Experience</h2>
+                  {!experienceForm && (
+                    <div className="flex justify-content-center m-4">
+                      <Button
+                        label='Add experience'
+                        className="p-button-rounded p-button-success"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setExperienceForm(true);
+                        }}
+                      />
+                      </div>
+                  )}
+                  {experienceForm && <ExperienceFormBlock />}
+                </div>
 
-
-                  <h2 className="text-2xl text-center m-4 text-emerald-400">Experience</h2>
           <Form onSubmit={onSubmit}
             initialValues={{ first_name: '', last_name: '', email: '', password: '', birthday: null, country: null, password_confirm: '' }}
             // validate={validate}
@@ -215,8 +230,7 @@ const CreateCVPage = () => {
                 </div>
 
                 ))}
-                {/* add button which calls more work expreience
-                 */}
+
                 <Button 
                   label="+ Add Experience" 
                   className="p-button-raised p-button-rounded p-button-secondary"
