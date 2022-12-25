@@ -48,7 +48,9 @@ const HeaderBlock = (props) => {
     };
     console.log(payloadHeader);
     try {
-      const response = await fetch("api/cvs/", {
+      // we are at route localhost/cvs
+      // we need to send a request to localhost/api/cvs
+      const response = await fetch(`${window.location.origin}/api/cvs`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -58,7 +60,7 @@ const HeaderBlock = (props) => {
       });
       const data = await response.json();
       console.log(data);
-      navigate(`/cvs/${data.id}`);
+      // navigate(`/cvs/${data.id}`);
     }
     catch (error) {
       console.log(error);
@@ -75,7 +77,7 @@ const HeaderBlock = (props) => {
         render={({ handleSubmit }) => (
           <form
             className="p-fluid bg-slate-900 p-6 rounded shadow-md"
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
           >
             <div className="card">
               <div className="formgrid grid">
