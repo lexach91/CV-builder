@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 
-const HeaderBlock = (props) => {
+const HeaderFormBlock = (props) => {
   const { isAuthenticated, user, registered, loading } = useSelector(
     (state) => state.user
   );
@@ -264,7 +264,7 @@ const HeaderBlock = (props) => {
   );
 };
 
-export default HeaderBlock;
+export default HeaderFormBlock;
 
 
 
