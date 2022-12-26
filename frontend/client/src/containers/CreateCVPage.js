@@ -36,7 +36,7 @@ const CreateCVPage = () => {
   const [summaryData, setSummaryData] = useState({
     summary: '',
   });
-  
+
   const [experiences, setExperiences] = useState([]);
   const [experienceForm, setExperienceForm] = useState(false);
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -64,6 +64,12 @@ const CreateCVPage = () => {
         job_title: data.header.job_title,
       });
 
+    if (data.summary) {
+      setSummaryExists(true);
+      console.log("summary exists");
+      setSummaryData({
+        summary: data.summary.summary,
+      });
     }
   };
 
