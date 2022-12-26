@@ -7,7 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import HeaderFormBlock from "../components/HeaderFormBlock";
-import SummaryBlock from "../components/SummaryBlock";
+import SummaryFormBlock from "../components/SummaryFormBlock";
 import ExperienceFormBlock from "../components/ExperienceFormBlock";
 
 
@@ -131,7 +131,7 @@ const CreateCVPage = () => {
                       />
                     </div>
                   )}
-                  {showSummaryForm && <SummaryBlock />}
+                  {showSummaryForm && <SummaryFormBlock />}
                 </div>
                 {/* Experience block */}
                 <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
