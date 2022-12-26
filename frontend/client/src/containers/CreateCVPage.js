@@ -32,6 +32,11 @@ const CreateCVPage = () => {
   });
 
   const [showSummaryForm, setShowSummaryForm] = useState(false);
+  const [summaryExists, setSummaryExists] = useState(false);
+  const [summaryData, setSummaryData] = useState({
+    summary: '',
+  });
+  
   const [experiences, setExperiences] = useState([]);
   const [experienceForm, setExperienceForm] = useState(false);
   const { isAuthenticated } = useSelector((state) => state.user);
