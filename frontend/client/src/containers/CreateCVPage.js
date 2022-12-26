@@ -53,7 +53,6 @@ const CreateCVPage = () => {
     if (data.header) {
       setHeaderExists(true);
       console.log("header exists");
-      // get the header data
       setHeaderData({
         first_name: data.header.first_name,
         last_name: data.header.last_name,
@@ -132,6 +131,15 @@ const CreateCVPage = () => {
                   <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
                   {!showSummaryForm && (
                     <div className="flex justify-content-center m-4">
+                      {/* Check if summary exist */}
+                      {summaryExists && (
+                        <div className="flex justify-content-center m-4">
+                          <div>
+                            {/* summaryData */}
+                            {summaryData.summary}
+                          </div>
+                        </div>
+                      )}
                       <Button
                         label='Add summary'
                         className="p-button-rounded p-button-success"
