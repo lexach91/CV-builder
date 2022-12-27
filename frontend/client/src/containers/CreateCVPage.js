@@ -7,7 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import HeaderFormBlock from "../components/HeaderFormBlock";
-import SummaryBlock from "../components/SummaryBlock";
+import SummaryFormBlock from "../components/SummaryFormBlock";
 import ExperienceFormBlock from "../components/ExperienceFormBlock";
 
 
@@ -32,6 +32,11 @@ const CreateCVPage = () => {
   });
 
   const [showSummaryForm, setShowSummaryForm] = useState(false);
+  const [summaryExists, setSummaryExists] = useState(false);
+  const [summaryData, setSummaryData] = useState({
+    summary: '',
+  });
+
   const [experiences, setExperiences] = useState([]);
   const [experienceForm, setExperienceForm] = useState(false);
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -48,7 +53,6 @@ const CreateCVPage = () => {
     if (data.header) {
       setHeaderExists(true);
       console.log("header exists");
-      // get the header data
       setHeaderData({
         first_name: data.header.first_name,
         last_name: data.header.last_name,
@@ -58,7 +62,14 @@ const CreateCVPage = () => {
         url_link: data.header.url_link,
         job_title: data.header.job_title,
       });
+    }
 
+    if (data.summary) {
+      setSummaryExists(true);
+      console.log("summary exists");
+      setSummaryData({
+        summary: data.summary.summary,
+      });
     }
   };
 
@@ -77,225 +88,95 @@ const CreateCVPage = () => {
         <div className="flex justify-content-center">
           <div className="card min-w-screen flex justify-content-center flex-column align-content-center">
             <h1 className="text-center">Create CV</h1>
-                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
-                  <h2 className="text-2xl text-center mb-4 text-emerald-400">Header</h2>
-                  {/* Header block */}
-                  {!showHeaderForm && (
+            <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
+              <h2 className="text-2xl text-center mb-4 text-emerald-400">Header</h2>
+              {/* Header block */}
+              {!showHeaderForm && (
+                <div className="flex justify-content-center m-4">
+                  {/* Check if header exist */}
+                  {headerExists && (
                     <div className="flex justify-content-center m-4">
-                      {/* Check if header exist */}
-                      {headerExists && (
-                        <div className="flex justify-content-center m-4">
-                          <div>
-                            {/* headerData */}
-                            {headerData.first_name} {headerData.last_name}
-                            {headerData.job_title}
-                            {headerData.email}
-                            {headerData.phone}
-                            {headerData.address}
-                            {headerData.url_link}
-                          </div>
-                          <Button
-                            label='Edit header'
-                            className="p-button-rounded p-button-success"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setShowHeaderForm(true);                        
-                            }}
-                          />
-                        </div>
-                      )}
-                    <Button 
-                      label='Add header'
-                      className="p-button-rounded p-button-success"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setShowHeaderForm(true);                        
-                      }}
-                    />
-                    </div>
-                  )}
-                  {showHeaderForm && <HeaderFormBlock id={cvId} />}
-                </div>
-                {/* Summary block */}
-                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
-                  <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
-                  {!showSummaryForm && (
-                    <div className="flex justify-content-center m-4">
+                      <div>
+                        {/* headerData */}
+                        {headerData.first_name} {headerData.last_name}
+                        {headerData.job_title}
+                        {headerData.email}
+                        {headerData.phone}
+                        {headerData.address}
+                        {headerData.url_link}
+                      </div>
                       <Button
-                        label='Add summary'
+                        label='Edit header'
                         className="p-button-rounded p-button-success"
                         onClick={(e) => {
                           e.preventDefault();
-                          setShowSummaryForm(true);                        
+                          setShowHeaderForm(true);                        
                         }}
                       />
                     </div>
                   )}
-                  {showSummaryForm && <SummaryBlock />}
+                <Button 
+                  label='Add header'
+                  className="p-button-rounded p-button-success"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowHeaderForm(true);                        
+                  }}
+                />
                 </div>
-                {/* Experience block */}
-                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
-                  <h2 className="text-2xl text-center mb-4 text-emerald-400">Experience</h2>
-                  {!experienceForm && (
+              )}
+              {showHeaderForm && <HeaderFormBlock id={cvId} />}
+            </div>
+            {/* Summary block */}
+            <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
+              <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
+              {!showSummaryForm && (
+                <div className="flex justify-content-center m-4">
+                  {/* Check if summary exist */}
+                  {summaryExists && (
                     <div className="flex justify-content-center m-4">
-                      <Button
-                        label='Add experience'
-                        className="p-button-rounded p-button-success"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setExperienceForm(true);
-                        }}
-                      />
+                      <div>
+                        {/* summaryData */}
+                        {summaryData.summary}
                       </div>
+                    </div>
                   )}
-                  {experienceForm && <ExperienceFormBlock />}
-                </div>
-
-          <Form onSubmit={onSubmit}
-            initialValues={{ first_name: '', last_name: '', email: '', password: '', birthday: null, country: null, password_confirm: '' }}
-            // validate={validate}
-            render={({ handleSubmit }) => (
-              <form
-                className="p-fluid bg-slate-900 p-6 rounded shadow-md"
-              >
-                {experiences.map((experience, index) => (
-
-                <div className="card mt-4 border-500 border-3 border-round p-4">
-
-                  <div className="card">
-                    <div className="formgrid grid">
-                      <div className="field col">
-                        <Field name="company" render={({ input, meta }) => (
-                          <div className="field">
-                            <span className="p-float-label">
-                              <InputText
-                                id={`company${index}`}
-                                {...input}
-                                autoFocus
-                                className=""
-                              />
-                              <label
-                                htmlFor={`company${index}`}
-                                className="">
-                                  company
-                              </label>
-                            </span>
-                          </div>
-                        )} />
-                      </div>
-                      <div className="field col">
-                        <Field name="position" render={({ input, meta }) => (
-                          <div className="field">
-                            <span className="p-float-label">
-                              <InputText
-                                id={`position${index}`}
-                                {...input}
-                                autoFocus
-                                className=""
-                              />
-                              <label
-                                htmlFor={`position${index}`}
-                                className="">
-                                  position
-                              </label>
-                            </span>
-                          </div>
-                        )} />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card">
-                    <div className="formgrid grid">
-                      <div className="field col">
-                        <Field name="start_date" render={({ input, meta }) => (
-                          <div className="field">
-                            <span className="p-float-label">
-                              <InputText
-                                id={`start_date${index}`}
-                                {...input}
-                                autoFocus
-                                className=""
-                              />
-                              <label
-                                htmlFor={`start_date${index}`}
-                                className="">
-                                  start_date
-                              </label>
-                            </span>
-                          </div>
-                        )} />
-                      </div>
-                      <div className="field col">
-                        <Field name="end_date" render={({ input, meta }) => (
-                          <div className="field">
-                            <span className="p-float-label">
-                              <InputText
-                                id={`end_date${index}`}
-                                {...input}
-                                autoFocus
-                                className=""
-                              />
-                              <label
-                                htmlFor={`end_date${index}`}
-                                className="">
-                                  end_date
-                              </label>
-                            </span>
-
-                          </div>
-                        )} />
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div className="formgrid grid">
-                        <Field name="description" render={({ input, meta }) => (
-                            <div className="field col w-full">
-                              <span className="p-float-label">
-                                <InputTextarea
-                                  id={`description${index}`}
-                                  {...input}
-                                  autoFocus
-                                  className=""
-                                />
-                                <label
-                                  htmlFor={`description${index}`}
-                                  className="">
-                                    description
-                                </label>
-                              </span>
-                            </div>
-                          )} />
-                      </div>
-                    </div>
-                  </div>
-                  <Button type="button" label="Save" icon="pi pi-check" onClick={() => this.addExperience()} />
-                
-                </div>
-
-                ))}
-
-                {/* <Button 
-                  label="+ Add Experience" 
-                  className="p-button-raised p-button-rounded p-button-secondary"
-                  id="add-experience"
-                  onClick={
-                    (e) => {
+                  <Button
+                    label='Add summary'
+                    className="p-button-rounded p-button-success"
+                    onClick={(e) => {
                       e.preventDefault();
-                      setExperiences([...experiences, {id: experiences.length}]);
-                    }
-                  }
-                /> */}
-                
-                
+                      setShowSummaryForm(true);                        
+                    }}
+                  />
+                </div>
+              )}
+              {showSummaryForm && <SummaryFormBlock />}
+            </div>
+            {/* Experience block */}
+            <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
+              <h2 className="text-2xl text-center mb-4 text-emerald-400">Experience</h2>
+              {!experienceForm && (
+                <div className="flex justify-content-center m-4">
+                  <Button
+                    label='Add experience'
+                    className="p-button-rounded p-button-success"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setExperienceForm(true);
+                    }}
+                  />
+                </div>
+              )}
+              {experienceForm && <ExperienceFormBlock />}
+            </div>
 
-              </form>
-              )} />
           </div>
         </div>
-
       </div>
     </Layout>
   );
+
 }
 
 export default CreateCVPage;

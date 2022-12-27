@@ -5,7 +5,7 @@ import { Button } from 'primereact/button'
 
 
 
-const SummaryBlock = () => {
+const SummaryFormBlock = () => {
   const [summary, setSummary] = useState({
     summary: '',
   });
@@ -57,7 +57,7 @@ const SummaryBlock = () => {
   );
 };
 
-export default SummaryBlock;
+export default SummaryFormBlock;
 
 
 
