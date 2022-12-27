@@ -48,9 +48,8 @@ const HeaderFormBlock = (props) => {
     };
     console.log(payloadHeader);
     try {
-      // we are at route localhost/cvs
-      // we need to send a request to localhost/api/cvs
-      const response = await fetch(`${window.location.origin}/api/cvs`, {
+      console.log("We are in the header form block");
+      const response = await fetch(`/api/cvs/header/`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -61,6 +60,7 @@ const HeaderFormBlock = (props) => {
       const data = await response.json();
       console.log(data);
       // navigate(`/cvs/${data.id}`);
+      console.log("We are in the header form block with success");
     }
     catch (error) {
       console.log(error);
