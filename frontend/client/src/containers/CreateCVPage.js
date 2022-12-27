@@ -62,6 +62,7 @@ const CreateCVPage = () => {
         url_link: data.header.url_link,
         job_title: data.header.job_title,
       });
+    }
 
     if (data.summary) {
       setSummaryExists(true);
@@ -87,95 +88,95 @@ const CreateCVPage = () => {
         <div className="flex justify-content-center">
           <div className="card min-w-screen flex justify-content-center flex-column align-content-center">
             <h1 className="text-center">Create CV</h1>
-                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
-                  <h2 className="text-2xl text-center mb-4 text-emerald-400">Header</h2>
-                  {/* Header block */}
-                  {!showHeaderForm && (
+            <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
+              <h2 className="text-2xl text-center mb-4 text-emerald-400">Header</h2>
+              {/* Header block */}
+              {!showHeaderForm && (
+                <div className="flex justify-content-center m-4">
+                  {/* Check if header exist */}
+                  {headerExists && (
                     <div className="flex justify-content-center m-4">
-                      {/* Check if header exist */}
-                      {headerExists && (
-                        <div className="flex justify-content-center m-4">
-                          <div>
-                            {/* headerData */}
-                            {headerData.first_name} {headerData.last_name}
-                            {headerData.job_title}
-                            {headerData.email}
-                            {headerData.phone}
-                            {headerData.address}
-                            {headerData.url_link}
-                          </div>
-                          <Button
-                            label='Edit header'
-                            className="p-button-rounded p-button-success"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setShowHeaderForm(true);                        
-                            }}
-                          />
-                        </div>
-                      )}
-                    <Button 
-                      label='Add header'
-                      className="p-button-rounded p-button-success"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setShowHeaderForm(true);                        
-                      }}
-                    />
-                    </div>
-                  )}
-                  {showHeaderForm && <HeaderFormBlock id={cvId} />}
-                </div>
-                {/* Summary block */}
-                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
-                  <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
-                  {!showSummaryForm && (
-                    <div className="flex justify-content-center m-4">
-                      {/* Check if summary exist */}
-                      {summaryExists && (
-                        <div className="flex justify-content-center m-4">
-                          <div>
-                            {/* summaryData */}
-                            {summaryData.summary}
-                          </div>
-                        </div>
-                      )}
+                      <div>
+                        {/* headerData */}
+                        {headerData.first_name} {headerData.last_name}
+                        {headerData.job_title}
+                        {headerData.email}
+                        {headerData.phone}
+                        {headerData.address}
+                        {headerData.url_link}
+                      </div>
                       <Button
-                        label='Add summary'
+                        label='Edit header'
                         className="p-button-rounded p-button-success"
                         onClick={(e) => {
                           e.preventDefault();
-                          setShowSummaryForm(true);                        
+                          setShowHeaderForm(true);                        
                         }}
                       />
                     </div>
                   )}
-                  {showSummaryForm && <SummaryFormBlock />}
+                <Button 
+                  label='Add header'
+                  className="p-button-rounded p-button-success"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowHeaderForm(true);                        
+                  }}
+                />
                 </div>
-                {/* Experience block */}
-                <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
-                  <h2 className="text-2xl text-center mb-4 text-emerald-400">Experience</h2>
-                  {!experienceForm && (
+              )}
+              {showHeaderForm && <HeaderFormBlock id={cvId} />}
+            </div>
+            {/* Summary block */}
+            <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
+              <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
+              {!showSummaryForm && (
+                <div className="flex justify-content-center m-4">
+                  {/* Check if summary exist */}
+                  {summaryExists && (
                     <div className="flex justify-content-center m-4">
-                      <Button
-                        label='Add experience'
-                        className="p-button-rounded p-button-success"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setExperienceForm(true);
-                        }}
-                      />
+                      <div>
+                        {/* summaryData */}
+                        {summaryData.summary}
+                      </div>
                     </div>
                   )}
-                  {experienceForm && <ExperienceFormBlock />}
+                  <Button
+                    label='Add summary'
+                    className="p-button-rounded p-button-success"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowSummaryForm(true);                        
+                    }}
+                  />
                 </div>
+              )}
+              {showSummaryForm && <SummaryFormBlock />}
+            </div>
+            {/* Experience block */}
+            <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
+              <h2 className="text-2xl text-center mb-4 text-emerald-400">Experience</h2>
+              {!experienceForm && (
+                <div className="flex justify-content-center m-4">
+                  <Button
+                    label='Add experience'
+                    className="p-button-rounded p-button-success"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setExperienceForm(true);
+                    }}
+                  />
+                </div>
+              )}
+              {experienceForm && <ExperienceFormBlock />}
+            </div>
 
           </div>
         </div>
-
       </div>
     </Layout>
   );
+
 }
 
 export default CreateCVPage;
