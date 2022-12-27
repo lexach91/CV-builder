@@ -6,16 +6,18 @@ const router = express.Router();
 
 
 // for the endpoint on express
-router.post(`/api/cvs`, async (req, res) => {
+router.post(`/api/cvs/header/`, async (req, res) => {
   // parse access token from cookie
+  console.log('req.cookies', req.cookies);
   const { access } = req.cookies;
-  
-  const { id } = req.query;
+  console.log(req.body)
+  // get id from request body
+  const id = req.body.id;
 
   console.log('CV id for creating a header', id);
 
   try {
-    const apiRes = await fetch(`${process.env.API_URL}/api/cvs/${id}/header`, {
+    const apiRes = await fetch(`${process.env.API_URL}/api/cvs/${id}/header/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -32,7 +34,7 @@ router.post(`/api/cvs`, async (req, res) => {
     // const data = await apiRes.json();
 
     // return res.status(apiRes.status).json(data);
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       error: 'Something went wrong when creating new CV and it is coming from the ROUTE',
     });
