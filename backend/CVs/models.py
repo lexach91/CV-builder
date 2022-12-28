@@ -12,7 +12,11 @@ class Theme(models.Model):
 
 class CV(models.Model):
     """CV model"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="cvs"
+    )
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -30,7 +34,11 @@ class CV(models.Model):
 
 class Header(models.Model):
     """Header model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="header")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="header"
+    )
     job_title = models.CharField(
         max_length=255,
         null=True,
@@ -70,7 +78,11 @@ class Header(models.Model):
 
 class Summary(models.Model):
     """Summary model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="summary")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="summary"
+    )
     summary = models.TextField(
         blank=True,
         null=True,
@@ -86,7 +98,11 @@ class Summary(models.Model):
 
 class ExperienceSection(models.Model):
     """ExperienceSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="experience_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="experience_section"
+    )
 
     def __str__(self):
         return f"ExperienceSection for {self.cv.title} of {self.cv.user}"
@@ -156,7 +172,7 @@ class ExperienceBullet(models.Model):
     )
 
     def __str__(self):
-        return f"CV experience bullet of {self.experience.experience_section.cv.user}"
+        return f"{self.experience.experience_section.cv.user} experience"
 
     class Meta:
         verbose_name_plural = "Experience bullets"
@@ -164,7 +180,11 @@ class ExperienceBullet(models.Model):
 
 class EducationSection(models.Model):
     """EducationSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="education_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="education_section"
+    )
 
     def __str__(self):
         return f"Educations for {self.cv} of {self.cv.user}"
@@ -232,7 +252,7 @@ class EducationBullet(models.Model):
     )
 
     def __str__(self):
-        return f"CV education bullet of {self.education.education_section.cv.user}"
+        return f"{self.education.education_section.cv.user} CV education"
 
     class Meta:
         verbose_name_plural = "Education bullets"
@@ -240,7 +260,11 @@ class EducationBullet(models.Model):
 
 class ShowcaseSection(models.Model):
     """ShowcaseSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="showcase_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="showcase_section"
+    )
 
     def __str__(self):
         return f"ShowcaseSection for {self.cv.title} of {self.cv.user}"
@@ -308,7 +332,7 @@ class ShowcaseBullet(models.Model):
     )
 
     def __str__(self):
-        return f"CV showcase bullet of {self.showcase.showcase_section.cv.user}"
+        return f"{self.showcase.showcase_section.cv.user} CV showcase"
 
     class Meta:
         verbose_name_plural = "Project bullets"
@@ -316,7 +340,11 @@ class ShowcaseBullet(models.Model):
 
 class SoftSkillSection(models.Model):
     """SoftSkillSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="soft_skill_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="soft_skill_section"
+    )
 
     def __str__(self):
         return f"SoftSkillSection for {self.cv.title} of {self.cv.user}"
@@ -348,10 +376,14 @@ class SoftSkill(models.Model):
 
 class ProfessionalSkillSection(models.Model):
     """HardSkillSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="professional_skill_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="professional_skill_section"
+    )
 
     def __str__(self):
-        return f"ProfessionalSkillSection for {self.cv.title} of {self.cv.user}"
+        return f"ProfessionalSkill for {self.cv.title} of {self.cv.user}"
 
     class Meta:
         verbose_name_plural = "Professional Skill sections"
@@ -372,7 +404,7 @@ class ProfessionalSkill(models.Model):
     )
 
     def __str__(self):
-        return f"CV professional skill of {self.professional_skill_section.cv.user}"
+        return f"{self.professional_skill_section.cv.user} professional skill"
 
     class Meta:
         verbose_name_plural = "Professional skills"
@@ -380,7 +412,11 @@ class ProfessionalSkill(models.Model):
 
 class SocialLinkSection(models.Model):
     """SocialLinkSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="social_link_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="social_link_section"
+    )
 
     def __str__(self):
         return f"SocialLinkSection for {self.cv.title} of {self.cv.user}"
@@ -417,7 +453,11 @@ class SocialLink(models.Model):
 
 class LanguageSection(models.Model):
     """LanguageSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="language_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="language_section"
+    )
 
     def __str__(self):
         return f"LanguageSection for {self.cv.title} of {self.cv.user}"
@@ -454,7 +494,11 @@ class Language(models.Model):
 
 class VolunteerSection(models.Model):
     """VolunteerSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="volunteer_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="volunteer_section"
+    )
 
     def __str__(self):
         return f"VolunteerSection for {self.cv.title} of {self.cv.user}"
@@ -521,7 +565,7 @@ class VolunteerBullet(models.Model):
     )
 
     def __str__(self):
-        return f"CV volunteer bullet of {self.volunteer.volunteer_section.cv.user}"
+        return f"{self.volunteer.volunteer_section.cv.user} volunteer bullet"
 
     class Meta:
         verbose_name_plural = "Volunteer bullets"
@@ -529,7 +573,11 @@ class VolunteerBullet(models.Model):
 
 class InterestSection(models.Model):
     """InterestSection model"""
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="interest_section")
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name="interest_section"
+    )
 
     def __str__(self):
         return f"InterestSection for {self.cv.title} of {self.cv.user}"
