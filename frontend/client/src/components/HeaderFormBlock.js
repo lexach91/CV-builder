@@ -14,13 +14,6 @@ const HeaderFormBlock = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  
-  // const [job_title, setJobTitle] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [url_link, setUrlLink] = useState("");
-
   const { id, job_title, email, phone, address, url_link } = props;
   
 
@@ -28,11 +21,6 @@ const HeaderFormBlock = (props) => {
 
 
   const [headerFormData, setHeaderFormData] = useState({});
-
-
-
-
-
 
   const navigate = useNavigate();
   useEffect(() => {
