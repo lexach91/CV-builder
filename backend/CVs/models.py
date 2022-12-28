@@ -12,7 +12,11 @@ class Theme(models.Model):
 
 class CV(models.Model):
     """CV model"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="cvs"
+    )
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
