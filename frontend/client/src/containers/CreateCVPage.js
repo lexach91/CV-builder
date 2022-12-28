@@ -81,6 +81,15 @@ const CreateCVPage = () => {
     }
   }, [isAuthenticated]);
 
+  let headerProps = {
+    id: cvId,
+    job_title: headerData.job_title,
+    email: headerData.email,
+    phone: headerData.phone,
+    address: headerData.address,
+    url_link: headerData.url_link,
+  };
+
 
   return (
     <Layout title='CV-builder | My CVs' content='Welcome to the Create CV page'>
@@ -94,7 +103,7 @@ const CreateCVPage = () => {
               {!showHeaderForm && (
                 <div className="flex justify-content-center m-4">
                   {/* Check if header exist */}
-                  {headerExists && (
+                  {headerExists ? (
                     <div className="flex justify-content-center m-4">
                       <div>
                         {/* headerData */}
@@ -110,22 +119,25 @@ const CreateCVPage = () => {
                         className="p-button-rounded p-button-success"
                         onClick={(e) => {
                           e.preventDefault();
-                          setShowHeaderForm(true);                        
+                          setShowHeaderForm(true);     
+                          // send header data to header form block
                         }}
                       />
                     </div>
+                  ) : (
+                    <Button 
+                      label='Add header'
+                      className="p-button-rounded p-button-success"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setShowHeaderForm(true);                        
+                      }}
+                    />
+
                   )}
-                <Button 
-                  label='Add header'
-                  className="p-button-rounded p-button-success"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowHeaderForm(true);                        
-                  }}
-                />
                 </div>
               )}
-              {showHeaderForm && <HeaderFormBlock id={cvId} />}
+              {showHeaderForm && <HeaderFormBlock {...headerProps}  />}
             </div>
             {/* Summary block */}
             <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
