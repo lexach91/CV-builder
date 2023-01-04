@@ -76,7 +76,7 @@ const HeaderFormBlock = (props) => {
     <>
       <Form
         onSubmit={responseHeader}
-        // initialValues={{ job_title: job_title, email: email, phone: phone, address: address, url_link: url_link }}
+        initialValues={{ job_title: job_title, email: email, phone: phone, address: address, url_link: url_link }}
         // validate={validate}
         render={({ handleSubmit }) => (
           <form
@@ -159,7 +159,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="job_title" {...input}
-                          value={job_title}
                           autoFocus
                           className=""
                         />
@@ -182,7 +181,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="email" {...input}
-                          value={email}
                           autoFocus
                           className=""
                         />
@@ -202,7 +200,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="phone" {...input}
-                          value={phone}
                           autoFocus
                           className=""
                         />
@@ -225,7 +222,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="address" {...input}
-                          value={address}
                           autoFocus
                           className=""
                         />
@@ -247,7 +243,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="url_link" {...input}
-                          value={url_link}
                           autoFocus
                           className=""
                         />
