@@ -14,25 +14,14 @@ const HeaderFormBlock = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  
-  // const [job_title, setJobTitle] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [url_link, setUrlLink] = useState("");
+  const { id, header_id, job_title, email, phone, address, url_link } = props;
 
-  const { id, job_title, email, phone, address, url_link } = props;
+  // const id_exist = id ? true : false;
   
 
   const [headerExists, setHeaderExists] = useState(false);
 
-
   const [headerFormData, setHeaderFormData] = useState({});
-
-
-
-
-
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -63,23 +52,49 @@ const HeaderFormBlock = (props) => {
       url_link: data.url_link,
     };
     console.log(payloadHeader);
-    try {
-      console.log("We are in the header form block");
-      const response = await fetch(`/api/cvs/header/`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          },
-        body: JSON.stringify(payloadHeader),
-      });
-      const data = await response.json();
-      console.log(data);
-      // navigate(`/cvs/${data.id}`);
-      console.log("We are in the header form block with success");
-    }
-    catch (error) {
-      console.log(error);
+
+    if (!header_id) {
+      // If create, then use POST
+      try {
+        console.log("We are in the header form block with id_exist = false");
+        const response = await fetch(`/api/cvs/header/`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            },
+          body: JSON.stringify(payloadHeader),
+        });
+        const data = await response.json();
+        console.log(data);
+        // setHeaderExists(true);
+        // navigate(`/cvs/${data.id}`);
+        console.log("We are in the header form block with success on create");
+      }
+      catch (error) {
+        console.log(error);
+      }
+    } else {
+      // If update, then use PUT
+      try {
+        console.log("We are in the header form block with id_exist = true");
+        const response = await fetch(`/api/cvs/header/`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            },
+          body: JSON.stringify(payloadHeader),
+        });
+        const data = await response.json();
+        console.log(data);
+        // setHeaderExists(true);
+        // navigate(`/cvs/${data.id}`);
+        console.log("We are in the header form block with success on update");
+      }
+      catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -88,7 +103,7 @@ const HeaderFormBlock = (props) => {
     <>
       <Form
         onSubmit={responseHeader}
-        // initialValues={{ job_title: job_title, email: email, phone: phone, address: address, url_link: url_link }}
+        initialValues={{ job_title: job_title, email: email, phone: phone, address: address, url_link: url_link }}
         // validate={validate}
         render={({ handleSubmit }) => (
           <form
@@ -171,7 +186,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="job_title" {...input}
-                          value={job_title}
                           autoFocus
                           className=""
                         />
@@ -194,7 +208,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="email" {...input}
-                          value={email}
                           autoFocus
                           className=""
                         />
@@ -214,7 +227,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="phone" {...input}
-                          value={phone}
                           autoFocus
                           className=""
                         />
@@ -237,7 +249,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="address" {...input}
-                          value={address}
                           autoFocus
                           className=""
                         />
@@ -259,7 +270,6 @@ const HeaderFormBlock = (props) => {
                       <span className="p-float-label">
                         <InputText
                           id="url_link" {...input}
-                          value={url_link}
                           autoFocus
                           className=""
                         />
