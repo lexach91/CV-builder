@@ -81,14 +81,35 @@ const CreateCVPage = () => {
     }
   }, [isAuthenticated]);
 
-  let headerProps = {
-    id: cvId,
-    job_title: headerData.job_title,
-    email: headerData.email,
-    phone: headerData.phone,
-    address: headerData.address,
-    url_link: headerData.url_link,
-  };
+  // let headerProps = {
+  //   id: cvId,
+  //   header_id: headerData.header_id,
+
+  // };
+  // console.log(headerProps);
+
+  let headerProps = headerExists ? (
+    {
+      id: cvId,
+      header_id: true,
+      job_title: headerData.job_title,
+      email: headerData.email,
+      phone: headerData.phone,
+      address: headerData.address,
+      url_link: headerData.url_link,
+    }
+  ) : (
+    {
+      id: cvId,
+      header_id: false,
+      job_title: headerData.job_title,
+      email: headerData.email,
+      phone: headerData.phone,
+      address: headerData.address,
+      url_link: headerData.url_link,
+    }
+  )
+  console.log(headerProps);
 
 
   return (
