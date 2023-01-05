@@ -53,7 +53,31 @@ const HeaderFormBlock = (props) => {
 
 
 
+  useEffect(() => {
+    if (cvId) {
+      const getCVDetails = async () => {
+        console.log(window.location.origin);
+        const res = await fetch(`${window.location.origin}/api/cvs/?id=${cvId}`);
 
+        const data = await res.json();
+        console.log(data);
+        if (data.header) {
+          setHeaderExists(true);
+          console.log("header exists");
+          setHeaderData({
+            first_name: data.header.first_name,
+            last_name: data.header.last_name,
+            email: data.header.email,
+            phone: data.header.phone,
+            address: data.header.address,
+            url_link: data.header.url_link,
+            job_title: data.header.job_title,
+          });
+        }
+      };
+      getCVDetails();
+    }
+  }, [cvId]);
 
 
   // const CreateCVPage = () => {
