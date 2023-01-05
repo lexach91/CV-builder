@@ -89,6 +89,7 @@ const HeaderFormBlock = (props) => {
     console.log(data);
     setHeaderFormData(data);
     const payloadHeader = {
+      id : cvId,
       job_title: data.job_title,
       email: data.email,
       phone: data.phone,
@@ -143,203 +144,7 @@ const HeaderFormBlock = (props) => {
       }
     }
   };
-
-
-  const headerMainForm = () => {
-    <>
-      <Form
-        onSubmit={responseHeader}
-        // get initialValues() from the headerData
-        initialValues={headerData}
-        // validate={validate}
-        render={({ handleSubmit }) => (
-          <form
-            className="p-fluid bg-slate-900 p-6 rounded shadow-md"
-            onSubmit={handleSubmit}
-          >
-            <div className="card">
-              <div className="formgrid grid">
-                <div className="field col relative">
-                  <div 
-                    className="flex w-full align-items-start justify-content-end">
-                    <Button
-                        className="p-button-rounded p-button-text p-button-plain"
-                        icon="pi pi-question-circle"
-                        tooltip="Go to profile to change your First Name"
-                        disabled
-                        tooltipOptions={{ showOnDisabled: true }}
-                      />
-                  </div>
-                  <Field name="first_name" render={({ input, meta }) => (
-                    <div className="field">
-                      <span className="p-float-label">
-                        <InputText
-                          id="first_name" {...input}
-                          value={firstName}
-                          autoFocus
-                          className="font-bold"
-                          disabled
-                          title="Go to profile to change your first name"
-                        />
-                        <label
-                          htmlFor="first_name"
-                          className="">
-                            First name
-                        </label>
-                      </span>
-                    </div>
-                  )} />
-
-                </div>
-
-                <div className="field col">
-                  <div 
-                    className="flex w-full align-items-start justify-content-end">
-                    <Button
-                        className="p-button-rounded p-button-text p-button-plain"
-                        icon="pi pi-question-circle"
-                        tooltip="Go to profile to change your Last Name"
-                        disabled
-                        tooltipOptions={{ showOnDisabled: true }}
-                      />
-                  </div>
-                  <Field name="last_name" render={({ input, meta }) => (
-                    <div className="field">
-                      <span className="p-float-label">
-                        <InputText
-                          id="last_name" {...input}
-                          value={lastName}
-                          autoFocus
-                          className="font-bold"
-                          disabled
-                        />
-                        <label
-                          htmlFor="last_name"
-                            
-                          className="">
-                            Last name
-                        </label>
-                      </span>
-                    </div>
-                  )} />
-                </div>
-              </div>
-            </div>
-
-            <div className="card mb-4">
-              <div className="formgrid grid">
-                <Field name="job_title" render={({ input, meta }) => (
-                    <div className="field col w-full">
-                      <span className="p-float-label">
-                        <InputText
-                          id="job_title" {...input}
-                          autoFocus
-                          className=""
-                        />
-                        <label
-                          htmlFor="job_title"
-                          className="">
-                            job_title
-                        </label>
-                      </span>
-                    </div>
-                  )} />
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="formgrid grid">
-                <div className="field col">
-                  <Field name="email" render={({ input, meta }) => (
-                    <div className="field">
-                      <span className="p-float-label">
-                        <InputText
-                          id="email" {...input}
-                          autoFocus
-                          className=""
-                        />
-                        <label
-                          htmlFor="email"
-                          className="">
-                            email
-                        </label>
-                      </span>
-                    </div>
-                  )} />
-                </div>
-
-                <div className="field col">
-                  <Field name="phone" render={({ input, meta }) => (
-                    <div className="field">
-                      <span className="p-float-label">
-                        <InputText
-                          id="phone" {...input}
-                          autoFocus
-                          className=""
-                        />
-                        <label
-                          htmlFor="phone"
-                          className="">
-                            phone
-                        </label>
-                      </span>
-                    </div>
-                  )} />
-                </div>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="formgrid grid">
-                <Field name="address" render={({ input, meta }) => (
-                    <div className="field col w-full">
-                      <span className="p-float-label">
-                        <InputText
-                          id="address" {...input}
-                          autoFocus
-                          className=""
-                        />
-                        <label
-                          htmlFor="address"
-                          className="">
-                            address
-                        </label>
-                      </span>
-                    </div>
-                  )} />
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="formgrid grid">
-                <Field name="url_link" render={({ input, meta }) => (
-                    <div className="field col w-full">
-                      <span className="p-float-label">
-                        <InputText
-                          id="url_link" {...input}
-                          autoFocus
-                          className=""
-                        />
-                        <label
-                          htmlFor="url_link"
-                          className="">
-                            url_link
-                        </label>
-                      </span>
-                    </div>
-                  )} />
-              </div>
-            </div>
-
-            <Button
-              label="Save Header"
-              className="mt-2"
-              type="submit"
-            />
-          </form>
-        )} />
-    </>
-  }
+  
 
 
   return (
@@ -352,6 +157,7 @@ const HeaderFormBlock = (props) => {
             <div className="flex justify-content-center m-4">
               <div>
                 {/* headerData */}
+
                 {firstName} {lastName}
                 {headerData.job_title}
                 {headerData.email}
@@ -381,7 +187,200 @@ const HeaderFormBlock = (props) => {
           )}
         </div>
       )}
-      {showHeaderForm && headerMainForm }
+      {showHeaderForm && (
+              <Form
+              onSubmit={responseHeader}
+              // get initialValues() from the headerData
+              initialValues={headerData}
+              // validate={validate}
+              render={({ handleSubmit }) => (
+                <form
+                  className="p-fluid bg-slate-900 p-6 rounded shadow-md"
+                  onSubmit={handleSubmit}
+                >
+                  <div className="card">
+                    <div className="formgrid grid">
+                      <div className="field col relative">
+                        <div 
+                          className="flex w-full align-items-start justify-content-end">
+                          <Button
+                              className="p-button-rounded p-button-text p-button-plain"
+                              icon="pi pi-question-circle"
+                              tooltip="Go to profile to change your First Name"
+                              disabled
+                              tooltipOptions={{ showOnDisabled: true }}
+                            />
+                        </div>
+                        <Field name="first_name" render={({ input, meta }) => (
+                          <div className="field">
+                            <span className="p-float-label">
+                              <InputText
+                                id="first_name" {...input}
+                                value={firstName}
+                                autoFocus
+                                className="font-bold"
+                                disabled
+                                title="Go to profile to change your first name"
+                              />
+                              <label
+                                htmlFor="first_name"
+                                className="">
+                                  First name
+                              </label>
+                            </span>
+                          </div>
+                        )} />
+      
+                      </div>
+      
+                      <div className="field col">
+                        <div 
+                          className="flex w-full align-items-start justify-content-end">
+                          <Button
+                              className="p-button-rounded p-button-text p-button-plain"
+                              icon="pi pi-question-circle"
+                              tooltip="Go to profile to change your Last Name"
+                              disabled
+                              tooltipOptions={{ showOnDisabled: true }}
+                            />
+                        </div>
+                        <Field name="last_name" render={({ input, meta }) => (
+                          <div className="field">
+                            <span className="p-float-label">
+                              <InputText
+                                id="last_name" {...input}
+                                value={lastName}
+                                autoFocus
+                                className="font-bold"
+                                disabled
+                              />
+                              <label
+                                htmlFor="last_name"
+                                  
+                                className="">
+                                  Last name
+                              </label>
+                            </span>
+                          </div>
+                        )} />
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div className="card mb-4">
+                    <div className="formgrid grid">
+                      <Field name="job_title" render={({ input, meta }) => (
+                          <div className="field col w-full">
+                            <span className="p-float-label">
+                              <InputText
+                                id="job_title" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="job_title"
+                                className="">
+                                  job_title
+                              </label>
+                            </span>
+                          </div>
+                        )} />
+                    </div>
+                  </div>
+      
+                  <div className="card">
+                    <div className="formgrid grid">
+                      <div className="field col">
+                        <Field name="email" render={({ input, meta }) => (
+                          <div className="field">
+                            <span className="p-float-label">
+                              <InputText
+                                id="email" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="email"
+                                className="">
+                                  email
+                              </label>
+                            </span>
+                          </div>
+                        )} />
+                      </div>
+      
+                      <div className="field col">
+                        <Field name="phone" render={({ input, meta }) => (
+                          <div className="field">
+                            <span className="p-float-label">
+                              <InputText
+                                id="phone" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="phone"
+                                className="">
+                                  phone
+                              </label>
+                            </span>
+                          </div>
+                        )} />
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div className="card">
+                    <div className="formgrid grid">
+                      <Field name="address" render={({ input, meta }) => (
+                          <div className="field col w-full">
+                            <span className="p-float-label">
+                              <InputText
+                                id="address" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="address"
+                                className="">
+                                  address
+                              </label>
+                            </span>
+                          </div>
+                        )} />
+                    </div>
+                  </div>
+      
+                  <div className="card">
+                    <div className="formgrid grid">
+                      <Field name="url_link" render={({ input, meta }) => (
+                          <div className="field col w-full">
+                            <span className="p-float-label">
+                              <InputText
+                                id="url_link" {...input}
+                                autoFocus
+                                className=""
+                              />
+                              <label
+                                htmlFor="url_link"
+                                className="">
+                                  url_link
+                              </label>
+                            </span>
+                          </div>
+                        )} />
+                    </div>
+                  </div>
+      
+                  <Button
+                    label="Save Header"
+                    className="mt-2"
+                    type="submit"
+                  />
+                </form>
+              )} />
+        )
+      }
     </>
   );
 };
