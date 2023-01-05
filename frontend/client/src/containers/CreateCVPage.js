@@ -2,9 +2,6 @@ import Layout from "../components/Layout";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Form, Field } from 'react-final-form';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import HeaderFormBlock from "../components/HeaderFormBlock";
 import SummaryFormBlock from "../components/SummaryFormBlock";
@@ -17,7 +14,7 @@ const onSubmit = (values) => {
 };
 
 
-const CreateCVPage = () => {
+const CreateCVPage = (props) => {
 
   const [showHeaderForm, setShowHeaderForm] = useState(false);
   const [ headerExists, setHeaderExists ] = useState(false);
