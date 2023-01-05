@@ -174,16 +174,50 @@ const HeaderFormBlock = (props) => {
         <div className="flex justify-content-center m-4">
           {/* Check if header exist */}
           {headerExists ? (
-            <div className="flex justify-content-center m-4">
+            <div className="flex justify-content-center flex-column align-content-center mb-4">
               <div>
                 {/* headerData */}
+                <div className="flex justify-content-center flex-column align-content-center m-4">
+                  <h2  className="text-2xl text-center mb-4 uppercase">
+                    {firstName} {lastName}
+                  </h2>
+                  <div className="flex justify-content-center flex-column align-content-center">
+                    <h3 className="text-xl text-center mb-4 capitalize text-blue-100">job title: 
+                      <span className="font-medium text-900 ml-2"> 
+                        {headerData.job_title}
+                      </span>
+                    </h3>
+                  </div>
+                  <div className="flex justify-content-center flex-column align-content-center">
+                    <h3 className="text-xl text-center mb-4 capitalize text-blue-100">email:
+                      <span className="font-medium lowercase text-900 ml-2"> 
+                        {headerData.email}
+                      </span>
+                    </h3>
+                  </div>
+                  <div className="flex justify-content-center flex-column align-content-center">
+                    <h3 className="text-xl text-center mb-4 capitalize text-blue-100">phone:
+                      <span className="font-medium lowercase text-900 ml-2"> 
+                        {headerData.phone}
+                      </span>
+                    </h3>
+                  </div>
+                  <div className="flex justify-content-center flex-column align-content-center">
+                    <h3 className="text-xl text-center mb-4 capitalize text-blue-100">address:
+                      <span className="font-medium lowercase text-900 ml-2"> 
+                        {headerData.address}
+                      </span>
+                    </h3>
+                  </div>
+                  <div className="flex justify-content-center flex-column align-content-center">
+                    <h3 className="text-xl text-center mb-4 capitalize text-blue-100">url:
+                      <span className="font-medium lowercase text-900 ml-2"> 
+                        {headerData.url_link}
+                      </span>
+                    </h3>
+                  </div>
 
-                {firstName} {lastName}
-                {headerData.job_title}
-                {headerData.email}
-                {headerData.phone}
-                {headerData.address}
-                {headerData.url_link}
+                </div>
               </div>
               <Button
                 label='Edit header'
