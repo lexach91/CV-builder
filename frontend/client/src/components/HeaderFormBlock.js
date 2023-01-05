@@ -114,6 +114,16 @@ const HeaderFormBlock = (props) => {
         console.log(data);
         setHeaderExists(true);
         setShowHeaderForm(false);
+        // set data from response to headerData
+        setHeaderData({
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          url_link: data.url_link,
+          job_title: data.job_title,
+        });
         // navigate(`/cvs/${data.id}`);
         console.log("We are in the header form block with success on create");
       }
@@ -137,6 +147,16 @@ const HeaderFormBlock = (props) => {
         console.log(data);
         setShowHeaderForm(false);
         // navigate(`/cvs/${data.id}`);
+        // set data from response to headerData
+        setHeaderData({
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          url_link: data.url_link,
+          job_title: data.job_title,
+        });
         console.log("We are in the header form block with success on update");
       }
       catch (error) {
