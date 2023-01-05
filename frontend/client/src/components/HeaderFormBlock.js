@@ -4,6 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 const HeaderFormBlock = (props) => {
@@ -15,12 +16,22 @@ const HeaderFormBlock = (props) => {
   const [lastName, setLastName] = useState("");
 
   const [headerExists, setHeaderExists] = useState(false);
-  const [showHeaderForm, setShowHeaderForm] = useState(true);
+  const [showHeaderForm, setShowHeaderForm] = useState(false);
 
   const [headerFormData, setHeaderFormData] = useState({});
 
+  const [headerData, setHeaderData] = useState({
+    first_name: '',
+    last_name: '',
+    job_title: '',
+    email: '',
+    phone: '',
+    address: '',
+    url_link: '',
+  });
+
   // Props from CreateCVPage
-  const { id, header_id, job_title, email, phone, address, url_link } = props;
+  const { cvId } = props;
 
   const navigate = useNavigate();
 
@@ -40,11 +51,18 @@ const HeaderFormBlock = (props) => {
     }
   }, [isAuthenticated, user]);
 
+
+
+
+
+
+  // const CreateCVPage = () => {
+  
+
   const responseHeader = async (data, form) => {
     console.log(data);
     setHeaderFormData(data);
     const payloadHeader = {
-      id: id,
       job_title: data.job_title,
       email: data.email,
       phone: data.phone,
@@ -53,7 +71,7 @@ const HeaderFormBlock = (props) => {
     };
     console.log(payloadHeader);
 
-    if (!header_id) {
+    if (!headerExists) {
       // If create, then use POST
       try {
         console.log("We are in the header form block with id_exist = false");
@@ -77,6 +95,7 @@ const HeaderFormBlock = (props) => {
       }
     } else {
       // If update, then use PUT
+      setHeaderExists(true);
       try {
         console.log("We are in the header form block with id_exist = true");
         const response = await fetch(`/api/cvs/header/`, {
@@ -100,11 +119,12 @@ const HeaderFormBlock = (props) => {
   };
 
 
-  return (
+  const headerMainForm = () => {
     <>
       <Form
         onSubmit={responseHeader}
-        initialValues={{ job_title: job_title, email: email, phone: phone, address: address, url_link: url_link }}
+        // get initialValues() from the headerData
+        initialValues={headerData}
         // validate={validate}
         render={({ handleSubmit }) => (
           <form
@@ -289,14 +309,55 @@ const HeaderFormBlock = (props) => {
               label="Save Header"
               className="mt-2"
               type="submit"
-              />
+            />
           </form>
         )} />
+    </>
+  }
+
+
+  return (
+    <>
+      {/* Header block */}
+      {!showHeaderForm && (
+        <div className="flex justify-content-center m-4">
+          {/* Check if header exist */}
+          {headerExists ? (
+            <div className="flex justify-content-center m-4">
+              <div>
+                {/* headerData */}
+                {headerData.first_name} {headerData.last_name}
+                {headerData.job_title}
+                {headerData.email}
+                {headerData.phone}
+                {headerData.address}
+                {headerData.url_link}
+              </div>
+              <Button
+                label='Edit header'
+                className="p-button-rounded p-button-success"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowHeaderForm(true);     
+                  // send header data to header form block
+                }}
+              />
+            </div>
+          ) : (
+            <Button 
+              label='Add header'
+              className="p-button-rounded p-button-success"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowHeaderForm(true);                        
+              }}
+            />
+          )}
+        </div>
+      )}
+      {showHeaderForm && headerMainForm }
     </>
   );
 };
 
 export default HeaderFormBlock;
-
-
-
