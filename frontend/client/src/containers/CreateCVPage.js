@@ -8,25 +8,7 @@ import SummaryFormBlock from "../components/SummaryFormBlock";
 import ExperienceFormBlock from "../components/ExperienceFormBlock";
 
 
-
-const onSubmit = (values) => {
-  console.log(values);
-};
-
-
 const CreateCVPage = (props) => {
-
-  const [showHeaderForm, setShowHeaderForm] = useState(false);
-  const [ headerExists, setHeaderExists ] = useState(false);
-  const [headerData, setHeaderData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    phone: '',
-    address: '',
-    url_link: '',
-    job_title: '',
-  });
 
   const [showSummaryForm, setShowSummaryForm] = useState(false);
   const [summaryExists, setSummaryExists] = useState(false);
@@ -47,19 +29,6 @@ const CreateCVPage = (props) => {
 
     const data = await res.json();
     console.log(data);
-    if (data.header) {
-      setHeaderExists(true);
-      console.log("header exists");
-      setHeaderData({
-        first_name: data.header.first_name,
-        last_name: data.header.last_name,
-        email: data.header.email,
-        phone: data.header.phone,
-        address: data.header.address,
-        url_link: data.header.url_link,
-        job_title: data.header.job_title,
-      });
-    }
 
     if (data.summary) {
       setSummaryExists(true);
@@ -78,17 +47,8 @@ const CreateCVPage = (props) => {
     }
   }, [isAuthenticated]);
 
-  // let headerProps = {
-  //   id: cvId,
-  //   header_id: headerData.header_id,
-
-  // };
-  // console.log(headerProps);
-
   let headerProps = {
     cvId: cvId,
-  // first_name: headerData.first_name,
-
   }
     
 
