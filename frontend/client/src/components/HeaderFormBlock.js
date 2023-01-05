@@ -14,16 +14,16 @@ const HeaderFormBlock = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const { id, header_id, job_title, email, phone, address, url_link } = props;
-
-  // const id_exist = id ? true : false;
-  
-
   const [headerExists, setHeaderExists] = useState(false);
+  const [showHeaderForm, setShowHeaderForm] = useState(true);
 
   const [headerFormData, setHeaderFormData] = useState({});
 
+  // Props from CreateCVPage
+  const { id, header_id, job_title, email, phone, address, url_link } = props;
+
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
@@ -67,7 +67,8 @@ const HeaderFormBlock = (props) => {
         });
         const data = await response.json();
         console.log(data);
-        // setHeaderExists(true);
+        setHeaderExists(true);
+        setShowHeaderForm(false);
         // navigate(`/cvs/${data.id}`);
         console.log("We are in the header form block with success on create");
       }
@@ -88,7 +89,7 @@ const HeaderFormBlock = (props) => {
         });
         const data = await response.json();
         console.log(data);
-        // setHeaderExists(true);
+        setShowHeaderForm(false);
         // navigate(`/cvs/${data.id}`);
         console.log("We are in the header form block with success on update");
       }
