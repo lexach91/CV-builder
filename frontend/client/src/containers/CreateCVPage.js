@@ -85,27 +85,13 @@ const CreateCVPage = (props) => {
   // };
   // console.log(headerProps);
 
-  let headerProps = headerExists ? (
-    {
-      id: cvId,
-      header_id: true,
-      job_title: headerData.job_title,
-      email: headerData.email,
-      phone: headerData.phone,
-      address: headerData.address,
-      url_link: headerData.url_link,
-    }
-  ) : (
-    {
-      id: cvId,
-      header_id: false,
-      job_title: headerData.job_title,
-      email: headerData.email,
-      phone: headerData.phone,
-      address: headerData.address,
-      url_link: headerData.url_link,
-    }
-  )
+  let headerProps = {
+    cvId: cvId,
+  // first_name: headerData.first_name,
+
+  }
+    
+
   console.log(headerProps);
 
 
@@ -117,45 +103,7 @@ const CreateCVPage = (props) => {
             <h1 className="text-center">Create CV</h1>
             <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
               <h2 className="text-2xl text-center mb-4 text-emerald-400">Header</h2>
-              {/* Header block */}
-              {!showHeaderForm && (
-                <div className="flex justify-content-center m-4">
-                  {/* Check if header exist */}
-                  {headerExists ? (
-                    <div className="flex justify-content-center m-4">
-                      <div>
-                        {/* headerData */}
-                        {headerData.first_name} {headerData.last_name}
-                        {headerData.job_title}
-                        {headerData.email}
-                        {headerData.phone}
-                        {headerData.address}
-                        {headerData.url_link}
-                      </div>
-                      <Button
-                        label='Edit header'
-                        className="p-button-rounded p-button-success"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setShowHeaderForm(true);     
-                          // send header data to header form block
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <Button 
-                      label='Add header'
-                      className="p-button-rounded p-button-success"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setShowHeaderForm(true);                        
-                      }}
-                    />
-
-                  )}
-                </div>
-              )}
-              {showHeaderForm && <HeaderFormBlock {...headerProps}  />}
+              <HeaderFormBlock {...headerProps}/>
             </div>
             {/* Summary block */}
             <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
@@ -198,7 +146,7 @@ const CreateCVPage = (props) => {
                   />
                 </div>
               )}
-              {experienceForm && <ExperienceFormBlock />}
+              {experienceForm && <ExperienceFormBlock  />}
             </div>
 
           </div>
