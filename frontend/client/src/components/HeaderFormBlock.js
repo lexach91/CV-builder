@@ -44,6 +44,8 @@ const HeaderFormBlock = (props) => {
   useEffect(() => {
     if (isAuthenticated && user) {
       setFirstName(user.first_name);
+      console.log(user.first_name);
+      console.log(firstName)
       setLastName(user.last_name);
     } else {
       setFirstName("");
@@ -350,7 +352,7 @@ const HeaderFormBlock = (props) => {
             <div className="flex justify-content-center m-4">
               <div>
                 {/* headerData */}
-                {headerData.first_name} {headerData.last_name}
+                {firstName} {lastName}
                 {headerData.job_title}
                 {headerData.email}
                 {headerData.phone}
