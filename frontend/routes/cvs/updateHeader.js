@@ -13,7 +13,6 @@ router.post(`/api/cvs/header/`, async (req, res) => {
   console.log(req.body)
   // get id from request body
   const id = req.body.id;
-
   console.log('CV id for creating a header', id);
 
   try {
