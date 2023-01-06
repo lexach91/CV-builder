@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Form, Field } from 'react-final-form';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
@@ -6,15 +8,71 @@ import { Button } from 'primereact/button'
 
 
 const SummaryFormBlock = () => {
-  const [summary, setSummary] = useState({
+
+  const { isAuthenticated, user, registered, loading } = useSelector(
+    (state) => state.user
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated]);
+
+
+  const [showSummaryForm, setShowSummaryForm] = useState(false);
+  const [summaryExists, setSummaryExists] = useState(false);
+  const [summaryData, setSummaryData] = useState({
     summary: '',
   });
 
-  const onSubmit = (values) => {
-    console.log(values);
-    // setHeaderFormData(values);
-  };
+  // Props from CreateCVPage
+  const { cvId } = props;
+
+  useEffect(() => {
+    if (cvId) {
+      const getCVDetails = async () => {
+        console.log(window.location.origin);
+        const res = await fetch(`${window.location.origin}/api/cvs/?id=${cvId}`);
+
+        const data = await res.json();
+        console.log(data);
+        setSummaryExists(true)
+        if (data.summary) {
+          setSummaryData({
+            summary: data.summary.summary,
+          });
+        }
+      };
+      getCVDetails();
+    }
+  }, [cvId]);
   
+
+  // {!showSummaryForm && (
+  //   <div className="flex justify-content-center m-4">
+  //     {/* Check if summary exist */}
+  //     {summaryExists && (
+  //       <div className="flex justify-content-center m-4">
+  //         <div>
+  //           {/* summaryData */}
+  //           {summaryData.summary}
+  //         </div>
+  //       </div>
+  //     )}
+  //     <Button
+  //       label='Add summary'
+  //       className="p-button-rounded p-button-success"
+  //       onClick={(e) => {
+  //         e.preventDefault();
+  //         setShowSummaryForm(true);                        
+  //       }}
+  //     />
+  //   </div>
+  // )}
+  // {showSummaryForm && <SummaryFormBlock />}
 
   return (
     <>
