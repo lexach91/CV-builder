@@ -51,66 +51,72 @@ const SummaryFormBlock = (props) => {
   }, [cvId]);
   
 
-  // {!showSummaryForm && (
-  //   <div className="flex justify-content-center m-4">
-  //     {/* Check if summary exist */}
-  //     {summaryExists && (
-  //       <div className="flex justify-content-center m-4">
-  //         <div>
-  //           {/* summaryData */}
-  //           {summaryData.summary}
-  //         </div>
-  //       </div>
-  //     )}
-  //     <Button
-  //       label='Add summary'
-  //       className="p-button-rounded p-button-success"
-  //       onClick={(e) => {
-  //         e.preventDefault();
-  //         setShowSummaryForm(true);                        
-  //       }}
-  //     />
-  //   </div>
-  // )}
-  // {showSummaryForm && <SummaryFormBlock />}
+
 
   return (
     <>
-      <Form
-        // onSubmit={onSubmit}
-        initialValues={{ summary: '' }}
-        // validate={validate}
-        render={({ handleSubmit }) => (
-          <form
-            className="p-fluid bg-slate-900 p-6 rounded shadow-md"
-          >
-            <div className="card">
-              <div className="formgrid grid">
-                <div className="field col">
-                  <Field name="summary" render={({ input, meta }) => (
-                    <div className="field col w-full">
-                      <span className="p-float-label">
-                        <InputTextarea
-                          id="summary" {...input}
-                          autoFocus
-                          className=""
-                        />
-                        <label
-                          htmlFor="summary"
-                          className="">
-                            summary
-                        </label>
-                      </span>
-                    </div>
-                  )} />
-                </div>
-
+      {!showSummaryForm && (
+        <div className="flex justify-content-center m-4">
+          {/* Check if summary exist */}
+          {summaryExists && (
+            <div className="flex justify-content-center m-4">
+              <div>
+                {/* summaryData */}
+                {summaryData.summary}
               </div>
             </div>
+          )}
+          <Button
+            label='Edit summary'
+            className="p-button-rounded p-button-success"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowSummaryForm(true);                        
+            }}
+          />
+        </div>
+      )}
+      {showSummaryForm && (
+        <Form
+          // onSubmit={onSubmit}
+          initialValues={{ summary: '' }}
+          // validate={validate}
+          render={({ handleSubmit }) => (
+            <form
+              className="p-fluid bg-slate-900 p-6 rounded shadow-md"
+            >
+              <div className="card">
+                <div className="formgrid grid">
+                  <div className="field col">
+                    <Field name="summary" render={({ input, meta }) => (
+                      <div className="field col w-full">
+                        <span className="p-float-label">
+                          <InputTextarea
+                            id="summary" {...input}
+                            autoFocus
+                            className=""
+                          />
+                          <label
+                            htmlFor="summary"
+                            className="">
+                              summary
+                          </label>
+                        </span>
+                      </div>
+                    )} />
+                  </div>
 
-            <Button type="submit" label="Save" className="mt-2" />
-          </form>
-        )} />
+                </div>
+              </div>
+              <Button
+                label="Save Header"
+                className="mt-2"
+                type="submit"
+              />
+            </form>
+          )}
+        />
+      )}
     </>
   );
 };
