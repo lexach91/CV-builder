@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Field } from 'react-final-form';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -7,7 +7,7 @@ import { Button } from 'primereact/button'
 
 
 
-const SummaryFormBlock = () => {
+const SummaryFormBlock = (props) => {
 
   const { isAuthenticated, user, registered, loading } = useSelector(
     (state) => state.user
@@ -77,7 +77,7 @@ const SummaryFormBlock = () => {
   return (
     <>
       <Form
-        onSubmit={onSubmit}
+        // onSubmit={onSubmit}
         initialValues={{ summary: '' }}
         // validate={validate}
         render={({ handleSubmit }) => (
