@@ -11,10 +11,6 @@ import ExperienceFormBlock from "../components/ExperienceFormBlock";
 const CreateCVPage = (props) => {
 
   const [showSummaryForm, setShowSummaryForm] = useState(false);
-  const [summaryExists, setSummaryExists] = useState(false);
-  const [summaryData, setSummaryData] = useState({
-    summary: '',
-  });
 
   const [experiences, setExperiences] = useState([]);
   const [experienceForm, setExperienceForm] = useState(false);
@@ -47,12 +43,12 @@ const CreateCVPage = (props) => {
     }
   }, [isAuthenticated]);
 
-  let headerProps = {
+  let IdProps = {
     cvId: cvId,
   }
     
 
-  console.log(headerProps);
+  console.log(IdProps);
 
 
   return (
@@ -63,33 +59,12 @@ const CreateCVPage = (props) => {
             <h1 className="text-center">Create CV</h1>
             <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
               <h2 className="text-2xl text-center mb-4 text-emerald-400">Header</h2>
-              <HeaderFormBlock {...headerProps}/>
+              <HeaderFormBlock {...IdProps}/>
             </div>
             {/* Summary block */}
             <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
               <h2 className="text-2xl text-center mb-4 text-emerald-400">Summary</h2>
-              {!showSummaryForm && (
-                <div className="flex justify-content-center m-4">
-                  {/* Check if summary exist */}
-                  {summaryExists && (
-                    <div className="flex justify-content-center m-4">
-                      <div>
-                        {/* summaryData */}
-                        {summaryData.summary}
-                      </div>
-                    </div>
-                  )}
-                  <Button
-                    label='Add summary'
-                    className="p-button-rounded p-button-success"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setShowSummaryForm(true);                        
-                    }}
-                  />
-                </div>
-              )}
-              {showSummaryForm && <SummaryFormBlock />}
+              <SummaryFormBlock {...IdProps}/>
             </div>
             {/* Experience block */}
             <div className="card mt-4 border-500 border-3 border-round p-4 mx-auto w-6 justify-content-center">
