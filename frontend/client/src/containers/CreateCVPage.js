@@ -25,14 +25,6 @@ const CreateCVPage = (props) => {
 
     const data = await res.json();
     console.log(data);
-
-    if (data.summary) {
-      setSummaryExists(true);
-      console.log("summary exists");
-      setSummaryData({
-        summary: data.summary.summary,
-      });
-    }
   };
 
   useEffect(() => {
