@@ -52,6 +52,71 @@ const SummaryFormBlock = (props) => {
   
 
 
+  const responseSummary = async (data, form) => {
+    console.log(data);
+    setSummaryData(data);
+    const payloadSummary = {
+      id : cvId,
+      summary: data.summary,
+    };
+    console.log(payloadSummary);
+
+    if (!setSummaryExists) {
+      // If create, then use POST
+      try {
+        console.log("We are in the header form block with id_exist = false");
+        const response = await fetch(`/api/cvs/summary/`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            },
+          body: JSON.stringify(payloadSummary),
+        });
+        const data = await response.json();
+        console.log(data);
+        setSummaryExists(true);
+        setShowSummaryForm(false);
+        // set data from response to summaryData
+        setSummaryData({
+          summary: data.summary,
+        });
+        // navigate(`/cvs/${data.id}`);
+        console.log("We are in the summary form block with success on create");
+      }
+      catch (error) {
+        console.log(error);
+      }
+    } else {
+      // If update, then use PUT
+      setSummaryData(data);
+      try {
+        console.log("We are in the summary form block with id_exist = true");
+        const response = await fetch(`/api/cvs/summary/`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            },
+          body: JSON.stringify(payloadSummary),
+        });
+        const data = await response.json();
+        console.log(data);
+        setShowSummaryForm(false);
+        // navigate(`/cvs/${data.id}`);
+        // set data from response to headerData
+        setSummaryData({
+          summary: data.summary,
+        });
+        console.log("We are in the summary form block with success on update");
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  
+
 
   return (
     <>
@@ -90,8 +155,8 @@ const SummaryFormBlock = (props) => {
       )}
       {showSummaryForm && (
         <Form
-          // onSubmit={onSubmit}
-          initialValues={{ summary: '' }}
+          onSubmit={responseSummary}
+          initialValues={{ summaryData }}
           // validate={validate}
           render={({ handleSubmit }) => (
             <form
@@ -121,7 +186,7 @@ const SummaryFormBlock = (props) => {
                 </div>
               </div>
               <Button
-                label="Save Header"
+                label="Save Summary"
                 className="mt-2"
                 type="submit"
               />
