@@ -161,6 +161,7 @@ const SummaryFormBlock = (props) => {
           render={({ handleSubmit }) => (
             <form
               className="p-fluid bg-slate-900 p-6 rounded shadow-md"
+              onSubmit={handleSubmit}
             >
               <div className="card">
                 <div className="formgrid grid">
