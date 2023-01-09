@@ -7,26 +7,8 @@ const fetch = (...args) =>
 
 
 router.post('/api/auth/register', async(req, res) => {
-  const { 
-    first_name,
-    last_name,
-    email,
-    birthday,
-    country,
-    password,
-    password_confirm,
-  } = req.body;
   
-  const body = JSON.stringify({
-    first_name,
-    last_name,
-    email,
-    birthday,
-    country,
-    password,
-    password_confirm,
-  })
-
+  const body = Object.keys(req.body)[0];
   try {
     // fetch request towards Django API
     console.log('before fetch')

@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import 'tw-elements';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import "./api/axios";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
