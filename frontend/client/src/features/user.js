@@ -86,11 +86,12 @@ export const checkAuth = createAsyncThunk('auth/verify', async (_, thunkAPI) => 
       dispatch(getUser());
       return data;
     } else {
-      const { dispatch } = thunkAPI;
-      dispatch(refreshToken());
+      // const { dispatch } = thunkAPI;
+      // dispatch(refreshToken());
+      return thunkAPI.rejectWithValue("Something went wrong");
     }
   } catch (err) {
-    return thunkAPI.rejectWithValue(err.response.data);
+    return thunkAPI.rejectWithValue("Something went wrong");
   }
 })
 
@@ -127,7 +128,7 @@ export const refreshToken = createAsyncThunk(
 
       if (res.status === 200) {
         const { dispatch } = thunkAPI;
-        dispatch(getUser());
+        dispatch(checkAuth());
         return data;
       } else {
         return thunkAPI.rejectWithValue(data);
