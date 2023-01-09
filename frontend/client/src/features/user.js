@@ -1,71 +1,51 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios';
 
 
 // get user action creator
 export const getUser = createAsyncThunk('auth/user', async (_, thunkAPI) => {
-	try {
-		const response = await fetch('/api/auth/user', {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json',
-			},
-		});
-
-		const data = await response.json();
-
-		if (response.status === 200) {
-			return data;
-		} else {
-			return thunkAPI.rejectWithValue(data);
-		}
-	} catch (err) {
-		return thunkAPI.rejectWithValue(err.response.data);
-	}
+  try {
+    const res = await axios.get('auth/user');
+    const data = await res.data;
+    if (res.status === 200) {
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue(data);
+    }
+  } catch (err) {
+    return thunkAPI.rejectWithValue(err.response.data);
+  }
 });
-
-
-
 
 
 // register action creator
 export const register = createAsyncThunk(
-	'auth/register',
-	async ({ first_name, last_name, birthday, country, email, password, password_confirm }, thunkAPI) => {
-		const body = JSON.stringify({
-			first_name,
-			last_name,
+  'auth/register',
+  async ({ first_name, last_name, birthday, country, email, password, password_confirm }, thunkAPI) => {
+    const body = JSON.stringify({
+      first_name,
+      last_name,
       birthday,
       country,
-			email,
-			password,
+      email,
+      password,
       password_confirm,
-		});
+    });
 
-		try {
-      // call to 5000 -  hit express route
-			const response = await fetch(`/api/auth/register`, {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body,
-			});
-
-			const data = await response.json();
-      console.log('after fetching data');
-      console.log(data);
-			if (response.status === 201) {
-        console.log("we are in the 201")
-				return data;
-			} else {
-				return thunkAPI.rejectWithValue(data);
-			}
-		} catch (err) {
-			return thunkAPI.rejectWithValue(err.response.data);
-		}
-	}
+    try {
+      const res = await axios.post('auth/register', body);
+      const data = await res.data;
+      if (res.status === 201) {
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
 );
+
 
 // login action creator
 export const login = createAsyncThunk('auth/login', async ( {email, password}, thunkAPI) => {
