@@ -48,52 +48,42 @@ export const register = createAsyncThunk(
 
 
 // login action creator
-export const login = createAsyncThunk('auth/login', async ( {email, password}, thunkAPI) => {
+export const login = createAsyncThunk(
+  'auth/login',
+  async ( {email, password}, thunkAPI) => {
 	const body = JSON.stringify({
 		email,
 		password,
 	});
+
 	try {
-		const response = await fetch(`/api/auth/login`, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body
-		});
-
-		const data = await response.json();
-
+		const response = await axios.post('auth/login', body);
+		const data = await response.data;
 		if (response.status === 200) {
 			const { dispatch } = thunkAPI;
 			dispatch(getUser());
+      // console.log('data', data);
 			return data;
 		} else {
+      console.log('something went wrong1')
 			return thunkAPI.rejectWithValue(data);
 		}
 	} catch (err) {
-		return thunkAPI.rejectWithValue(err.response.data);
+    console.log('something went wrong2')
+    console.log(err)
+		return thunkAPI.rejectWithValue("Something went wrong");
 	}
 });
 
 // verification action creator
 export const checkAuth = createAsyncThunk('auth/verify', async (_, thunkAPI) => {
   try {
-    const res = await fetch('/api/auth/verify', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-      },
-    });
+    const response = await axios.get('auth/verify');
+    const data = await response.data;
 
-    const data = await res.json();
-
-    if (res.status === 200) {
+    if (response.status === 200) {
       const { dispatch } = thunkAPI;
-
       dispatch(getUser());
-
       return data;
     } else {
       const { dispatch } = thunkAPI;
@@ -111,17 +101,10 @@ export const logout = createAsyncThunk(
 	async (_, thunkAPI) => {
 
 		try {
-			const res = await fetch('/api/auth/logout', {
-				method: 'GET',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-			});
+			const response = await axios.get('auth/logout');
+			const data = await response.data;
 
-			const data = await res.json();
-
-			if (res.status === 200) {
+			if (response.status === 200) {
 
 				return data;
 			} else {
@@ -139,15 +122,8 @@ export const refreshToken = createAsyncThunk(
   'auth/refresh',
   async (_, thunkAPI) => {
     try {
-      const res = await fetch('/api/auth/refresh', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      const data = await res.json();
+      const res = await axios.post('auth/refresh');
+      const data = await res.data;
 
       if (res.status === 200) {
         const { dispatch } = thunkAPI;
@@ -225,7 +201,7 @@ const userSlice = createSlice({
     })
     .addCase(login.rejected, (state, action) => {
       state.loading = false;
-      state.errors = action.payload.error;
+      state.errors = action.payload;
       state.messages = null;
       state.isAuthenticated = false;
     })

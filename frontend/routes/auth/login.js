@@ -6,12 +6,11 @@ const fetch = (...args) =>
 const router = express.Router();
 console.log('in login route');
 router.post('/api/auth/login', async(req,res) => {
-  const {email, password} = req.body;
   console.log('before fetch in login route');
-  console.log(email);
-  console.log(password);
+  console.log(req.body);
+  console.log(Object.keys(req.body)[0])
 
-  const body = JSON.stringify({email, password});
+  const body = Object.keys(req.body)[0];
   const url = `${process.env.API_URL}/api/auth/login`;
   console.log(url);
 
