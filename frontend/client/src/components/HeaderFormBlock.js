@@ -103,15 +103,8 @@ const HeaderFormBlock = (props) => {
       // If create, then use POST
       try {
         console.log("We are in the header form block with id_exist = false");
-        const response = await fetch(`/api/cvs/header/`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            },
-          body: JSON.stringify(payloadHeader),
-        });
-        const data = await response.json();
+        const response = axios.post(`cvs/header/`);
+        const data = await response.data;
         console.log(data);
         setHeaderExists(true);
         setShowHeaderForm(false);
