@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -21,9 +22,9 @@ const CreateCVPage = (props) => {
 
   const getCVDetails = async () => {
     console.log(window.location.origin);
-    const res = await fetch(`${window.location.origin}/api/cvs/?id=${cvId}`);
+    const res = axios.get(`cvs/?id=${cvId}`);
 
-    const data = await res.json();
+    const data = await res.data;
     console.log(data);
   };
 
