@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 
@@ -59,9 +60,9 @@ const HeaderFormBlock = (props) => {
     if (cvId) {
       const getCVDetails = async () => {
         console.log(window.location.origin);
-        const res = await fetch(`${window.location.origin}/api/cvs/?id=${cvId}`);
+        const res = axios.get(`cvs/?id=${cvId}`);
 
-        const data = await res.json();
+        const data = await res.data;
         console.log(data);
         if (data.header) {
           setHeaderExists(true);
