@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Field } from 'react-final-form';
@@ -65,15 +66,8 @@ const SummaryFormBlock = (props) => {
       // If create, then use POST
       try {
         console.log("We are in the header form block with id_exist = false");
-        const response = await fetch(`/api/cvs/summary/`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            },
-          body: JSON.stringify(payloadSummary),
-        });
-        const data = await response.json();
+        const response = await axios.post(`cvs/summary/`, payloadSummary);
+        const data = await response.data;
         console.log(data);
         setSummaryExists(true);
         setShowSummaryForm(false);
@@ -92,15 +86,8 @@ const SummaryFormBlock = (props) => {
       setSummaryData(data);
       try {
         console.log("We are in the summary form block with id_exist = true");
-        const response = await fetch(`/api/cvs/summary/`, {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            },
-          body: JSON.stringify(payloadSummary),
-        });
-        const data = await response.json();
+        const response = await axios.put(`cvs/summary/`, payloadSummary);
+        const data = await response.data;
         console.log(data);
         setShowSummaryForm(false);
         // navigate(`/cvs/${data.id}`);
@@ -115,8 +102,6 @@ const SummaryFormBlock = (props) => {
       }
     }
   };
-  
-
 
   return (
     <>
