@@ -2,8 +2,15 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const bodyParser = require('body-parser');
+const axios = require('axios');
+
 
 require('dotenv').config();
+
+axios.defaults.baseURL = process.env.API_URL + '/api/';
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Accept'] = 'application/json';
 
 
 const registerRoute = require('./routes/auth/register');
@@ -52,3 +59,45 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 5500;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+// axios interceptors
+axios.interceptors.request.use(
+  (config) => {
+    const refreshToken = config.cookies.refresh;
+    if (refreshToken) {
+      config.headers['Authorization'] = `Bearer ${refreshToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+let refreshing = false;
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      if (refreshing) {
+        return;
+      }
+      refreshing = true;
+      return axios
+        .post('auth/refresh', {
+          withCredentials: true,
+        })
+        .then((response) => {
+          return axios(error.config);
+        })
+        .catch((err) => {
+          refreshing = false;
+          return Promise.reject('refresh failed');
+        });
+    } else {
+      return Promise.reject('something went wrong');
+    }
+  }
+);
