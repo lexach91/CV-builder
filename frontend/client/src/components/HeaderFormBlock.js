@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button'
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 
@@ -59,9 +60,9 @@ const HeaderFormBlock = (props) => {
     if (cvId) {
       const getCVDetails = async () => {
         console.log(window.location.origin);
-        const res = await fetch(`${window.location.origin}/api/cvs/?id=${cvId}`);
+        const res = await axios.get(`cvs/?id=${cvId}`);
 
-        const data = await res.json();
+        const data = await res.data;
         console.log(data);
         if (data.header) {
           setHeaderExists(true);
@@ -102,20 +103,14 @@ const HeaderFormBlock = (props) => {
       // If create, then use POST
       try {
         console.log("We are in the header form block with id_exist = false");
-        const response = await fetch(`/api/cvs/header/`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            },
-          body: JSON.stringify(payloadHeader),
-        });
-        const data = await response.json();
+        const response = await axios.post(`cvs/header/`, payloadHeader);
+        const data = await response.data;
         console.log(data);
         setHeaderExists(true);
         setShowHeaderForm(false);
         // set data from response to headerData
         setHeaderData({
+          id : cvId,
           first_name: data.first_name,
           last_name: data.last_name,
           email: data.email,
@@ -135,20 +130,14 @@ const HeaderFormBlock = (props) => {
       setHeaderExists(true);
       try {
         console.log("We are in the header form block with id_exist = true");
-        const response = await fetch(`/api/cvs/header/`, {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            },
-          body: JSON.stringify(payloadHeader),
-        });
-        const data = await response.json();
+        const response = await axios.put(`cvs/header/`, payloadHeader);
+        const data = await response.data;
         console.log(data);
         setShowHeaderForm(false);
         // navigate(`/cvs/${data.id}`);
         // set data from response to headerData
         setHeaderData({
+          id : cvId,
           first_name: data.first_name,
           last_name: data.last_name,
           email: data.email,
