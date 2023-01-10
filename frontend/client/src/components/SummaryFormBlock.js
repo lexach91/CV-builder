@@ -35,9 +35,9 @@ const SummaryFormBlock = (props) => {
     if (cvId) {
       const getCVDetails = async () => {
         console.log(window.location.origin);
-        const res = await fetch(`${window.location.origin}/api/cvs/?id=${cvId}`);
+        const res = await axios.get(`cvs/?id=${cvId}`);
 
-        const data = await res.json();
+        const data = await res.data;
         console.log(data);
         setSummaryExists(true)
         if (data.summary) {
