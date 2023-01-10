@@ -7,12 +7,14 @@ const router = express.Router();
 
 // for the endpoint on express server for creating a new summary
 router.post(`/api/cvs/summary/`, async (req, res) => {
+  console.log('we are now in the summary route');
   // parse access token from cookie
   console.log('req.cookies', req.cookies);
   const { access } = req.cookies;
   console.log(req.body)
   // get id from request body
-  const id = req.body.id;
+  const id = JSON.parse(Object.keys(req.body)[0]).id;
+
   console.log('CV id for creating a summary', id);
 
   try {
