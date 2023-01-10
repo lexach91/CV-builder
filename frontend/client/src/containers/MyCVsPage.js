@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from 'primereact/button'
 import { useSelector, useDispatch } from "react-redux";
@@ -21,15 +22,8 @@ const MyCVsPage = () => {
   const responseCreateCV = async () => {
     setNewCV(true);
     try {
-      const response = await fetch("api/cvs/", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          },
-        body: JSON.stringify({}),
-      });
-      const data = await response.json();
+      const response = await axios.post("cvs/");
+      const data = await response.data;
       console.log(data);
       navigate(`/cvs/${data.id}`);
     }
