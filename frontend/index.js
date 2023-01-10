@@ -25,6 +25,7 @@ const getCVDetailsRoute = require('./routes/cvs/getCVDetails');
 const createNewCVRoute = require('./routes/cvs/createNewCV');
 
 const updateHeaderRoute = require('./routes/cvs/updateHeader');
+const updateSummaryRoute = require('./routes/cvs/updateSummary');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use(getCVDetailsRoute);
 app.use(createNewCVRoute);
 
 app.use(updateHeaderRoute);
+app.use(updateSummaryRoute);
 
 app.use(express.static('client/build'));
 
