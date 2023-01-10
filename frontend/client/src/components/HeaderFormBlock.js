@@ -60,7 +60,7 @@ const HeaderFormBlock = (props) => {
     if (cvId) {
       const getCVDetails = async () => {
         console.log(window.location.origin);
-        const res = axios.get(`cvs/?id=${cvId}`);
+        const res = await axios.get(`cvs/?id=${cvId}`);
 
         const data = await res.data;
         console.log(data);
@@ -103,13 +103,14 @@ const HeaderFormBlock = (props) => {
       // If create, then use POST
       try {
         console.log("We are in the header form block with id_exist = false");
-        const response = axios.post(`cvs/header/`);
+        const response = await axios.post(`cvs/header/`, payloadHeader);
         const data = await response.data;
         console.log(data);
         setHeaderExists(true);
         setShowHeaderForm(false);
         // set data from response to headerData
         setHeaderData({
+          id : cvId,
           first_name: data.first_name,
           last_name: data.last_name,
           email: data.email,
@@ -129,20 +130,14 @@ const HeaderFormBlock = (props) => {
       setHeaderExists(true);
       try {
         console.log("We are in the header form block with id_exist = true");
-        const response = await fetch(`/api/cvs/header/`, {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            },
-          body: JSON.stringify(payloadHeader),
-        });
-        const data = await response.json();
+        const response = await axios.put(`cvs/header/`, payloadHeader);
+        const data = await response.data;
         console.log(data);
         setShowHeaderForm(false);
         // navigate(`/cvs/${data.id}`);
         // set data from response to headerData
         setHeaderData({
+          id : cvId,
           first_name: data.first_name,
           last_name: data.last_name,
           email: data.email,
