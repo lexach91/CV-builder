@@ -39,7 +39,16 @@ const CreateCVPage = (props) => {
   let IdProps = {
     cvId: cvId,
   }
-    
+
+  const deleteCV = async () => {
+    try {
+      await axios.delete(`cvs/?id=${cvId}`);
+      window.location.href = "/cvs";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   console.log(IdProps);
 
@@ -47,6 +56,16 @@ const CreateCVPage = (props) => {
   return (
     <Layout title='CV-builder | My CVs' content='Welcome to the Create CV page'>
       <div className="pt-4 container mx-auto">
+        <div className="flex justify-content-center">
+          <Button
+            label='Delete CV'
+            className="p-button-rounded p-button-danger"
+            onClick={(e) => {
+              e.preventDefault();
+              deleteCV();
+            }}
+          />
+        </div>
         <div className="flex justify-content-center">
           <div className="card min-w-screen flex justify-content-center flex-column align-content-center">
             <h1 className="text-center">Create CV</h1>
