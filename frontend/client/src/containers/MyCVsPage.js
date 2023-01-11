@@ -11,6 +11,8 @@ const MyCVsPage = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const [ NewCV, setNewCV ] = useState(false);
 
+  const [ CVs, setCVs ] = useState([]);
+
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,6 +20,24 @@ const MyCVsPage = () => {
       navigate("/login");
     }
   }, [isAuthenticated]);
+
+  const fetchCVs = async () => {
+    try {
+      console.log("fetchCVs");
+      const response = await axios.get("allCvs/");
+      console.log("response: ")
+      const data = await response.data;
+      console.log(data);
+      setCVs(data);
+      console.log(CVs);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchCVs();
+  }, [])
 
   const responseCreateCV = async () => {
     setNewCV(true);
@@ -31,6 +51,18 @@ const MyCVsPage = () => {
       console.log(error);
     }
   };
+
+  // const responseGetCV = async () => {
+  //   setNewCV(false);
+  //   try {
+  //     const response = await axios.get("cvs/");
+  //     const data = await response.data;
+  //     console.log(data);
+  //   }
+  //   catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   return (
     <Layout title='CV-builder | My CVs' content='Welcome to the Your CVs page'>
@@ -50,6 +82,7 @@ const MyCVsPage = () => {
               }}
           />
         </div>
+
         <p  className="text-xl text-center">
           Here you will find your CVs created with CV-builder before
         </p>
