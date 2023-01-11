@@ -82,7 +82,32 @@ const MyCVsPage = () => {
               }}
           />
         </div>
-
+        <div className="flex justify-content-center m-4">
+          <div className="grid">
+            {CVs ? (
+              // map through the CVs and show them
+              CVs.map((cv) => (
+                <div key={cv.id} className="col m-4 bg-yellow-500">
+                  <p className="text-xl text-center">
+                    {cv.id}
+                  </p>
+                  <Button
+                    className="p-button-rounded p-button-success"
+                    label="Open CV"
+                    onClick={() => {
+                      navigate(`/cvs/${cv.id}`);
+                      }}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="flex justify-content-center m-4">
+                <p>No cvs</p>
+              </div>
+              )
+            }
+          </div>
+        </div>
         <p  className="text-xl text-center">
           Here you will find your CVs created with CV-builder before
         </p>
