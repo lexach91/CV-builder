@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import HeaderFormBlock from "../components/HeaderFormBlock";
 import SummaryFormBlock from "../components/SummaryFormBlock";
 import ExperienceFormBlock from "../components/ExperienceFormBlock";
-
+import { setMessages } from "../features/user";
 
 
 const CreateCVPage = (props) => {
@@ -97,6 +97,7 @@ const CreateCVPage = (props) => {
   const deleteCV = async () => {
     try {
       await axios.delete(`cvs/?id=${cvId}`);
+      dispatch(setMessages("CV deleted successfully"));
       navigate("/cvs");
     } catch (error) {
       console.log("Error deleting CV");
