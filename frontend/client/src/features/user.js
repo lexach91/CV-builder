@@ -164,10 +164,10 @@ const userSlice = createSlice({
       state.errors = null
     },
     setMessages: (state, message) => {
-      state.messages = message;
+      state.messages = message.payload;
     },
     setErrors: (state, error) => {
-      state.errors = error;
+      state.errors = error.payload;
     },
   },
   // accept other types outside of the slice
