@@ -40,4 +40,34 @@ router.get('/api/cvs/', async (req, res) => {
   }
 });
 
+router.delete('/api/cvs/', async (req, res) => {
+  console.log("we are about to delete a CV");
+  const { access } = req.cookies;
+  const { id } = req.query;
+  console.log(id);
+
+  try {
+    const apiRes = await fetch(`${process.env.API_URL}/api/cvs/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    // in return we get only a response code
+
+    return res.status(apiRes.status).json({'success': true});
+
+    // const data = await apiRes.json();
+
+    // return res.status(apiRes.status).json(data);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      error: 'Something went wrong when deleting CV and it is coming from the ROUTE',
+    });
+  }
+});
+
 module.exports = router;
