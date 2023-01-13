@@ -76,7 +76,7 @@ const ExperienceFormBlock = (props) => {
               className="p-button-rounded p-button-success m-0"
               onClick={(e) => {
                 e.preventDefault();
-                showExperienceForm(true);                        
+                setShowExperienceForm(true);                        
               }}
             />
         </> 
@@ -86,7 +86,7 @@ const ExperienceFormBlock = (props) => {
           className="p-button-rounded p-button-success"
           onClick={(e) => {
             e.preventDefault();
-            showExperienceForm(true);                        
+            setShowExperienceForm(true);                        
           }}
         />
       )}
@@ -100,6 +100,7 @@ const ExperienceFormBlock = (props) => {
         render={({ handleSubmit }) => (
           <form
             className="p-fluid bg-slate-900 p-6 rounded shadow-md"
+            onSubmit={handleSubmit}
           >
             <div className="card mt-4 border-500 border-3 border-round p-4">
               <div className="card">
@@ -208,15 +209,8 @@ const ExperienceFormBlock = (props) => {
                   </div>
                 </div>
               </div>
-
-
-  <Button type="button" label="Submit" icon="pi pi-check" onClick={() => this.addExperience()} />
-
+              <Button type="submit" label="Submit" icon="pi pi-check" onClick={() => this.addExperience()} />
             </div>
-
-
-
-            <Button type="submit" label="Save" className="mt-2" />
           </form>
         )} />
     )}
