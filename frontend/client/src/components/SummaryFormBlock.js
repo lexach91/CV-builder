@@ -40,11 +40,15 @@ const SummaryFormBlock = (props) => {
 
         const data = await res.data;
         console.log(data);
-        setSummaryExists(true)
-        if (data.summary) {
+        if (data.summary !== null) {
+          console.log("Summary exists");
+          setSummaryExists(true)
           setSummaryData({
             summary: data.summary.summary,
           });
+        } else {
+          console.log("Summary does not exist");
+          setSummaryExists(false)
         }
       };
       getCVDetails();
@@ -62,7 +66,7 @@ const SummaryFormBlock = (props) => {
     };
     console.log(payloadSummary);
 
-    if (!setSummaryExists) {
+    if (!summaryExists) {
       // If create, then use POST
       try {
         console.log("We are in the header form block with id_exist = false");
@@ -117,7 +121,7 @@ const SummaryFormBlock = (props) => {
                 </div>
               </div>
               <Button
-                label='Add summary'
+                label='Edit summary'
                 className="p-button-rounded p-button-success m-0"
                 onClick={(e) => {
                   e.preventDefault();
@@ -127,7 +131,7 @@ const SummaryFormBlock = (props) => {
             </> 
           ) : (
             <Button
-              label='Edit summary'
+              label='Add summary'
               className="p-button-rounded p-button-success"
               onClick={(e) => {
                 e.preventDefault();
