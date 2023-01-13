@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -7,9 +10,21 @@ import { Button } from 'primereact/button'
 
 
 const ExperienceFormBlock = () => {
-  const [summary, setSummary] = useState({
-    summary: '',
-  });
+  const { isAuthenticated, user, registered, loading } = useSelector(
+    (state) => state.user
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated]);
+
+  const [showExperienceForm, setShowExperienceForm] = useState(false);
+  const [experienceSectionExists, setExperienceSectionExists] = useState(false);
+  const [experienceSectionData, setExperienceSectionData] = useState({});
 
   const onSubmit = (values) => {
     console.log(values);
