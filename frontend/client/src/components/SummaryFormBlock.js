@@ -110,31 +110,30 @@ const SummaryFormBlock = (props) => {
           {/* Check if summary exist */}
           {summaryExists ? (
             <>
-            <div className="flex justify-content-center flex-column align-content-center mb-4">
-              <div>
-                {/* summaryData */}
-                {summaryData.summary}
+              <div className="flex justify-content-center flex-column align-content-center mb-4">
+                <div>
+                  {/* summaryData */}
+                  {summaryData.summary}
+                </div>
               </div>
-            </div>
+              <Button
+                label='Add summary'
+                className="p-button-rounded p-button-success m-0"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowSummaryForm(true);                        
+                }}
+              />
+            </> 
+          ) : (
             <Button
-              label='Add summary'
-              className="p-button-rounded p-button-success m-0"
+              label='Edit summary'
+              className="p-button-rounded p-button-success"
               onClick={(e) => {
                 e.preventDefault();
                 setShowSummaryForm(true);                        
               }}
-
             />
-            </> 
-          ) : (
-          <Button
-            label='Edit summary'
-            className="p-button-rounded p-button-success"
-            onClick={(e) => {
-              e.preventDefault();
-              setShowSummaryForm(true);                        
-            }}
-          />
           )}
         </div>
       )}
