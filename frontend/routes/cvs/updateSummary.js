@@ -49,9 +49,9 @@ router.put(`/api/cvs/summary/`, async (req, res) => {
   const { access } = req.cookies;
   console.log(req.body)
   // get id from request body
-  const id = req.body.id;
+  const id = JSON.parse(Object.values(req.body)[0]);
 
-  console.log('CV id for creating a summary', id);
+  console.log('CV id for updating a summary', id);
 
   try {
     const apiRes = await fetch(`${process.env.API_URL}/api/cvs/${id}/summary/`, {
