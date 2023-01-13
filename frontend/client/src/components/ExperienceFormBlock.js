@@ -6,6 +6,8 @@ import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
+import "react-datepicker/dist/react-datepicker.css";
+import { Calendar } from 'primereact/calendar';
 
 
 
@@ -95,7 +97,7 @@ const ExperienceFormBlock = (props) => {
     {showExperienceForm && (
       <Form
         onSubmit={onSubmit}
-        initialValues={{ first_name: '', last_name: '', email: '', password: '', birthday: null, country: null, password_confirm: '' }}
+        initialValues={{ company: '', position: '', start_date: '', end_date: '', description: '' }}
         // validate={validate}
         render={({ handleSubmit }) => (
           <form
@@ -151,11 +153,12 @@ const ExperienceFormBlock = (props) => {
                     <Field name="start_date" render={({ input, meta }) => (
                       <div className="field">
                         <span className="p-float-label">
-                          <InputText
-                            id={`start_date-new`}
+                          <Calendar
+                            id="date"
                             {...input}
-                            autoFocus
-                            className=""
+                            dateFormat="dd/mm/yy"
+                            mask="99/99/9999"
+                            showIcon
                           />
                           <label
                             htmlFor={`start_date-new`}
@@ -170,11 +173,12 @@ const ExperienceFormBlock = (props) => {
                     <Field name="end_date" render={({ input, meta }) => (
                       <div className="field">
                         <span className="p-float-label">
-                          <InputText
-                            id={`end_date-new}`}
+                        <Calendar
+                            id="date"
                             {...input}
-                            autoFocus
-                            className=""
+                            dateFormat="dd/mm/yy"
+                            mask="99/99/9999"
+                            showIcon
                           />
                           <label
                             htmlFor={`end_date-new`}
@@ -209,7 +213,7 @@ const ExperienceFormBlock = (props) => {
                   </div>
                 </div>
               </div>
-              <Button type="submit" label="Submit" icon="pi pi-check" onClick={() => this.addExperience()} />
+              <Button type="submit" label="Submit" icon="pi pi-check"/>
             </div>
           </form>
         )} />
