@@ -76,22 +76,23 @@ const CreateCVPage = (props) => {
     }
   }, [isAuthenticated]);
 
-  let IdProps = {
-    cvId: cvId,
-  }
-
-  // Get CV id from url
-  const cvId = useParams().id;
-  console.log(cvId);
-
   // Get CV details
   const getCVDetails = async () => {
     console.log(window.location.origin);
     const res = axios.get(`cvs/?id=${cvId}`);
-
+    
     const data = await res.data;
     console.log(data);
   };
+  
+  // Get CV id from url
+  const cvId = useParams().id;
+  console.log(cvId);
+
+  let IdProps = {
+    cvId: cvId,
+  }
+
 
   // Delete CV
   const deleteCV = async () => {
