@@ -12,13 +12,14 @@ const MyCVsPage = () => {
   const [ NewCV, setNewCV ] = useState(false);
   const [ CVs, setCVs ] = useState([]);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
     }
   }, [isAuthenticated]);
 
+  // fetching all CVs data
   const fetchCVs = async () => {
     try {
       console.log("fetchCVs");
@@ -37,6 +38,7 @@ const MyCVsPage = () => {
     fetchCVs();
   }, [])
 
+  // creating a new CV
   const responseCreateCV = async () => {
     setNewCV(true);
     try {
@@ -49,18 +51,6 @@ const MyCVsPage = () => {
       console.log(error);
     }
   };
-
-  // const responseGetCV = async () => {
-  //   setNewCV(false);
-  //   try {
-  //     const response = await axios.get("cvs/");
-  //     const data = await response.data;
-  //     console.log(data);
-  //   }
-  //   catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   return (
     <Layout title='CV-builder | My CVs' content='Welcome to the Your CVs page'>
