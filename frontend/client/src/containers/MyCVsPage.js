@@ -82,22 +82,27 @@ const MyCVsPage = () => {
               }}
           />
         </div>
-        <div className="flex justify-content-center m-4">
+        <div className="flex align-content-center">
           <div className="grid">
             {CVs ? (
               // map through the CVs and show them
               CVs.map((cv) => (
-                <div key={cv.id} className="col m-4 bg-yellow-500">
-                  <p className="text-xl text-center">
-                    {cv.id}
-                  </p>
-                  <Button
-                    className="p-button-rounded p-button-success"
-                    label="Open CV"
-                    onClick={() => {
-                      navigate(`/cvs/${cv.id}`);
-                      }}
-                  />
+                <div
+                  key={cv.id}
+                  className="col-12 md:col-6 lg:col-3 flex justify-content-center align-content-center flex-col p-3"
+                  >
+                  <div className="flex justify-content-center align-content-center flex-col bg-slate-700 p-3 border-4 border-slate-900 rounded-lg">
+                    <p className="text-xl text-center mb-3">
+                      {cv.id}
+                    </p>
+                    <Button
+                      className="p-button-rounded p-button-success"
+                      label="Open CV"
+                      onClick={() => {
+                        navigate(`/cvs/${cv.id}`);
+                        }}
+                    />
+                  </div>
                 </div>
               ))
             ) : (
