@@ -38,10 +38,14 @@ const ExperienceFormBlock = (props) => {
 
         const data = await res.data;
         console.log(data);
-        if (data.experience_section) {
+        if (data.experience_section !== null) {
           setExperienceSectionExists(true)
           setExperienceSectionData({data});
           console.log(experienceSectionData);
+          console.log("Experience section exists");
+        } else {
+          setExperienceSectionExists(false);
+          console.log("Experience section does not exist");
         }
       };
       getCVDetails();
@@ -56,6 +60,39 @@ const ExperienceFormBlock = (props) => {
 
   return (
     <>
+    {!showExperienceForm && (
+      <div className="flex justify-content-center m-4">
+        {/* Check if Experience exist */}
+        {experienceSectionExists ? (
+          <>
+            <div className="flex justify-content-center flex-column align-content-center mb-4">
+              <div>
+                {/* Experience data */}
+
+              </div>
+            </div>
+            <Button
+              label='Edit experience'
+              className="p-button-rounded p-button-success m-0"
+              onClick={(e) => {
+                e.preventDefault();
+                showExperienceForm(true);                        
+              }}
+            />
+        </> 
+      ) : (
+        <Button
+          label='Add experience'
+          className="p-button-rounded p-button-success"
+          onClick={(e) => {
+            e.preventDefault();
+            showExperienceForm(true);                        
+          }}
+        />
+      )}
+    </div>
+    )}
+    {showExperienceForm && (
       <Form
         onSubmit={onSubmit}
         initialValues={{ first_name: '', last_name: '', email: '', password: '', birthday: null, country: null, password_confirm: '' }}
@@ -182,6 +219,7 @@ const ExperienceFormBlock = (props) => {
             <Button type="submit" label="Save" className="mt-2" />
           </form>
         )} />
+    )}
     </>
   );
 };
