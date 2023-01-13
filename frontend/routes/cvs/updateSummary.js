@@ -13,7 +13,7 @@ router.post(`/api/cvs/summary/`, async (req, res) => {
   const { access } = req.cookies;
   console.log(req.body)
   // get id from request body
-  const id = JSON.parse(Object.keys(req.body)[0]).id;
+  const id = JSON.parse(Object.values(req.body)[0]);
 
   console.log('CV id for creating a summary', id);
 
