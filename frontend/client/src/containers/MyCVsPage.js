@@ -10,17 +10,16 @@ const MyCVsPage = () => {
 
   const { isAuthenticated } = useSelector((state) => state.user);
   const [ NewCV, setNewCV ] = useState(false);
-
   const [ CVs, setCVs ] = useState([]);
-
-
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
     }
   }, [isAuthenticated]);
 
+  // fetching all CVs data
   const fetchCVs = async () => {
     try {
       console.log("fetchCVs");
@@ -39,6 +38,7 @@ const MyCVsPage = () => {
     fetchCVs();
   }, [])
 
+  // creating a new CV
   const responseCreateCV = async () => {
     setNewCV(true);
     try {
@@ -51,18 +51,6 @@ const MyCVsPage = () => {
       console.log(error);
     }
   };
-
-  // const responseGetCV = async () => {
-  //   setNewCV(false);
-  //   try {
-  //     const response = await axios.get("cvs/");
-  //     const data = await response.data;
-  //     console.log(data);
-  //   }
-  //   catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   return (
     <Layout title='CV-builder | My CVs' content='Welcome to the Your CVs page'>
@@ -82,22 +70,27 @@ const MyCVsPage = () => {
               }}
           />
         </div>
-        <div className="flex justify-content-center m-4">
+        <div className="flex align-content-center">
           <div className="grid">
             {CVs ? (
               // map through the CVs and show them
               CVs.map((cv) => (
-                <div key={cv.id} className="col m-4 bg-yellow-500">
-                  <p className="text-xl text-center">
-                    {cv.id}
-                  </p>
-                  <Button
-                    className="p-button-rounded p-button-success"
-                    label="Open CV"
-                    onClick={() => {
-                      navigate(`/cvs/${cv.id}`);
-                      }}
-                  />
+                <div
+                  key={cv.id}
+                  className="col-12 md:col-6 lg:col-3 flex justify-content-center align-content-center flex-col p-3"
+                  >
+                  <div className="flex justify-content-center align-content-center flex-col bg-slate-700 p-3 border-4 border-slate-900 rounded-lg">
+                    <p className="text-xl text-center mb-3">
+                      {cv.id}
+                    </p>
+                    <Button
+                      className="p-button-rounded p-button-success"
+                      label="Open CV"
+                      onClick={() => {
+                        navigate(`/cvs/${cv.id}`);
+                        }}
+                    />
+                  </div>
                 </div>
               ))
             ) : (
