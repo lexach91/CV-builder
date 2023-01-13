@@ -10,11 +10,9 @@ const MyCVsPage = () => {
 
   const { isAuthenticated } = useSelector((state) => state.user);
   const [ NewCV, setNewCV ] = useState(false);
-
   const [ CVs, setCVs ] = useState([]);
-
-
   const navigate = useNavigate();
+  
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
