@@ -31,18 +31,18 @@ router.post('/api/auth/login', async(req,res) => {
         cookie.serialize('access', data.access, {
           httpOnly: true,
           maxAge: 60 * 30,
-          path: '/api/',
+          path: '/',
           sameSite: 'strict',
           secure: process.env.NODE_ENV === 'production',
-          path: '/',
+          // path: '/',
         }),
         cookie.serialize('refresh', data.refresh, {
           httpOnly: true,
           maxAge: 60 * 60 * 24,
-          path: '/api/',
+          path: '/',
           sameSite: 'strict',
           secure: process.env.NODE_ENV === 'production',
-          path: '/',
+          // path: '/',
         }),
       ]);
       return res.status(loginResponse.status).json({ access: 'login successful' });
