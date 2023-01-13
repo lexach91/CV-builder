@@ -117,17 +117,19 @@ const SummaryFormBlock = (props) => {
               <div className="flex justify-content-center flex-column align-content-center mb-4">
                 <div>
                   {/* summaryData */}
-                  {summaryData.summary}
+                  <div className="flex justify-content-center flex-column align-content-center m-4 text-center">
+                    {summaryData.summary}
+                  </div>
                 </div>
+                <Button
+                  label='Edit summary'
+                  className="p-button-rounded p-button-success m-0"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowSummaryForm(true);                        
+                  }}
+                />
               </div>
-              <Button
-                label='Edit summary'
-                className="p-button-rounded p-button-success m-0"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowSummaryForm(true);                        
-                }}
-              />
             </> 
           ) : (
             <Button
