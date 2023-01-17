@@ -8,6 +8,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import "react-datepicker/dist/react-datepicker.css";
 import { Calendar } from 'primereact/calendar';
+import { response } from "express";
 
 
 
@@ -27,6 +28,13 @@ const ExperienceFormBlock = (props) => {
   const [showExperienceForm, setShowExperienceForm] = useState(false);
   const [experienceSectionExists, setExperienceSectionExists] = useState(false);
   const [experienceSectionData, setExperienceSectionData] = useState({});
+  const [experienceBullet, setExperienceBullet] = useState({
+    company: "",
+    position: "",
+    start_date: "",
+    end_date: "",
+    description: "",
+  });
 
   // Props with cvId
   const { cvId } = props;
@@ -54,9 +62,33 @@ const ExperienceFormBlock = (props) => {
     }
   }, [cvId]);
 
-  const onSubmit = (values) => {
-    console.log(values);
-    // setHeaderFormData(values);
+  const responseExperience = async (data, form) => {
+    console.log(data);
+    setExperienceBullet(data);
+    const payloadExperienceBullet = {
+      company: data.company,
+      position: data.position,
+      start_date: data.start_date,
+      end_date: data.end_date,
+      description: data.description,
+    };
+    console.log(payloadExperienceBullet);
+    if (!experienceSectionExists) {
+      try {
+        const res = await axios.post(
+          `cvs/${cvId}/experience/`,
+          payloadExperienceBullet
+        );
+        const data = await res.data;
+        console.log(data);
+        setExperienceSectionExists(true);
+        setExperienceSectionData(data);
+        setShowExperienceForm(false);
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
   };
   
 
@@ -96,7 +128,7 @@ const ExperienceFormBlock = (props) => {
     )}
     {showExperienceForm && (
       <Form
-        onSubmit={onSubmit}
+        onSubmit={responseExperience}
         initialValues={{ company: '', position: '', start_date: '', end_date: '', description: '' }}
         // validate={validate}
         render={({ handleSubmit }) => (
