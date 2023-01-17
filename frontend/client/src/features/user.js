@@ -86,11 +86,13 @@ export const checkAuth = createAsyncThunk('auth/verify', async (_, thunkAPI) => 
       dispatch(getUser());
       return data;
     } else {
+      console.log(response);
       // const { dispatch } = thunkAPI;
       // dispatch(refreshToken());
       return thunkAPI.rejectWithValue("Something went wrong");
     }
   } catch (err) {
+    console.log(err);
     return thunkAPI.rejectWithValue("Something went wrong");
   }
 })
@@ -221,7 +223,7 @@ const userSlice = createSlice({
     .addCase(getUser.rejected, state => {
       state.loading = false;
       state.isAuthenticated = false;
-      state.errors = "Session expired. Please login to continue.";
+      // state.errors = "Session expired. Please login to continue.";
       state.messages = null;
     })
     .addCase(checkAuth.pending, state => {
@@ -238,7 +240,7 @@ const userSlice = createSlice({
     .addCase(checkAuth.rejected, state => {
       state.loading = false;
       state.isAuthenticated = false;
-      state.errors = "Session expired. Please login to continue.";
+      // state.errors = "Session expired. Please login to continue.";
     })
     .addCase(logout.pending, state => {
       state.loading = true;
