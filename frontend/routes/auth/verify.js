@@ -38,9 +38,16 @@ router.get('/api/auth/verify', async (req, res) => {
 
 		// return res.status(apiRes.status).json(data);
 	} catch (err) {
-		return res.status(500).json({
-			error: err,
-		});
+		console.log(err);
+		if (err.response.status === 401) {
+			return res.status(202).json({
+				error: 'Unauthorized',
+			});
+		} else {
+			return res.status(500).json({
+				error: 'Server error',
+			});
+		}		
 	}
 });
 

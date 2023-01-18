@@ -66,22 +66,35 @@ const ExperienceFormBlock = (props) => {
   const responseExperience = async (data, form) => {
     console.log(data);
     setExperienceBullet(data);
-    const payloadExperienceBullet = {
-      id: cvId,
-      company: data.company,
-      position: data.position,
-      start_date: data.start_date,
-      end_date: data.end_date,
-      description: data.description,
-    };
-    console.log(payloadExperienceBullet);
+    // const payloadExperienceBullet = {
+    //   id: cvId,
+    //   company: data.company,
+    //   position: data.position,
+    //   start_date: data.start_date,
+    //   end_date: data.end_date,
+    //   description: data.description,
+    // };
+    const payload = {
+      "id": cvId,
+      "experiences": [
+        {
+          "company": data.company,
+          "position": data.position,
+          "start_date": data.start_date,
+          "end_date": data.end_date,
+          "description": data.description,
+        }
+      ]
+    }
+    // console.log(payloadExperienceBullet);
     console.log("Experience bullet created");
     if (!experienceSectionExists) {
       console.log("Experience section is about to be created");
       try {
         const res = await axios.post(
           `cvs/experience/`,
-          payloadExperienceBullet
+          // payloadExperienceBullet
+          payload
         );
         const data = await res.data;
         console.log(data);
@@ -97,7 +110,8 @@ const ExperienceFormBlock = (props) => {
       try {
         const res = await axios.put(
           `cvs/experience/`,
-          payloadExperienceBullet
+          // payloadExperienceBullet
+          payload
         );
         const data = await res.data;
         console.log(data);
