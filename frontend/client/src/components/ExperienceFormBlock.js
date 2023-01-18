@@ -67,12 +67,12 @@ const ExperienceFormBlock = (props) => {
     console.log(data);
     setExperienceBullet(data);
     const payloadExperienceBullet = {
+      id: cvId,
       company: data.company,
       position: data.position,
       start_date: data.start_date,
       end_date: data.end_date,
       description: data.description,
-      id: cvId,
     };
     console.log(payloadExperienceBullet);
     console.log("Experience bullet created");
@@ -86,6 +86,21 @@ const ExperienceFormBlock = (props) => {
         const data = await res.data;
         console.log(data);
         setExperienceSectionExists(true);
+        setExperienceSectionData(data);
+        setShowExperienceForm(false);
+      }
+      catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("Experience section is about to be updated");
+      try {
+        const res = await axios.put(
+          `cvs/experience/`,
+          payloadExperienceBullet
+        );
+        const data = await res.data;
+        console.log(data);
         setExperienceSectionData(data);
         setShowExperienceForm(false);
       }
