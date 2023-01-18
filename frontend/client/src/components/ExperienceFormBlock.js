@@ -72,12 +72,15 @@ const ExperienceFormBlock = (props) => {
       start_date: data.start_date,
       end_date: data.end_date,
       description: data.description,
+      id: cvId,
     };
     console.log(payloadExperienceBullet);
+    console.log("Experience bullet created");
     if (!experienceSectionExists) {
+      console.log("Experience section is about to be created");
       try {
         const res = await axios.post(
-          `cvs/${cvId}/experience/`,
+          `cvs/experience/`,
           payloadExperienceBullet
         );
         const data = await res.data;
@@ -91,11 +94,6 @@ const ExperienceFormBlock = (props) => {
       }
     }
   };
-  
-
-
-
-
 
   return (
     <>
@@ -224,7 +222,6 @@ const ExperienceFormBlock = (props) => {
                             </label>
                           </span>
                         ) : (
-                        
                         <span className="p-float-label">
                           <Calendar
                             id="end-date"
@@ -244,7 +241,6 @@ const ExperienceFormBlock = (props) => {
                         </span>
                           )
                         }
-
                       </div>
                     )} />
                   </div>
