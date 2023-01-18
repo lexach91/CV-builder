@@ -35,6 +35,7 @@ const ExperienceFormBlock = (props) => {
     end_date: "",
     description: "",
   });
+  const [present, setPresent] = useState(false);
 
   // Props with cvId
   const { cvId } = props;
@@ -93,24 +94,8 @@ const ExperienceFormBlock = (props) => {
   
 
 
-  const [present, setPresent] = useState(false);
 
 
-  const onChangeCheckboxPresent = (e) => {
-    console.log(e.checked);
-    if (e.checked) {
-      // disable end_date
-      console.log("disable end_date");
-      // disable #end_date
-
-
-
-
-    } else {
-      // enable end_date
-      console.log("enable end_date");
-    }
-  }
 
   return (
     <>
@@ -213,7 +198,7 @@ const ExperienceFormBlock = (props) => {
                             showIcon
                           />
                           <label
-                            htmlFor={`start_date-new`}
+                            htmlFor={`start-date`}
                             className="">
                               start_date
                           </label>
@@ -224,25 +209,45 @@ const ExperienceFormBlock = (props) => {
                   <div className="field col">
                     <Field name="end_date" render={({ input, meta }) => (
                       <div className="field">
+                        {present ? (
+                          <span className="p-float-label">
+                            <InputText
+                              id={`end-date`}
+                              value = "Present"
+                              disabled
+                              className="font-bold"
+                            />
+                            <label
+                              htmlFor={`end-date`}
+                              className="">
+                                end_date
+                            </label>
+                          </span>
+                        ) : (
+                        
                         <span className="p-float-label">
-                        <Calendar
+                          <Calendar
                             id="end-date"
                             {...input}
                             dateFormat="dd/mm/yy"
                             mask="99/99/9999"
                             showIcon
                             disabled={present}
+                            visible={present}
                           />
+                          
                           <label
-                            htmlFor={`end_date-new`}
+                            htmlFor={`end-date`}
                             className="">
                               end_date
                           </label>
                         </span>
+                          )
+                        }
+
                       </div>
                     )} />
                   </div>
-                  {/* Add a checkbox if the job is still present */}
                 </div>
                 <div className="card">
                   <div className="formgrid grid">
