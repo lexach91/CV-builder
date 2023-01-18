@@ -29,6 +29,7 @@ const createNewCVRoute = require('./routes/cvs/createNewCV');
 
 const updateHeaderRoute = require('./routes/cvs/updateHeader');
 const updateSummaryRoute = require('./routes/cvs/updateSummary');
+const updateExperienceRoute = require('./routes/cvs/updateExperience');
 
 const app = express();
 
@@ -55,6 +56,8 @@ app.use(createNewCVRoute);
 
 app.use(updateHeaderRoute);
 app.use(updateSummaryRoute);
+app.use(updateExperienceRoute);
+
 
 // need to take access token from cookie and send it to the backend as 'Authorization' header
 // if the access token is expired, the backend will send a 401 response

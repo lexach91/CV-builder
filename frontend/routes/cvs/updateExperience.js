@@ -13,8 +13,8 @@ router.post(`/api/cvs/experience/`, async (req, res) => {
   const { access } = req.cookies;
   console.log(req.body)
   // get id from request body
-  const id = JSON.parse(Object.values(req.body)[0]);
-
+  // const id = JSON.parse(Object.values(req.body).id);
+  const id = req.body.id;
   console.log('CV id for creating a experience', id);
 
   try {
