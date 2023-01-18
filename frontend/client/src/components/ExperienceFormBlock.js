@@ -8,7 +8,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import "react-datepicker/dist/react-datepicker.css";
 import { Calendar } from 'primereact/calendar';
-import { response } from "express";
+import { Checkbox } from 'primereact/checkbox';
 
 
 
@@ -35,6 +35,7 @@ const ExperienceFormBlock = (props) => {
     end_date: "",
     description: "",
   });
+  const [present, setPresent] = useState(false);
 
   // Props with cvId
   const { cvId } = props;
@@ -71,12 +72,15 @@ const ExperienceFormBlock = (props) => {
       start_date: data.start_date,
       end_date: data.end_date,
       description: data.description,
+      id: cvId,
     };
     console.log(payloadExperienceBullet);
+    console.log("Experience bullet created");
     if (!experienceSectionExists) {
+      console.log("Experience section is about to be created");
       try {
         const res = await axios.post(
-          `cvs/${cvId}/experience/`,
+          `cvs/experience/`,
           payloadExperienceBullet
         );
         const data = await res.data;
@@ -90,7 +94,6 @@ const ExperienceFormBlock = (props) => {
       }
     }
   };
-  
 
   return (
     <>
@@ -186,14 +189,14 @@ const ExperienceFormBlock = (props) => {
                       <div className="field">
                         <span className="p-float-label">
                           <Calendar
-                            id="date"
+                            id="start-date"
                             {...input}
                             dateFormat="dd/mm/yy"
                             mask="99/99/9999"
                             showIcon
                           />
                           <label
-                            htmlFor={`start_date-new`}
+                            htmlFor={`start-date`}
                             className="">
                               start_date
                           </label>
@@ -204,23 +207,56 @@ const ExperienceFormBlock = (props) => {
                   <div className="field col">
                     <Field name="end_date" render={({ input, meta }) => (
                       <div className="field">
+                        {present ? (
+                          <span className="p-float-label">
+                            <InputText
+                              id={`end-date`}
+                              value = "Present"
+                              disabled
+                              className="font-bold"
+                            />
+                            <label
+                              htmlFor={`end-date`}
+                              className="">
+                                end_date
+                            </label>
+                          </span>
+                        ) : (
                         <span className="p-float-label">
-                        <Calendar
-                            id="date"
+                          <Calendar
+                            id="end-date"
                             {...input}
                             dateFormat="dd/mm/yy"
                             mask="99/99/9999"
                             showIcon
+                            disabled={present}
+                            visible={present}
                           />
+                          
                           <label
-                            htmlFor={`end_date-new`}
+                            htmlFor={`end-date`}
                             className="">
                               end_date
                           </label>
                         </span>
-
+                          )
+                        }
                       </div>
                     )} />
+                  </div>
+                </div>
+                <div className="card">
+                  <div className="formgrid grid">
+                    <div className="field col flex align-content-center">
+                      <Checkbox
+                        inputId="job-present"
+                        value="Present"
+                        onChange={e => setPresent(e.checked)} checked={present}
+
+                        >
+                      </Checkbox>
+                      <label htmlFor="job-present" className="p-checkbox-label ml-2 pb-1">Present</label>
+                    </div>
                   </div>
                 </div>
                 <div className="card">

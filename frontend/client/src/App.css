@@ -44,3 +44,11 @@
     padding: 1rem;
   }
 }
+
+.field:has(>#end-date[disabled]) {
+  background-color: #f60606;
+}
+
+.field:has(>#end-date[disabled]):hover {
+  background-color: #05fd37;
+}
