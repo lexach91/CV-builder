@@ -8,7 +8,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button'
 import "react-datepicker/dist/react-datepicker.css";
 import { Calendar } from 'primereact/calendar';
-import { response } from "express";
+import { Checkbox } from 'primereact/checkbox';
 
 
 
@@ -91,6 +91,26 @@ const ExperienceFormBlock = (props) => {
     }
   };
   
+
+
+  const [present, setPresent] = useState(false);
+
+
+  const onChangeCheckboxPresent = (e) => {
+    console.log(e.checked);
+    if (e.checked) {
+      // disable end_date
+      console.log("disable end_date");
+      // disable #end_date
+
+
+
+
+    } else {
+      // enable end_date
+      console.log("enable end_date");
+    }
+  }
 
   return (
     <>
@@ -186,7 +206,7 @@ const ExperienceFormBlock = (props) => {
                       <div className="field">
                         <span className="p-float-label">
                           <Calendar
-                            id="date"
+                            id="start-date"
                             {...input}
                             dateFormat="dd/mm/yy"
                             mask="99/99/9999"
@@ -206,11 +226,12 @@ const ExperienceFormBlock = (props) => {
                       <div className="field">
                         <span className="p-float-label">
                         <Calendar
-                            id="date"
+                            id="end-date"
                             {...input}
                             dateFormat="dd/mm/yy"
                             mask="99/99/9999"
                             showIcon
+                            disabled={present}
                           />
                           <label
                             htmlFor={`end_date-new`}
@@ -218,9 +239,23 @@ const ExperienceFormBlock = (props) => {
                               end_date
                           </label>
                         </span>
-
                       </div>
                     )} />
+                  </div>
+                  {/* Add a checkbox if the job is still present */}
+                </div>
+                <div className="card">
+                  <div className="formgrid grid">
+                    <div className="field col flex align-content-center">
+                      <Checkbox
+                        inputId="job-present"
+                        value="Present"
+                        onChange={e => setPresent(e.checked)} checked={present}
+
+                        >
+                      </Checkbox>
+                      <label htmlFor="job-present" className="p-checkbox-label ml-2 pb-1">Present</label>
+                    </div>
                   </div>
                 </div>
                 <div className="card">
