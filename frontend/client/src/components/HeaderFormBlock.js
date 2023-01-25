@@ -210,7 +210,7 @@ const HeaderFormBlock = (props) => {
               </div>
               <Button
                 label='Edit header'
-                className="p-button-rounded p-button-success"
+                className="p-button-rounded p-button-success px-4"
                 onClick={(e) => {
                   e.preventDefault();
                   setShowHeaderForm(true);     
@@ -221,7 +221,7 @@ const HeaderFormBlock = (props) => {
           ) : (
             <Button 
               label='Add header'
-              className="p-button-rounded p-button-success"
+              className="p-button-rounded p-button-success px-4"
               onClick={(e) => {
                 e.preventDefault();
                 setShowHeaderForm(true);                        
@@ -247,7 +247,7 @@ const HeaderFormBlock = (props) => {
                         <div 
                           className="flex w-full align-items-start justify-content-end">
                           <Button
-                              className="p-button-rounded p-button-text p-button-plain"
+                              className="p-button-rounded p-button-text p-button-plain "
                               icon="pi pi-question-circle"
                               tooltip="Go to profile to change your First Name"
                               disabled
