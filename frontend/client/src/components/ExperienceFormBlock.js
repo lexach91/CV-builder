@@ -51,13 +51,17 @@ const ExperienceFormBlock = (props) => {
         console.log(data);
         if (data.experience_section !== null) {
           setExperienceSectionExists(true)
-          setExperienceSectionData({data});
-          console.log(experienceSectionData);
+
           console.log("Experience section exists");
         } else {
           setExperienceSectionExists(false);
           console.log("Experience section does not exist");
         }
+        setExperienceSectionData({
+          "id": cvId,
+          "experiences": data.experience_section.experiences
+        });
+        console.log(experienceSectionData);
       };
       getCVDetails();
     }
@@ -66,34 +70,27 @@ const ExperienceFormBlock = (props) => {
   const responseExperience = async (data, form) => {
     console.log(data);
     setExperienceBullet(data);
-    // const payloadExperienceBullet = {
-    //   id: cvId,
-    //   company: data.company,
-    //   position: data.position,
-    //   start_date: data.start_date,
-    //   end_date: data.end_date,
-    //   description: data.description,
-    // };
+    // Format date to American format
+    const start_date = new Date(data.start_date);
     const payload = {
       "id": cvId,
       "experiences": [
         {
           "company": data.company,
           "position": data.position,
-          "start_date": data.start_date,
-          "end_date": data.end_date,
+          "start_date": new Date(data.start_date).toLocaleDateString("en-US"),
+          "end_date": new Date(data.end_date).toLocaleDateString("en-US"),
           "description": data.description,
         }
       ]
     }
-    // console.log(payloadExperienceBullet);
-    console.log("Experience bullet created");
+    console.log(payload);
+    console.log("Experience bullet created in react");
     if (!experienceSectionExists) {
       console.log("Experience section is about to be created");
       try {
         const res = await axios.post(
           `cvs/experience/`,
-          // payloadExperienceBullet
           payload
         );
         const data = await res.data;
@@ -110,7 +107,6 @@ const ExperienceFormBlock = (props) => {
       try {
         const res = await axios.put(
           `cvs/experience/`,
-          // payloadExperienceBullet
           payload
         );
         const data = await res.data;
@@ -130,31 +126,113 @@ const ExperienceFormBlock = (props) => {
       <div className="flex justify-content-center m-4">
         {/* Check if Experience exist */}
         {experienceSectionExists ? (
-          <>
             <div className="flex justify-content-center flex-column align-content-center mb-4">
-              <div>
                 {/* Experience data */}
+                <div>
+                {experienceSectionData.experiences?.map((experience) => (
+                    <>
+                      <div className="card mt-4 border-500 border-3 border-round p-4">
+                        <div className="card">
+                          <div className="formgrid grid">
+                            <div className="field col">
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                Company:
+                              </label>
+                              <div className="control">
+                                <p className="text-lg font-medium">
+                                  {experience.company}
+                                </p>
+                              </div>
+                            </div>
 
+                            <div className="field col">
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                Position:
+                              </label>
+                              <div className="control">
+                                <p className="text-lg font-medium">
+                                  {experience.position}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card">
+                          <div className="formgrid grid">
+                            <div className="field col">
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                Start date:
+                              </label>
+                              <div className="control">
+                                <p className="text-lg font-medium">
+                                  {experience.start_date}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="field col">
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                End date:
+                              </label>
+                              <div className="control">
+                                <p className="text-lg font-medium">
+                                  {experience.end_date}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card">
+                          <div className="formgrid grid">
+                            <div className="field col">
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                Description:
+                              </label>
+                              <div className="control">
+                                <p className="text-lg font-medium">
+                                  {experience.description}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card flex justify-content-center">
+                          <Button
+                            label='Edit'
+                            className="p-button-rounded p-button-success mr-2 px-4"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setShowExperienceForm(true);                        
+                            }}
+                          />
+                          <Button
+                            label='Delete'
+                            className="p-button-rounded p-button-danger ml-2 px-4"
+                            onClick={(e) => {
+                              e.preventDefault();
+
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  ))}
+                <div className="card flex justify-content-center">
+                  <Button
+                    label='Add experience'
+                    className="p-button-rounded p-button-success px-4 mt-4"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowExperienceForm(true);                        
+                    }}
+                  />
+                </div>
               </div>
             </div>
-            <Button
-              label='Edit experience'
-              className="p-button-rounded p-button-success m-0"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowExperienceForm(true);                        
-              }}
-            />
-        </> 
       ) : (
-        <Button
-          label='Add experience'
-          className="p-button-rounded p-button-success"
-          onClick={(e) => {
-            e.preventDefault();
-            setShowExperienceForm(true);                        
-          }}
-        />
+        <>
+        Just to check
+        </>
+
       )}
     </div>
     )}

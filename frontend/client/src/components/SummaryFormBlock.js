@@ -123,7 +123,7 @@ const SummaryFormBlock = (props) => {
                 </div>
                 <Button
                   label='Edit summary'
-                  className="p-button-rounded p-button-success m-0"
+                  className="p-button-rounded p-button-success m-0 px-4"
                   onClick={(e) => {
                     e.preventDefault();
                     setShowSummaryForm(true);                        
@@ -134,7 +134,7 @@ const SummaryFormBlock = (props) => {
           ) : (
             <Button
               label='Add summary'
-              className="p-button-rounded p-button-success"
+              className="p-button-rounded p-button-success px-4"
               onClick={(e) => {
                 e.preventDefault();
                 setShowSummaryForm(true);                        
