@@ -174,8 +174,15 @@ const ExperienceFormBlock = (props) => {
                             </div>
                           </div>
                         </div>
+                        <Button
+                          label='Edit experience'
+                          className="p-button-rounded p-button-success"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setShowExperienceForm(true);                        
+                          }}
+                        />
                       </div>
-
                     </>
                   ))}
               </div>
