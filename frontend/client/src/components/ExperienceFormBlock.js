@@ -216,14 +216,16 @@ const ExperienceFormBlock = (props) => {
                       </div>
                     </>
                   ))}
-                <Button
-                  label='Add experience'
-                  className="p-button-rounded p-button-success px-4"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowExperienceForm(true);                        
-                  }}
-                />
+                <div className="card flex justify-content-center">
+                  <Button
+                    label='Add experience'
+                    className="p-button-rounded p-button-success px-4 mt-4"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowExperienceForm(true);                        
+                    }}
+                  />
+                </div>
               </div>
             </div>
       ) : (
