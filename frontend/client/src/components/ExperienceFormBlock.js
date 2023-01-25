@@ -70,14 +70,16 @@ const ExperienceFormBlock = (props) => {
   const responseExperience = async (data, form) => {
     console.log(data);
     setExperienceBullet(data);
+    // Format date to American format
+    const start_date = new Date(data.start_date);
     const payload = {
       "id": cvId,
       "experiences": [
         {
           "company": data.company,
           "position": data.position,
-          "start_date": data.start_date,
-          "end_date": data.end_date,
+          "start_date": new Date(data.start_date).toLocaleDateString("en-US"),
+          "end_date": new Date(data.end_date).toLocaleDateString("en-US"),
           "description": data.description,
         }
       ]
@@ -133,41 +135,60 @@ const ExperienceFormBlock = (props) => {
                         <div className="card">
                           <div className="formgrid grid">
                             <div className="field col">
-                              <label className="label">Company</label>
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                Company:
+                              </label>
                               <div className="control">
-                                <p className="text-lg font-medium text-gray-900">
+                                <p className="text-lg font-medium">
                                   {experience.company}
                                 </p>
                               </div>
                             </div>
+
                             <div className="field col">
-                              <label className="label">Position</label>
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                Position:
+                              </label>
                               <div className="control">
-                                <p className="text-lg font-medium text-gray-900">
+                                <p className="text-lg font-medium">
                                   {experience.position}
                                 </p>
                               </div>
                             </div>
+                          </div>
+                        </div>
+                        <div className="card">
+                          <div className="formgrid grid">
                             <div className="field col">
-                              <label className="label">Start date</label>
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                Start date:
+                              </label>
                               <div className="control">
-                                <p className="text-lg font-medium text-gray-900">
+                                <p className="text-lg font-medium">
                                   {experience.start_date}
                                 </p>
                               </div>
                             </div>
                             <div className="field col">
-                              <label className="label">End date</label>
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                End date:
+                              </label>
                               <div className="control">
-                                <p className="text-lg font-medium text-gray-900">
+                                <p className="text-lg font-medium">
                                   {experience.end_date}
                                 </p>
                               </div>
                             </div>
+                          </div>
+                        </div>
+                        <div className="card">
+                          <div className="formgrid grid">
                             <div className="field col">
-                              <label className="label">Description</label>
+                              <label className="text-xl text-center capitalize text-blue-100">
+                                Description:
+                              </label>
                               <div className="control">
-                                <p className="text-lg font-medium text-gray-900">
+                                <p className="text-lg font-medium">
                                   {experience.description}
                                 </p>
                               </div>
@@ -185,17 +206,21 @@ const ExperienceFormBlock = (props) => {
                       </div>
                     </>
                   ))}
+              <Button
+                label='Add experience'
+                className="p-button-rounded p-button-success"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowExperienceForm(true);                        
+                }}
+              />
               </div>
             </div>
       ) : (
-        <Button
-          label='Add experience'
-          className="p-button-rounded p-button-success"
-          onClick={(e) => {
-            e.preventDefault();
-            setShowExperienceForm(true);                        
-          }}
-        />
+        <>
+        Just to check
+        </>
+
       )}
     </div>
     )}
