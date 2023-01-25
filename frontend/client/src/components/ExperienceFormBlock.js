@@ -195,25 +195,35 @@ const ExperienceFormBlock = (props) => {
                             </div>
                           </div>
                         </div>
-                        <Button
-                          label='Edit experience'
-                          className="p-button-rounded p-button-success"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setShowExperienceForm(true);                        
-                          }}
-                        />
+                        <div className="card flex justify-content-center">
+                          <Button
+                            label='Edit'
+                            className="p-button-rounded p-button-success mr-2 px-4"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setShowExperienceForm(true);                        
+                            }}
+                          />
+                          <Button
+                            label='Delete'
+                            className="p-button-rounded p-button-danger ml-2 px-4"
+                            onClick={(e) => {
+                              e.preventDefault();
+
+                            }}
+                          />
+                        </div>
                       </div>
                     </>
                   ))}
-              <Button
-                label='Add experience'
-                className="p-button-rounded p-button-success"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowExperienceForm(true);                        
-                }}
-              />
+                <Button
+                  label='Add experience'
+                  className="p-button-rounded p-button-success px-4"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowExperienceForm(true);                        
+                  }}
+                />
               </div>
             </div>
       ) : (
