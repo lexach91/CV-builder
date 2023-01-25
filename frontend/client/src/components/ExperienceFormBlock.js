@@ -51,13 +51,17 @@ const ExperienceFormBlock = (props) => {
         console.log(data);
         if (data.experience_section !== null) {
           setExperienceSectionExists(true)
-          setExperienceSectionData({data});
-          console.log(experienceSectionData);
+
           console.log("Experience section exists");
         } else {
           setExperienceSectionExists(false);
           console.log("Experience section does not exist");
         }
+        setExperienceSectionData({
+          "id": cvId,
+          "experiences": data.experience_section.experiences
+        });
+        console.log(experienceSectionData);
       };
       getCVDetails();
     }
@@ -66,14 +70,6 @@ const ExperienceFormBlock = (props) => {
   const responseExperience = async (data, form) => {
     console.log(data);
     setExperienceBullet(data);
-    // const payloadExperienceBullet = {
-    //   id: cvId,
-    //   company: data.company,
-    //   position: data.position,
-    //   start_date: data.start_date,
-    //   end_date: data.end_date,
-    //   description: data.description,
-    // };
     const payload = {
       "id": cvId,
       "experiences": [
@@ -86,14 +82,13 @@ const ExperienceFormBlock = (props) => {
         }
       ]
     }
-    // console.log(payloadExperienceBullet);
-    console.log("Experience bullet created");
+    console.log(payload);
+    console.log("Experience bullet created in react");
     if (!experienceSectionExists) {
       console.log("Experience section is about to be created");
       try {
         const res = await axios.post(
           `cvs/experience/`,
-          // payloadExperienceBullet
           payload
         );
         const data = await res.data;
@@ -110,7 +105,6 @@ const ExperienceFormBlock = (props) => {
       try {
         const res = await axios.put(
           `cvs/experience/`,
-          // payloadExperienceBullet
           payload
         );
         const data = await res.data;
@@ -130,22 +124,62 @@ const ExperienceFormBlock = (props) => {
       <div className="flex justify-content-center m-4">
         {/* Check if Experience exist */}
         {experienceSectionExists ? (
-          <>
             <div className="flex justify-content-center flex-column align-content-center mb-4">
-              <div>
                 {/* Experience data */}
+                <div>
+                {experienceSectionData.experiences?.map((experience) => (
+                    <>
+                      <div className="card mt-4 border-500 border-3 border-round p-4">
+                        <div className="card">
+                          <div className="formgrid grid">
+                            <div className="field col">
+                              <label className="label">Company</label>
+                              <div className="control">
+                                <p className="text-lg font-medium text-gray-900">
+                                  {experience.company}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="field col">
+                              <label className="label">Position</label>
+                              <div className="control">
+                                <p className="text-lg font-medium text-gray-900">
+                                  {experience.position}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="field col">
+                              <label className="label">Start date</label>
+                              <div className="control">
+                                <p className="text-lg font-medium text-gray-900">
+                                  {experience.start_date}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="field col">
+                              <label className="label">End date</label>
+                              <div className="control">
+                                <p className="text-lg font-medium text-gray-900">
+                                  {experience.end_date}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="field col">
+                              <label className="label">Description</label>
+                              <div className="control">
+                                <p className="text-lg font-medium text-gray-900">
+                                  {experience.description}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
+                    </>
+                  ))}
               </div>
             </div>
-            <Button
-              label='Edit experience'
-              className="p-button-rounded p-button-success m-0"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowExperienceForm(true);                        
-              }}
-            />
-        </> 
       ) : (
         <Button
           label='Add experience'
