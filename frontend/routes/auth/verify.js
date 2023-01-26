@@ -40,7 +40,7 @@ router.get('/api/auth/verify', async (req, res) => {
 	} catch (err) {
 		console.log(err);
 		if (err.response.status === 401) {
-			return res.status(202).json({
+			return res.status(401).json({
 				error: 'Unauthorized',
 			});
 		} else {
