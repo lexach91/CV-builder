@@ -60,135 +60,15 @@ app.use(updateExperienceRoute);
 
 
 // need to take access token from cookie and send it to the backend as 'Authorization' header
-// if the access token is expired, the backend will send a 401 response
-// then we need to send a request to the refresh endpoint with the refresh token
 app.use((req, res, next) => {
-  console.log("refreshing token middleware");
-  console.log(req.cookies);
   const { access } = req.cookies;
-  const { refresh } = req.cookies;
-  // console.log(access);
-  // console.log(refresh);
   if (access) {
     console.log('access token exists');
     axios.defaults.headers.common['Authorization'] = `Bearer ${access}`;
-    // verify the access token
-    axios.get('auth/verify', {}, {withCredentials: true})
-      .then((response) => {
-        console.log('in verify success');
-        // console.log(response);
-        next();
-      })
-      .catch((error) => {
-        console.log('in verify error');
-        // refresh the access token
-        // console.log(error);
-        axios.defaults.headers.common['Cookie'] = `refresh=${refresh}`;
-        axios.post('auth/refresh', {}, {withCredentials: true})
-          .then((response) => {
-            console.log('in refresh success 1');
-            console.log(response.data);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
-            res.cookie(
-              'access',
-              response.data.access,
-              {
-                maxAge: 60 * 30,
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                path: '/',              
-              });
-            res.cookie(
-              'refresh',
-              response.data.refresh,
-              {
-                maxAge: 60 * 60 * 24,
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                path: '/',
-              });
-            // set cookies in the request object to be absolutely the same as the cookies in the response object
-            req.cookies.access = response.data.access;
-            // maxAge is in milliseconds
-            req.cookies.refresh = response.data.refresh;
-            // set httpOnly to true to prevent client-side access to the cookie
-            // set secure to true to prevent cookie from being sent over http
-            // set sameSite to 'strict' to prevent cookie from being sent over http
-            // set path to '/' to make the cookie available to all routes
-            req.cookies.maxAge = 60 * 30;
-            next();
-          })
-          .catch((error) => {
-            console.log('in refresh error 1');
-            next(
-              // res.status(401).json({ message: 'Unauthorized' })
-            );
-          });
-      });
-    // console.log(axios.defaults.headers);
-    // next();
-  } else if (refresh) {
-    console.log('in refresh 2');
-    axios.defaults.headers.common['Cookie'] = `refresh=${refresh}`;
-    axios.post('auth/refresh', {}, {withCredentials: true})
-      .then((response) => {
-        console.log('in refresh success 2');
-        console.log(response.data);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
-        req.cookies.access = response.data.access;
-            req.cookies.refresh = response.data.refresh;
-            res.cookie(
-              'access',
-              response.data.access,
-              {
-                maxAge: 60 * 30,
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                path: '/',              
-              });
-            res.cookie(
-              'refresh',
-              response.data.refresh,
-              {
-                maxAge: 60 * 60 * 24,
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                path: '/',
-              });
-        next();
-      })
-      .catch((error) => {
-        console.log('in refresh error 2');
-        next(
-          // res.status(401).json({ message: 'Unauthorized' })
-        );
-      });
-  } else {
-    console.log('in refresh 3');
-    next(
-      // res.status(401).json({ message: 'Unauthorized' })
-    );
   }
+  next();
 });
-// axios interceptors
-// axios.interceptors.request.use(
-//   (request) => {
-//     console.log('in axios interceptor');
-//     console.log(request);
-//     // parse cookies from the request with cookie-parser
-    
-//     return request;
-//   },
-//   (error) => {
-//     console.log('in axios interceptor error');
-//     console.log(error);
-//     return Promise.reject(error);
-//   },
-// );
+
 
 
 app.use(express.static('client/build'));
