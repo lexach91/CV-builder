@@ -9,6 +9,7 @@ import { Button } from 'primereact/button'
 import "react-datepicker/dist/react-datepicker.css";
 import { Calendar } from 'primereact/calendar';
 import { Checkbox } from 'primereact/checkbox';
+import { setMessages } from "../features/user";
 
 
 
@@ -25,6 +26,57 @@ const ExperienceFormBlock = (props) => {
     }
   }, [isAuthenticated]);
 
+  // Pop up deletion form states
+  const [displayBasic, setDisplayBasic] = useState(false);
+  const [displayModal, setDisplayModal] = useState(false);
+  const [displayMaximizable, setDisplayMaximizable] = useState(false);
+  const [displayPosition, setDisplayPosition] = useState(false);
+  const [displayResponsive, setDisplayResponsive] = useState(false);
+  const [position, setPosition] = useState('center');
+
+  // Dialog functions for pop up window to delete experience bullet
+  const dialogFuncMap = {
+    'displayBasic': setDisplayBasic,
+    'displayModal': setDisplayModal,
+    'displayMaximizable': setDisplayMaximizable,
+    'displayPosition': setDisplayPosition,
+    'displayResponsive': setDisplayResponsive
+  }
+
+  // Pop up window position
+  const onClickPopUp = (name, position) => {
+      dialogFuncMap[`${name}`](true);
+
+      if (position) {
+          setPosition(position);
+      }
+  }
+
+  const onHide = (name) => {
+    dialogFuncMap[`${name}`](false);
+  }
+
+  const renderFooter = (name) => {
+    return (
+      <div>
+        <Button
+          label="No"
+          icon="pi pi-times"
+          onClick={() => onHide(name)}
+          className="p-button-text" />
+        <Button
+          label="Yes"
+          icon="pi pi-check"
+          onClick={() => {
+            onHide(name);
+            // deleteExperienceBullet();
+          }}
+          autoFocus />
+      </div>
+    );
+  }
+
+  // Experience form states
   const [showExperienceForm, setShowExperienceForm] = useState(false);
   const [experienceSectionExists, setExperienceSectionExists] = useState(false);
   const [experienceSectionData, setExperienceSectionData] = useState({});
