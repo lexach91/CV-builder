@@ -6,8 +6,8 @@ const router = express.Router();
 const axios = require('axios');
 
 router.get('/api/auth/user', async (req, res) => {
-	const { access } = req.cookies;
-	axios.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+	// const { access } = req.cookies;
+	// axios.defaults.headers.common['Authorization'] = `Bearer ${access}`;
 
 	try {
 		// const apiRes = await fetch(`${process.env.API_URL}/api/auth/user`, {
